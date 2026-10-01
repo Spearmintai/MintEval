@@ -184,7 +184,7 @@ def validate(text: str, spec: dict, jargon: list[str], lo=40, hi=120) -> dict:
     if codey:
         problems.append("text looks like code (patterns: " + ", ".join(codey) + ")")
     if spec["sizing"]["id"] == "atr_risk" and not re.search(
-            r"\brisk(ing|s)?\b[^.;]{0,40}?%[^.;]{0,40}?\bper\b[^.;]{0,25}?ATR", text, re.I):
+            r"\brisk(ing|s)?\b[^;\n]{0,40}?%[^;\n]{0,40}?\bper\b[^;\n]{0,25}?ATR", text, re.I):
         problems.append('volatility sizing must be phrased "risk <r>% of equity per <k> ATR" (desk convention)')
     return {"ok": not problems, "words": words, "n_jargon": len(set(hits)), "jargon": sorted(set(hits)),
             "missing": missing, "codey": codey, "problems": problems}

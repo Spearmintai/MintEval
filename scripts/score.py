@@ -9,6 +9,7 @@ pr = {p["strategy_id"]: p for p in map(json.loads, open(prompts_path))}
 tasks = [t for t in load_tasks() if t["strategy_id"] in pr]
 for t in tasks:
     t["n_jargon"] = pr[t["strategy_id"]]["n_jargon"]; t["prompt_len"] = pr[t["strategy_id"]]["prompt_len"]
+    t["prompt_valid"] = int(pr[t["strategy_id"]]["valid"]); t["roundtrip"] = pr[t["strategy_id"]].get("recovery")
 refs = reference_runs(tasks, cfg["data"]["price_file"], cfg["engine"])
 import numpy as np
 from minteval.data import load_prices

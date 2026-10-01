@@ -112,3 +112,17 @@ Attempt log (all runs kept under `results/archive/`):
    formulas): it verifies identification, not sufficiency. Fix: two desk conventions (model doc +
    translator), a deterministic cue check for vol sizing, full re-translation (v2). Genuine model errors
    also present in the low set (e.g. S0736 compares close to a highest() that includes the current bar).
+4. Re-translation v2 (conventions + vol-sizing cue): first pass only 639/800 valid -> **my bug**: the cue
+   regex's gap class `[^.;]` excluded '.', so "risk 0.25% ..." never matched. Fixed (`[^;\n]`), regression
+   tests in `tests/test_translate.py`, re-run (first attempts replayed from cache): **796/800 valid,
+   780 round-trip verified, 20 unverifiable (reader failure), 0 failed**. The 4 invalid ones stay in the
+   set with `prompt_valid = 0`. v1 prompts archived in `results/archive/`.
+5. Calibration v2 (same 50 tasks, `results/calib/`): compile_fail 4/50 (all audited, genuine: SyntaxError,
+   None stored in state, htf(15) on 15m data, numpy TypeError); AM median 0.526, 60.9% in [0.3,0.95],
+   6.5% == 1, 26.1% < 0.3. Ambiguity cases fixed (S0336 0.028 -> 0.965, S0704 0.011 -> 0.939); genuine
+   model bug S0736 unchanged (0.037). **Test 5 passes; quant_delta stays 0.05** (no delta change made).
+
+## Step 6 — full evaluation (launched)
+- Cost per task measured on calibration: gpt-5.4-mini ~$0.0056 (open), claude-haiku ~$0.0082 (open).
+  Balance after step 5: ~$44. Order: Qwen 7B/32B (local, free) both settings; gpt-5.4-mini both settings;
+  claude-haiku open; claude-haiku closed only if budget remains.

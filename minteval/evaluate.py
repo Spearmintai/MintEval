@@ -96,7 +96,7 @@ def score(tasks, generations: dict, refs: dict, price_file: str, cfg: dict, time
                **{k: t.get(k) for k in ("K_bits", "tau_max", "tau_p90", "n_registers",
                                         "nesting_depth", "mccabe", "halstead", "R_bench",
                                         "sharpe_bench", "maxdd_bench", "n_trades_bench",
-                                        "tau_bin", "realized_vol")},
+                                        "tau_bin", "realized_vol", "prompt_valid", "roundtrip")},
                "n_jargon": t.get("n_jargon"), "prompt_len": t.get("prompt_len"),
                **met, "error_type": error_type(results[(sid, m)].get("error")),
                "signal_id": t["spec"]["signal"]["id"], "n_risk": len(t["spec"]["risk"]),
