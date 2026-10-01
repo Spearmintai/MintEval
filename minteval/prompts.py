@@ -59,6 +59,11 @@ DESK CONVENTIONS (apply unless the instruction explicitly says otherwise)
   at-or-below on the previous bar and strictly above now); "at least", "at most", "no more than",
   "within" are inclusive. "The prior N bars" / "N-bar high" for breakouts means the N bars BEFORE the
   current bar.
+- Breakout conditions ("closes above the prior N-bar high", "breaks the box") are LEVEL conditions,
+  checked on every bar (true on every bar the close is beyond the level), not one-time cross events.
+  Only the word "cross"/"crosses" denotes an event (at-or-below on the previous bar, above now).
+- Volatility sizing "risk r% of equity per k ATR" means: position fraction = r * close / (k * ATR) on the
+  signal bar (r as a fraction, e.g. 1% -> 0.01), then apply any stated cap/floor.
 - Only open a trade when flat. A signal in the direction opposite to the open trade closes it (target 0)
   at the next open; it does not reverse the position.
 - "Bars" are 15-minute bars. Bar counts are measured with bar indices (t = len(hist) - 1).

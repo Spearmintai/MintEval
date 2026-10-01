@@ -123,7 +123,7 @@ class Indicators:
         self._cache = {}
 
     # -- cache machinery -------------------------------------------------------
-    def _cached(self, key, minutes, compute_full, n_out=1):
+    def _cached(self, key, minutes, compute_full, n_out=1, length=None):
         m = self._feed.visible_len(minutes)
         ent = self._cache.get(key)
         if ent is None:
@@ -154,6 +154,8 @@ class Indicators:
         else:
             out = tuple(r[:m] for r in ent[3])
         ent[4], ent[5] = m, out
+        if length is not None and length < m:
+            return out[:length] if n_out == 1 else tuple(o[:length] for o in out)
         return out
 
     def _series(self, name, x, params, fn, n_out=1):
@@ -161,12 +163,12 @@ class Indicators:
         if tag is None:
             arr = np.asarray(x, dtype=np.float64)
             return fn(arr, *(_check_n(p) for p in params))
-        mins, field = tag
+        mins, field, length = tag
         key = (name, mins, field, params)
         if key not in self._cache:
             params = tuple(_check_n(p) for p in params)
         return self._cached(key, mins,
-                            lambda: fn(self._feed.full_series(mins, field), *params), n_out)
+                            lambda: fn(self._feed.full_series(mins, field), *params), n_out, length)
 
     def _bars(self, name, h, params, fn):
         mins = self._feed.tag_of_hist(h) if self._feed is not None else None

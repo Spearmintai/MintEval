@@ -90,3 +90,25 @@ copied from pipeline outputs (files named in each entry).
   32B open S0003 LookaheadError is genuine (`htf.close[t // 16]` indexes the 4h series with a 15m index);
   32B closed S0790 ActionMatch 0 with SpecMatch 1 is genuine (`highest(high,32)[-1]` includes the current
   bar, so `close > box_top` can never hold; stop re-anchored to the current close each bar).
+
+## Step 5 — calibration (acceptance test 5), gpt-5.4-mini, open setting, 50 tasks (every 16th)
+Attempt log (all runs kept under `results/archive/`):
+1. v1: compile_fail 19/50 (Timeout 15, SandboxViolation 4); AM median 0.456, 52% in [0.3,0.95].
+   Audit: timeouts were **my bug** — `ind.highest(high[:-1], n)` (natural "prior n bars" idiom) missed the
+   indicator cache and recomputed over full history each bar (O(n^2)); est. 8-16 s vs 10 s budget.
+   Fix: prefix views of feed buffers are served exactly from the cache (causal => prefix of full series);
+   test `test_prefix_slice_indicators_exact`. Timeouts 15 -> 0. Self-match re-run: PASS.
+2. The 4 SandboxViolations were stateless nested helper functions. Rule 4's intent (no state outside
+   `state`) cannot be broken by a per-call helper when nonlocal/global/mutable defaults are banned, so they
+   are now allowed and flagged in a `strict_violation` column (strict reading reportable). The model-facing
+   doc still says "no nested functions" (unchanged, to keep prompts stable).
+3. After 1-2: compile_fail 0/50, AM median 0.423, 48% in [0.3,0.95], 8% == 1, 38% < 0.3.
+   Audit of the 19 low (<0.3) cases: no one-bar timing artefact (shifting +-1 bar never helps). Two
+   **instruction ambiguities** (translation sufficiency, not model error) found:
+   a. vol sizing "1% equity over 1 ATR" read literally as 0.01/ATR (reference: 0.01*close/ATR) — S0336
+      has identical trade timing (96.5% same sign) but AM 0.028.
+   b. Donchian/box "breaks the N-bar high" read as a one-time cross; reference is a level condition.
+   The round-trip gate could not catch these because the reader sees the block menu (which contains the
+   formulas): it verifies identification, not sufficiency. Fix: two desk conventions (model doc +
+   translator), a deterministic cue check for vol sizing, full re-translation (v2). Genuine model errors
+   also present in the low set (e.g. S0736 compares close to a highest() that includes the current bar).

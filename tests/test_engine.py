@@ -216,7 +216,8 @@ def test_flip_creates_two_round_trips():
     "X = []\ndef strategy(hist, state, pos, ind):\n    return {}\n",
     "def strategy(hist, state, pos, ind, cache={}):\n    return {}\n",
     "def strategy(hist, state, pos, ind):\n    global Y\n    return {}\n",
-    "def strategy(hist, state, pos, ind):\n    def f():\n        return 1\n    return {}\n",
+    "def strategy(hist, state, pos, ind):\n    def f(c=[]):\n        return 1\n    return {}\n",
+    "def strategy(hist, state, pos, ind):\n    x = 0\n    def f():\n        nonlocal x\n    return {}\n",
     "def strategy(hist, state, pos, ind):\n    hist.foo = 1\n    return {}\n",
     "def strategy(hist, state, pos, ind):\n    return open('x')\n",
     "def strategy(hist, state, pos, ind):\n    return hist._feed\n",
@@ -250,3 +251,32 @@ def test_timeout():
             "        pass\n")
     r = run_sandboxed(code, PRICE_FILE, EngineConfig().__dict__, timeout_s=2)
     assert r["error"].startswith("Timeout"), r["error"]
+
+
+def test_prefix_slice_indicators_exact(prices, cfg):
+    """ind.f(hist.x[:-k]) is served from the cache; must equal recomputation on the slice."""
+    from minteval import indicators as I
+    bad, seen = [], []
+
+    def chk(hist, state, pos, ind):
+        t = len(hist) - 1
+        if t in (300, 1234, 2999):
+            hs = hist.high[:-1]
+            a = ind.highest(hs, 48)
+            seen.append(len(a) == t)
+            b = I._highest(np.asarray(hs).copy(), 48)
+            if not np.array_equal(a, b, equal_nan=True):
+                bad.append(("highest", t))
+            e = ind.ema(hist.close[:-3], 20)
+            if not np.array_equal(e, I._ema(np.asarray(hist.close[:-3]).copy(), 20), equal_nan=True):
+                bad.append(("ema", t))
+            w = ind.ema(hist.close[-200:], 20)          # non-prefix slice: direct computation
+            if not np.array_equal(w, I._ema(np.asarray(hist.close[-200:]).copy(), 20)):
+                bad.append(("window", t))
+            h4 = hist.htf(240)
+            x = ind.sma(h4.close[:-1], 5)
+            if not np.array_equal(x, I._sma(np.asarray(h4.close[:-1]).copy(), 5), equal_nan=True):
+                bad.append(("htf", t))
+        return FLAT
+    run_backtest(chk, _slice(prices, 3001), cfg)
+    assert not bad and seen == [True] * 3, (bad, seen)

@@ -160,6 +160,7 @@ class Feed:
         self._bufs = {f: np.full(self.n, np.nan) for f in self._full}
         self._pairs = [(self._bufs[f], self._full[f]) for f in self._full]
         self._tags = {}         # id(visible view) -> (minutes, field); views live in Hist._views
+        self._addr = {b.ctypes.data: (minutes, f) for f, b in self._bufs.items()}
         self.hist = Hist(self._bufs, minutes, self)
         self._htf_full = {}     # minutes -> (full dict, m_of_t array)
         self._htf_bufs = {}
@@ -202,6 +203,8 @@ class Feed:
         m_of_t = np.where(closes_bucket, bucket_idx + 1, bucket_idx)
         self._htf_full[minutes] = (full, m_of_t)
         self._htf_bufs[minutes] = {f: np.full(len(o), np.nan) for f in full}
+        for f, b in self._htf_bufs[minutes].items():
+            self._addr[b.ctypes.data] = (minutes, f)
         self._htf_filled[minutes] = 0
         h = Hist(self._htf_bufs[minutes], minutes, self)
         self._htf_hist[minutes] = h
@@ -222,14 +225,26 @@ class Feed:
 
     # ---- tags used by the indicator cache ------------------------------------
     def tag_of(self, x):
-        """Return (minutes, field) if x is the current full view of a feed series."""
+        """Return (minutes, field, length) if x is a prefix view [0:length] of a visible feed series.
+
+        Causal indicators on a prefix equal the prefix of the indicator on the full series, so
+        such inputs (e.g. ``hist.high[:-1]``) can be served exactly from the cache."""
         tag = self._tags.get(id(x))
-        if tag is None:
+        if tag is not None:
+            h = self.hist if tag[0] == self.minutes else self._htf_hist.get(tag[0])
+            if h is not None and h._vt == h._n and h._views.get(tag[1]) is x:
+                return (tag[0], tag[1], h._n)
+        if not isinstance(x, np.ndarray) or x.ndim != 1 or x.dtype != np.float64 or x.strides != (8,):
             return None
-        h = self.hist if tag[0] == self.minutes else self._htf_hist.get(tag[0])
-        if h is None or h._vt != h._n or h._views.get(tag[1]) is not x:
+        addr = x.__array_interface__["data"][0]
+        hit = self._addr.get(addr)
+        if hit is None:
             return None
-        return tag
+        mins, f = hit
+        vis = self.t + 1 if mins == self.minutes else self._htf_hist[mins]._n
+        if len(x) > vis:
+            return None
+        return (mins, f, len(x))
 
     def tag_of_hist(self, h):
         if h is self.hist:

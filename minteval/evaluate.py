@@ -13,7 +13,7 @@ import pandas as pd
 
 from .engine import EngineConfig, run_backtest
 from .metrics import compare, spec_match
-from .sandbox import run_sandboxed
+from .sandbox import run_sandboxed, soft_violations
 
 CSV_COLS = ["strategy_id", "model", "setting", "K_bits", "tau_max", "tau_p90", "n_registers",
             "nesting_depth", "mccabe", "halstead", "n_jargon", "prompt_len", "realized_vol",
@@ -99,7 +99,8 @@ def score(tasks, generations: dict, refs: dict, price_file: str, cfg: dict, time
                                         "tau_bin", "realized_vol")},
                "n_jargon": t.get("n_jargon"), "prompt_len": t.get("prompt_len"),
                **met, "error_type": error_type(results[(sid, m)].get("error")),
-               "signal_id": t["spec"]["signal"]["id"], "n_risk": len(t["spec"]["risk"])}
+               "signal_id": t["spec"]["signal"]["id"], "n_risk": len(t["spec"]["risk"]),
+               "strict_violation": int(bool(g.get("code") and soft_violations(g["code"])))}
         if extra_cols:
             row.update(extra_cols.get((sid, m), {}))
         rows.append(row)

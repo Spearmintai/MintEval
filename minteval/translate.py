@@ -19,7 +19,9 @@ developer who will code it. The developer works under these desk conventions, so
 restate them (but must not contradict them): entry price = close of the signal bar; "ATR" = 14-period
 ATR, and distances in ATR use the ATR at entry; stops/targets are live from the signal bar on; profit
 conditions are judged on bar closes; "above/below/breaks/crosses" are strict comparisons and
-"at least/at most/within" inclusive; only enter when flat; an opposite signal just closes the trade; bars
+"at least/at most/within" inclusive; breakouts ("closes above the prior N-bar high", "breaks the box")
+are level conditions checked every bar while only "crosses" is an event; volatility sizing is phrased
+"risk r% of equity per k ATR" (fraction = r x close / (k x ATR)); only enter when flat; an opposite signal just closes the trade; bars
 are 15-minute candles.
 
 STRATEGY (precise spec):
@@ -181,6 +183,9 @@ def validate(text: str, spec: dict, jargon: list[str], lo=40, hi=120) -> dict:
         problems.append("these parameter values are missing (state them with digits): " + ", ".join(missing))
     if codey:
         problems.append("text looks like code (patterns: " + ", ".join(codey) + ")")
+    if spec["sizing"]["id"] == "atr_risk" and not re.search(
+            r"\brisk(ing|s)?\b[^.;]{0,40}?%[^.;]{0,40}?\bper\b[^.;]{0,25}?ATR", text, re.I):
+        problems.append('volatility sizing must be phrased "risk <r>% of equity per <k> ATR" (desk convention)')
     return {"ok": not problems, "words": words, "n_jargon": len(set(hits)), "jargon": sorted(set(hits)),
             "missing": missing, "codey": codey, "problems": problems}
 

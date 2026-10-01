@@ -106,7 +106,8 @@ structured reading of $q_s$ slot by slot. A \emph{silent failure} is a run with 
 and ActionMatch$<0.9$.
 
 \section{Benchmark Construction}
-\textbf{Building blocks.} \todo{counts from code: 6 signal, 2 filter, 3 sizing, 9 risk blocks} each
+\textbf{Building blocks.} The library has \NBlocksSignal{} signal, \NBlocksFilter{} filter,
+\NBlocksSizing{} sizing and \NBlocksRisk{} risk blocks, each
 with a discrete parameter grid and a precise English template. Programs combine one signal,
 a direction, a filter, a sizing rule and 1--3 risk layers; hard combinations include moving
 boxes, scaling out, pyramiding, multi-timeframe filters, breakout-then-retest state machines and
@@ -120,9 +121,25 @@ $\mathrm{corr}(\log\tau_{\max},K)=\CorrTauK$. Several blocks vary $\tau$ through
 alone (time stop, cooldown, retest window), which lets us estimate the effect of $\tau$ within a
 block via block fixed effects.
 
-\textbf{Selection.} \todo{pool size, filters, 5 $\tau$ quintiles $\times$ 5 return bands; from selection\_report.json}
+\textbf{Selection.} We sample \NPool{} candidate programs and keep the \NPoolKept{} that make at least
+20 round trips, are not flat throughout and do not lose half their equity in the first 5\% of bars
+(\NFewTrades{} removed for too few trades, \NAlwaysFlat{} for never trading). Because programs with
+short state spans trade more often and therefore pay more fees, $\tau$ and reference return are
+confounded in the raw pool. We therefore stratify jointly: within each $\tau_{\max}$ quintile we draw
+32 tasks from each of five equal-width bands of reference return, giving \NTasks{} tasks with median
+reference return \RMedBinA, \RMedBinB, \RMedBinC, \RMedBinD{} and \RMedBinE{} across the five quintiles.
 
-\textbf{Back-translation.} \todo{translator, slang dictionary (pending human review), validation gates, round-trip reader, rates}
+\textbf{Back-translation.} An LLM translator (a third vendor, not among the models under test)
+rewrites each program, given its precise template description and source, as a 40--120 word desk
+message in one of eight rotating voices. Deterministic gates require every parameter value to appear,
+at least three expressions from a slang dictionary (drafted with LLM help, under human review), no
+code-like tokens, and the conventional phrasing for formula-level rules; failures are fed back for up
+to six attempts. A round-trip reader from a fourth vendor then recovers the block-level spec from the
+message; a mismatch is fed back as well. \NValidPrompts{} of \NTasks{} messages pass all gates
+(\NRoundTripOK{} round-trip verified, \NRoundTripNA{} unverifiable because the reader failed); median
+length \MedWords{} words with \MedJargon{} slang hits. The reader sees the block menu, so it verifies
+identification rather than sufficiency; two ambiguities it missed during calibration were resolved
+with explicit desk conventions (\S\ref{sec:limits}).
 
 \textbf{Contamination.} Tasks are sampled from a combinatorial space at build time; neither the
 instruction nor the reference program exists on the web.
@@ -157,7 +174,7 @@ SpecMatch equal to one and ActionMatch below 0.9 are highlighted.}
 \section{Related Work}
 \todo{condense; see introduction citations; contamination \cite{jain2024livecodebench}; code hallucination \cite{tian2024codehalu,zhang2024hallucode}}
 
-\section{Limitations}
+\section{Limitations}\label{sec:limits}
 v0 is small: one instrument (BTCUSDT), one data window, \NTasks{} tasks and \todo{N} models with
 one sample each. A human baseline and a human-rewritten instruction subset are in progress; until
 then, instructions are LLM-written and may be friendlier to LLMs than real traders' messages, and

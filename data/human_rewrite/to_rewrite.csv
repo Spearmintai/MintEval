@@ -1,0 +1,397 @@
+strategy_id,tau_bin,spec,"your_message_to_the_quant (40-120 words, how you'd really say it)"
+S0008,0,"- Entry signal: sma crossover. Bullish when the 5-bar sma of the close crosses above the 100-bar sma (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: a fixed 0.75 of equity per trade.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 2 x entry ATR behind the anchor and the target 2 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Time stop: if the trade is still open 32 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 32).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 3 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0035,0,"- Entry signal: sma crossover. Bullish when the 20-bar sma of the close crosses above the 100-bar sma (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: a fixed 0.75 of equity per trade.
+- Time stop: if the trade is still open 128 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 128).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 1.5 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0045,0,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 96 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 96 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Time stop: if the trade is still open 32 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 32).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0047,0,"- Entry signal: ema crossover. Bullish when the 10-bar ema of the close crosses above the 100-bar ema (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Protective stop 1 x entry ATR away from the entry price (below for longs, above for shorts).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 1.5 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0088,0,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 192 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 192 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (2 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 0.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Time stop: if the trade is still open 16 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 16).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0093,0,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 96 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 16 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 16 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 96-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: a fixed 0.25 of equity per trade.
+- Take-profit order 3 x entry ATR beyond the entry price.
+- Time stop: if the trade is still open 16 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 16).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0103,0,"- Entry signal: ema crossover. Bullish when the 20-bar ema of the close crosses above the 200-bar ema (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Take-profit order 4 x entry ATR beyond the entry price.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 1.5 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0119,0,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 25 (below 25 on the previous bar, at or above 25 now); bearish when it crosses back down through 100-25 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.0025 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Scale out: the first time a bar closes at least 3 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- Time stop: if the trade is still open 32 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 32).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0129,0,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 64 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 4 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.25 of equity per trade.
+- Scale out: the first time a bar closes at least 2 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 2 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0136,0,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 64 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 4 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: volatility-scaled. Fraction of equity = 0.0025 x close / (2 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 2 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Take-profit order 4 x entry ATR beyond the entry price.
+- Time stop: if the trade is still open 16 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 16).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0139,0,"- Entry signal: RSI(14) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Take-profit order 4 x entry ATR beyond the entry price.
+- Time stop: if the trade is still open 16 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 16).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0140,0,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Protective stop 2 x entry ATR away from the entry price (below for longs, above for shorts).
+- Take-profit order 2 x entry ATR beyond the entry price.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 1.5 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0198,1,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 32 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 6 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.75 of equity per trade.
+- Breakeven: once a bar closes at least 2 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Time stop: if the trade is still open 128 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 128).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme. The trailing stop only becomes active once the breakeven rule has triggered.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0201,1,"- Entry signal: RSI(7) mean reversion. Bullish when RSI crosses back up through 25 (below 25 on the previous bar, at or above 25 now); bearish when it crosses back down through 100-25 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: a fixed 0.25 of equity per trade.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Protective stop 1.5 x entry ATR away from the entry price (below for longs, above for shorts).
+- Take-profit order 6 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0228,1,"- Entry signal: MACD(8,17,9) line crossing its signal line. Bullish when the MACD line crosses above the signal line (at or below on the previous bar, strictly above now); bearish on the cross below.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Breakeven: once a bar closes at least 2 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Cooldown: after any trade ends, take no new entry for 48 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 48).
+- Daily cap: at most 1 new entry per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0233,1,"- Entry signal: sma crossover. Bullish when the 20-bar sma of the close crosses above the 50-bar sma (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.5 of equity per trade.
+- Time stop: if the trade is still open 64 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 64).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0238,1,"- Entry signal: sma crossover. Bullish when the 5-bar sma of the close crosses above the 200-bar sma (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Protective stop 3 x entry ATR away from the entry price (below for longs, above for shorts).
+- Time stop: if the trade is still open 64 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 64).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0240,1,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 48 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 16 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 16 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 48-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Time stop: if the trade is still open 128 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 128).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0246,1,"- Entry signal: ema crossover. Bullish when the 5-bar ema of the close crosses above the 100-bar ema (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: volatility-scaled. Fraction of equity = 0.005 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 2 x entry ATR behind the anchor and the target 3 x entry ATR beyond it. Every time a bar closes at least another 1 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 1 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 3 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0250,1,"- Entry signal: MACD(5,35,5) line crossing its signal line. Bullish when the MACD line crosses above the signal line (at or below on the previous bar, strictly above now); bearish on the cross below.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.75 of equity per trade.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 1 x entry ATR behind the anchor and the target 2 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Cooldown: after any trade ends, take no new entry for 96 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 96).
+- Time stop: if the trade is still open 128 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 128).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0267,1,"- Entry signal: sma crossover. Bullish when the 20-bar sma of the close crosses above the 100-bar sma (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Take-profit order 2 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0289,1,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 96 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 96 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Time stop: if the trade is still open 128 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 128).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0310,1,"- Entry signal: RSI(14) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: volatility-scaled. Fraction of equity = 0.0025 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Protective stop 2 x entry ATR away from the entry price (below for longs, above for shorts).
+- Time stop: if the trade is still open 64 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 64).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 2 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0318,1,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 192 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 192 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 2 x entry ATR behind the anchor and the target 3 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0325,2,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 48 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 48 bars. This is a level condition, true on every bar it holds.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: volatility-scaled. Fraction of equity = 0.005 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Scale out: the first time a bar closes at least 2 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- Time stop: if the trade is still open 32 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 32).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0326,2,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 48 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 48 bars. This is a level condition, true on every bar it holds.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Protective stop 1.5 x entry ATR away from the entry price (below for longs, above for shorts).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 3 x entry ATR behind that extreme. The trailing stop only becomes active once the breakeven rule has triggered.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0337,2,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 20 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 20 bars. This is a level condition, true on every bar it holds.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: a fixed 0.75 of equity per trade.
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Protective stop 1 x entry ATR away from the entry price (below for longs, above for shorts).
+- Scale out: the first time a bar closes at least 1.5 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0341,2,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 20 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 20 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.75 of equity per trade.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 1 x entry ATR behind the anchor and the target 2 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0387,2,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 96 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 8 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 8 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 96-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.75 of equity per trade.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 2 x entry ATR behind the anchor and the target 2 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Scale out: the first time a bar closes at least 2 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0392,2,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 20 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 20 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.25 of equity per trade.
+- Cooldown: after any trade ends, take no new entry for 4 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 4).
+- Protective stop 3 x entry ATR away from the entry price (below for longs, above for shorts).
+- Take-profit order 6 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0399,2,"- Entry signal: sma crossover. Bullish when the 10-bar sma of the close crosses above the 200-bar sma (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.75 of equity per trade.
+- Scale out: the first time a bar closes at least 1.5 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0420,2,"- Entry signal: RSI(7) mean reversion. Bullish when RSI crosses back up through 25 (below 25 on the previous bar, at or above 25 now); bearish when it crosses back down through 100-25 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Take-profit order 2 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0446,2,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 48 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 8 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 8 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 48-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 1 x entry ATR behind the anchor and the target 3 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Daily cap: at most 1 new entry per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0450,2,"- Entry signal: RSI(14) mean reversion. Bullish when RSI crosses back up through 30 (below 30 on the previous bar, at or above 30 now); bearish when it crosses back down through 100-30 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.25 of equity per trade.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 2 x entry ATR behind the anchor and the target 2 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme. The trailing stop only becomes active once the breakeven rule has triggered.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0464,2,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 2 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0470,2,"- Entry signal: RSI(14) mean reversion. Bullish when RSI crosses back up through 30 (below 30 on the previous bar, at or above 30 now); bearish when it crosses back down through 100-30 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.25 of equity per trade.
+- Daily cap: at most 2 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Take-profit order 6 x entry ATR beyond the entry price.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0480,3,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 48 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 48 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 1 of equity per trade.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Take-profit order 3 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0504,3,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 32 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 6 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: a fixed 1 of equity per trade.
+- Cooldown: after any trade ends, take no new entry for 16 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 16).
+- Protective stop 1.5 x entry ATR away from the entry price (below for longs, above for shorts).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0510,3,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 96 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 96 bars. This is a level condition, true on every bar it holds.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Take-profit order 6 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0536,3,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 48 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 64 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 64 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 48-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 1 of equity per trade.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Cooldown: after any trade ends, take no new entry for 16 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 16).
+- Scale out: the first time a bar closes at least 3 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0555,3,"- Entry signal: RSI(7) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: volatility-scaled. Fraction of equity = 0.0025 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 2 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0565,3,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 48 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 64 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 64 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 48-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.25 of equity per trade.
+- Cooldown: after any trade ends, take no new entry for 4 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 4).
+- Protective stop 1.5 x entry ATR away from the entry price (below for longs, above for shorts).
+- Take-profit order 3 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0576,3,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 32 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 6 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.25 of equity per trade.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Cooldown: after any trade ends, take no new entry for 96 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 96).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0583,3,"- Entry signal: RSI(7) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.005 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Cooldown: after any trade ends, take no new entry for 16 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 16).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0584,3,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 48 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 48 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Protective stop 1.5 x entry ATR away from the entry price (below for longs, above for shorts).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0589,3,"- Entry signal: RSI(7) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.0025 x close / (3 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Cooldown: after any trade ends, take no new entry for 96 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 96).
+- Take-profit order 2 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0610,3,"- Entry signal: breakout then retest. When the close is strictly above the highest high of the 48 bars before the current bar, remember that high as the breakout level (a newer breakout replaces the old one and restarts the clock). The setup stays armed for 8 bars after the breakout bar. While armed, the first bar whose low trades at or below the level is the bullish signal and disarms the setup; if more than 8 bars pass first, the setup simply expires. The bearish version is the mirror image (close below the 48-bar lowest low, then a high at or above that level). Arming, expiry and triggering are checked on every bar, in or out of a position; a newer breakout in either direction replaces the armed setup.
+- Direction: long only (bearish signals only close longs).
+- Position size: a fixed 0.25 of equity per trade.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Protective stop 1 x entry ATR away from the entry price (below for longs, above for shorts).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0612,3,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 48 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 48 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: start with 0.25 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.25 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Breakeven: once a bar closes at least 1 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Cooldown: after any trade ends, take no new entry for 48 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 48).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 4 x entry ATR behind that extreme. The trailing stop only becomes active once the breakeven rule has triggered.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0653,4,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 30 (below 30 on the previous bar, at or above 30 now); bearish when it crosses back down through 100-30 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: volatility-scaled. Fraction of equity = 0.005 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 2 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Scale out: the first time a bar closes at least 3 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0676,4,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 32 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 4 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: volatility-scaled. Fraction of equity = 0.01 x close / (2 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 2 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Scale out: the first time a bar closes at least 1.5 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0697,4,"- Entry signal: RSI(14) mean reversion. Bullish when RSI crosses back up through 25 (below 25 on the previous bar, at or above 25 now); bearish when it crosses back down through 100-25 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Take-profit order 6 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0710,4,"- Entry signal: RSI(14) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 1 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 1 add(s) per trade; the add price becomes that bar's close.
+- Moving box: the trade lives in a box anchored at the entry price, with the stop 2 x entry ATR behind the anchor and the target 3 x entry ATR beyond it. Every time a bar closes at least another 2 x entry ATR in profit beyond the current anchor, shift the whole box (anchor, stop and target) 2 x entry ATR in the trade's favour (repeat if the close cleared several steps). The box never shifts back.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Cooldown: after any trade ends, take no new entry for 48 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 48).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0718,4,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 96 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 96 bars. This is a level condition, true on every bar it holds.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 50-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: volatility-scaled. Fraction of equity = 0.0025 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Cooldown: after any trade ends, take no new entry for 4 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 4).
+- Protective stop 1 x entry ATR away from the entry price (below for longs, above for shorts).
+- Take-profit order 3 x entry ATR beyond the entry price.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0722,4,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 30 (below 30 on the previous bar, at or above 30 now); bearish when it crosses back down through 100-30 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.5 of equity per trade.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Scale out: the first time a bar closes at least 1.5 x entry ATR in profit, cut the position to half its current size (once per trade); the rest stays on.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0735,4,"- Entry signal: ema crossover. Bullish when the 10-bar ema of the close crosses above the 200-bar ema (it was at or below it on the previous bar and is strictly above it now); bearish on the mirror-image cross below.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 1 of equity per trade.
+- Cooldown: after any trade ends, take no new entry for 96 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 96).
+- Time stop: if the trade is still open 128 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 128).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0742,4,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 20 (below 20 on the previous bar, at or above 20 now); bearish when it crosses back down through 100-20 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Position size: start with 0.5 of equity, then pyramid. While in the trade, each time the close is at least 2 x the entry ATR beyond the price of the last add (initially the entry price) in the trade's favour, add another 0.5 (total capped at 1.0), at most 2 add(s) per trade; the add price becomes that bar's close.
+- Breakeven: once a bar closes at least 0.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0747,4,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 32 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 4 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long only (bearish signals only close longs).
+- Position size: volatility-scaled. Fraction of equity = 0.005 x close / (1 x ATR(14)) on the signal bar, capped at 1.0 and floored at 0.05.
+- Breakeven: once a bar closes at least 1.5 x entry ATR in profit, move the stop to the entry price for the rest of the trade (it never moves back).
+- Daily cap: at most 1 new entry per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Time stop: if the trade is still open 32 bars after the signal bar, exit at the next open (decide on the bar where bars-since-signal reaches 32).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0751,4,"- Entry signal: Donchian channel breakout. Bullish whenever the close is strictly above the highest high of the 96 bars before the current bar; bearish whenever the close is strictly below the lowest low of those 96 bars. This is a level condition, true on every bar it holds.
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.5 of equity per trade.
+- Cooldown: after any trade ends, take no new entry for 16 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 16).
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0775,4,"- Entry signal: range-box breakout. The box is the highest high and lowest low of the 32 bars before the current bar. It only counts as a box if its height (top minus bottom) is at most 3 times the current ATR(14). Bullish when the close is strictly above the top of a valid box; bearish when the close is strictly below its bottom.
+- Direction: long only (bearish signals only close longs).
+- Trend filter on completed 60-minute candles: only take long entries when the last completed 60-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.5 of equity per trade.
+- Cooldown: after any trade ends, take no new entry for 48 bars, counted from the bar on which you first see yourself flat (entries allowed again from that bar + 48).
+- Protective stop 1 x entry ATR away from the entry price (below for longs, above for shorts).
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 1.5 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
+S0799,4,"- Entry signal: RSI(21) mean reversion. Bullish when RSI crosses back up through 25 (below 25 on the previous bar, at or above 25 now); bearish when it crosses back down through 100-25 (above it on the previous bar, at or below it now).
+- Direction: long and short (a bullish signal opens a long when flat, a bearish one opens a short when flat).
+- Trend filter on completed 240-minute candles: only take long entries when the last completed 240-minute close is strictly above the 20-period EMA of those candles' closes, and only take short entries when it is strictly below. The filter only blocks entries, never exits.
+- Position size: a fixed 0.5 of equity per trade.
+- Daily cap: at most 3 new entries per UTC calendar day (by the signal bar's open time); further signals that day are ignored.
+- Trailing stop: track the best price of the trade (highest high for longs, lowest low for shorts, starting from the entry price and updated with each bar's high/low while the position is held); the stop sits 3 x entry ATR behind that extreme.
+- A signal in the opposite direction of an open trade closes it at the next open.",
