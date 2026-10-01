@@ -18,7 +18,9 @@ class StateTypeError(TypeError):
     pass
 
 
-def _coerce(key, value):
+def _coerce(key, value, lenient=False):
+    if lenient and (value is None or isinstance(value, str)):
+        return value
     if type(key) is not str:
         raise StateTypeError(f"state keys must be str, got {type(key).__name__}")
     if isinstance(value, _SCALARS):
@@ -34,9 +36,10 @@ def _coerce(key, value):
 
 
 class TrackedState:
-    __slots__ = ("_d", "_t", "_track", "log", "_last_w", "spans")
+    __slots__ = ("_d", "_t", "_track", "log", "_last_w", "spans", "_lenient")
 
-    def __init__(self, track: bool = True):
+    def __init__(self, track: bool = True, lenient: bool = False):
+        self._lenient = lenient
         self._d: dict = {}
         self._t = -1
         self._track = track
@@ -77,7 +80,7 @@ class TrackedState:
         return key in self._d
 
     def __setitem__(self, key, value):
-        value = _coerce(key, value)
+        value = _coerce(key, value, self._lenient)
         if isinstance(value, float) and math.isinf(value):
             pass  # inf/nan are legal floats
         self._d[key] = value

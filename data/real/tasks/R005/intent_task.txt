@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Long-only EMA 8/22 trend follower on 15-minute bars. Buy when EMA8 crosses above EMA22, unless there was a pump or dump: skip it if any of the last three bars (signal bar included) moved more than 2.3% from open to close, or if price moved more than 2.3% from the open two bars ago to the current close. Base size is 10% of equity times a multiplier that starts at 1 and is multiplied by 1.66 after every stop-out; it never resets, and after the fifth stop-out you size at plain 10% for good. Stop 17.2% below entry. Exit at market when the close is more than 15.3% above entry or when the EMAs cross either way.
+
+[Facts added beyond the original intent text to make behaviour unique: all numbers (hyperparameter defaults); 15-minute bars; 'capital' = current equity; multiplier never resets (code quirk made explicit).]

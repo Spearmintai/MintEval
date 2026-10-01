@@ -36,6 +36,7 @@ class EngineConfig:
     quant_delta: float = 0.05
     bars_per_year: int = 35040
     warmup_bars: int = 960          # strategy is first called at the close of this bar
+    lenient_state: bool = False     # sensitivity analysis only: also accept None / str state values
     interval_minutes: int = 15
 
     @classmethod
@@ -90,7 +91,7 @@ def run_backtest(strategy, prices: dict, cfg: EngineConfig, track_state: bool = 
     n = feed.n if end_bar is None else end_bar
     O, H, L, C = (feed._full[f] for f in ("open", "high", "low", "close"))
     ind = Indicators(feed)
-    state = TrackedState(track=track_state)
+    state = TrackedState(track=track_state, lenient=cfg.lenient_state)
     hist = feed.hist
     delta = cfg.quant_delta
     kmax = int(round(1.0 / delta))

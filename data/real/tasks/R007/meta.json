@@ -1,0 +1,59 @@
+{
+ "id": "R007",
+ "source": "QuantConnect LEAN / TrailingStopRiskFrameworkRegressionAlgorithm (+ ConstantAlphaModel, TrailingStopRiskManagementModel)",
+ "url": "https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/TrailingStopRiskFrameworkRegressionAlgorithm.py",
+ "license": "Apache-2.0",
+ "original_framework": "LEAN (framework)",
+ "state_features": [
+  "long_only",
+  "always_in_unless_stopped",
+  "trailing_stop_from_peak_close",
+  "calendar_reentry_31d"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "4-equity universe with churn collapsed to one symbol -> weight 1.0",
+  "hourly data -> 15m closes",
+  "initial high = signal close instead of fill price"
+ ],
+ "added_facts": [
+  "single symbol / 100 % sizing",
+  "15-minute cadence",
+  "clock starts at the first strategy call"
+ ],
+ "intent_task_words": 117,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:53",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.15,
+  "engine_error": null,
+  "n_trades": 24,
+  "n_long_trades": 24,
+  "n_short_trades": 0,
+  "frac_bars_in_position": 0.02083484048325255,
+  "n_fills": 48,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": -0.04991450122269814,
+  "sharpe": -0.45968684360291695,
+  "maxdd": -0.11510083520559233,
+  "median_trade_bars": 42.0,
+  "exits_by_stop_or_take": 0,
+  "sandbox_seconds": 0.5,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.01,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 24,
+  "entries_second": 24,
+  "entries_both": 24,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0
+ },
+ "pilot_notes": "Borderline trade count: 24 round trips (one per 31-day cycle), 2.1% of bars in position."
+}

@@ -1,0 +1,72 @@
+{
+ "id": "R002",
+ "source": "jesse example-strategies / TradingView_RSI",
+ "url": "https://github.com/jesse-ai/example-strategies/blob/7c91e0a37bf62165790120d730442e4f6eb00364/TradingView_RSI/__init__.py",
+ "license": "MIT",
+ "original_framework": "jesse",
+ "state_features": [
+  "long_only",
+  "cross_events",
+  "fixed_pct_bracket_stop_take",
+  "signal_exit"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "timeframe -> 15m bars",
+  "RSI seed difference (jesse SMA-seeded on 240 candles) negligible for n=5",
+  "stop/take simulated on the next 15m bars' high/low (jesse: 1m candles); stop wins a same-bar tie",
+  "available-margin guard dropped (always true when flat)"
+ ],
+ "added_facts": [
+  "RSI period 5, 5 % stop, 10 % take, exit level 75 (code defaults; the docstring omits the period and the bracket)",
+  "15-minute bars",
+  "re-entry allowed on the stop/take bar"
+ ],
+ "intent_task_words": 81,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:46",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.19,
+  "engine_error": null,
+  "n_trades": 1691,
+  "n_long_trades": 1691,
+  "n_short_trades": 0,
+  "frac_bars_in_position": 0.6329884974318165,
+  "n_fills": 3381,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": -0.8901897593051826,
+  "sharpe": -2.47339140971644,
+  "maxdd": -0.8936891834261325,
+  "median_trade_bars": 20.0,
+  "exits_by_stop_or_take": 29,
+  "sandbox_seconds": 0.52,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.07,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 1691,
+  "entries_second": 1691,
+  "entries_both": 1691,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "second_impl_stop_agreement": 1.0,
+  "second_impl_stop_mismatch_bars": [],
+  "second_impl_take_agreement": 1.0,
+  "second_impl_take_mismatch_bars": [],
+  "jesse_indicator_differential": {
+   "bars_checked": 4777,
+   "event_bars": 3351,
+   "mismatches": 0,
+   "agreement": 1.0,
+   "first_mismatches": [],
+   "method": "data/real/diff_jesse.py: original conditions re-evaluated with jesse's own indicator modules (jesse-ai/jesse@7a01f999) on event bars + 1500 random bars"
+  }
+ },
+ "pilot_notes": "Take-profit fired once, stop 28 times, RSI exits 1660 times."
+}

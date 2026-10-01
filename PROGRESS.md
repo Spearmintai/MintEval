@@ -126,3 +126,40 @@ Attempt log (all runs kept under `results/archive/`):
 - Cost per task measured on calibration: gpt-5.4-mini ~$0.0056 (open), claude-haiku ~$0.0082 (open).
   Balance after step 5: ~$44. Order: Qwen 7B/32B (local, free) both settings; gpt-5.4-mini both settings;
   claude-haiku open; claude-haiku closed only if budget remains.
+- All 6,400 generations done (4 models x 2 settings x 800). Spend on the OpenRouter key: $34.58 total
+  (translation ~$4, gpt-5.4-mini ~$9.8, claude-haiku ~$19.5, pilots/smoke the rest).
+- Harness issues found and fixed during step 6 (each audited before attribution to models):
+  a. 3 Qwen-32B closed requests failed with ReadTimeout (client timeout 300 s < long batch-invariant
+     generations). Fixed (vLLM client timeout 3600 s), re-run: 0 API errors remain.
+  b. Audit of compile-failure categories: StateTypeError = storing None/str (explicitly forbidden);
+     LookaheadError (Qwen-32B open: 101) = indexing HTF series with the 15m index (`htf.close[t//4]`,
+     reads the in-progress candle) — genuine look-ahead; Qwen-7B TypeError = `hist[-1]` interface misuse;
+     "cannot delete conditional expression" = invalid Python in the raw model text (not extraction).
+  c. Sensitivity (`scripts/sensitivity_state.py`, engine `lenient_state`): allowing None/str in state
+     raises CompileOK substantially for Qwen but leaves ActionMatch on compiled runs ~unchanged.
+- Acceptance test 4 on the final CSV: two scoring runs, SHA256 identical
+  (`results/logs/final_hashes.txt`).
+
+## Step 7 — figures/tables (`scripts/analyze.py` -> `paper/`)
+- Table 1 (`table1.tex/csv`), Fig 1 (ActionMatch by tau quintile, 95% bootstrap CI), Fig 2 (closed:
+  ActionMatch by SpecMatch level, box plots), Fig 3 (tau_max histogram), regressions with block fixed
+  effects and task-clustered SEs (`analysis.json`). Palette validated (dataviz validator; contrast WARN
+  on two hues -> distinct marker shapes + legend). Figures were rendered and inspected; legend overlap and
+  Fig 2 overplotting fixed.
+- Bug fixed: macro-name collision (7b/32b both -> "QwenCoderB") and digits in macro names (TradeF1);
+  analyze.py now asserts both.
+
+## Step 8 — paper (`paper/main.tex`, `paper/build.sh`)
+- Every result number is a macro from `numbers.tex`, generated from `results/minteval_v0.csv`.
+  arXiv variant `[sigconf,nonacm]` and submission variant `[sigconf,anonymous,review]`, 4 pages each.
+- Bibliography: 16 entries, each verified (arXiv API / Crossref / SEC site). SR 11-7 dropped (URL not
+  verifiable).
+- Prose claims audited against data; two corrected (7B failure mix; an unverified "flags reset" claim
+  removed; the "HTF wrong candle" silent pattern verified: 10 compiled runs, AM ~ 0).
+- Remaining TODO for humans: author list/order, affiliation.
+
+## Real subset (started; see the user's "diagnostic benchmark + real subset" plan)
+- Survey/catalog: `data/real/SURVEY.md`, `catalog.csv` (155 candidates, licences with evidence;
+  TradingView not scraped — ToS).
+- Pilot: 10 permissive-licence ports in `data/real/tasks/R001..R010`, all PENDING_HUMAN_VERIFICATION;
+  intents are placeholders pending human rewrite. Pipeline demo only (`results/real_scores.csv`).

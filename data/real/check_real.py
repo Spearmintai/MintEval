@@ -157,7 +157,7 @@ def main(ids=None):
             mp.write_text(json.dumps(meta, indent=1, default=float) + "\n")
         keys = ("n_trades", "frac_bars_in_position", "engine_seconds", "sandbox_ok", "sandbox_error",
                 "second_impl_target_agreement", "entry_jaccard", "second_impl_stop_agreement",
-                "second_impl_take_agreement", "engine_error")
+                "second_impl_take_agreement", "engine_error", "sandbox_static_error")
         print(d.name, json.dumps({k: res.get(k) for k in keys}, default=float), flush=True)
     return summary
 

@@ -1,0 +1,78 @@
+{
+ "id": "R004",
+ "source": "jesse gpt-instructions / TurtleAI (Example Strategy #6)",
+ "url": "https://github.com/jesse-ai/gpt-instructions/blob/64873bfdbafd32ce55c6a244956247977ca48b34/instructions.md",
+ "license": "MIT",
+ "original_framework": "jesse",
+ "state_features": [
+  "long_short",
+  "donchian_breakout",
+  "htf_filter",
+  "adx_chop_filters",
+  "risk_sizing",
+  "atr_trailing_ratchet",
+  "cooldown_1_bar"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "timeframe unspecified -> 15m; 4h feed = completed 4h candles (hist.htf(240))",
+  "size 1.8*min(1, 0.03*P/(2.5*ATR)) > 1 almost always -> capped at 1.0 (jesse could use 1.8x leverage)",
+  "ATR SMA-seeded on 240 candles (jesse) vs ind.atr full-history seed: rel. diff < 1e-6",
+  "ADX reproduced exactly as jesse computes it on the last 240 candles; CHOP per jesse definition",
+  "stops simulated on 15m high/low (jesse: 1m)"
+ ],
+ "added_facts": [
+  "everything: the source has NO prose (code only)",
+  "15-minute bars",
+  "ADX/CHOP definitions",
+  "4h SMA uses completed 4h candles",
+  "one-bar cooldown meaning of jesse's index-based passed_time",
+  "cap at 100 % equity"
+ ],
+ "intent_task_words": 113,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:49",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.46,
+  "engine_error": null,
+  "n_trades": 265,
+  "n_long_trades": 142,
+  "n_short_trades": 123,
+  "frac_bars_in_position": 0.08731823771974245,
+  "n_fills": 530,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": 0.1048152004524685,
+  "sharpe": 0.3434357304718579,
+  "maxdd": -0.2312148669352146,
+  "median_trade_bars": 15.0,
+  "exits_by_stop_or_take": 259,
+  "sandbox_seconds": 0.83,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.83,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 265,
+  "entries_second": 265,
+  "entries_both": 265,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "second_impl_stop_agreement": 1.0,
+  "second_impl_stop_mismatch_bars": [],
+  "jesse_indicator_differential": {
+   "bars_checked": 1761,
+   "event_bars": 265,
+   "mismatches": 0,
+   "agreement": 1.0,
+   "first_mismatches": [],
+   "method": "data/real/diff_jesse.py: original conditions re-evaluated with jesse's own indicator modules (jesse-ai/jesse@7a01f999) on event bars + 1500 random bars",
+   "atr_max_rel_diff_vs_jesse": 1.0636914260508945e-07
+  }
+ },
+ "pilot_notes": "Exits are stop-only (259 stop exits); cooldown and ratchet are live."
+}

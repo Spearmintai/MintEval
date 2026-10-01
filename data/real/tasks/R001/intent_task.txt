@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Connors-style RSI(2) mean reversion on 15-minute bars, long and short, full account each time. Go long when the close is above the 200-bar SMA and the 2-period RSI is 10 or lower; go short when the close is below the 200 SMA and RSI(2) is 90 or higher. Get out of a long as soon as a bar closes above the 5-bar SMA, and out of a short when a bar closes below the 5 SMA. No stops, no targets. If the bar that closes a trade also gives an entry signal, either side, take the new trade right away on that bar.
+
+[Facts added beyond the original intent text to make behaviour unique: 15-minute bars; same-bar exit + new entry (jesse framework semantics, not stated in the source text); Wilder RSI definition.]

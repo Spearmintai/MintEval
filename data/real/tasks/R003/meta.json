@@ -1,0 +1,65 @@
+{
+ "id": "R003",
+ "source": "jesse example-strategies / SimpleBollinger",
+ "url": "https://github.com/jesse-ai/example-strategies/blob/7c91e0a37bf62165790120d730442e4f6eb00364/SimpleBollinger/__init__.py",
+ "license": "MIT",
+ "original_framework": "jesse",
+ "state_features": [
+  "long_only",
+  "level_breakout",
+  "indicator_filter_ichimoku",
+  "signal_exit"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "timeframe 1h -> 15m bars, same bar counts",
+  "size whole balance -> 1.0"
+ ],
+ "added_facts": [
+  "Bollinger 20 / 2 std (population) / SMA middle on hl2 and Ichimoku 9/26/52/26 = jesse defaults, spelled out",
+  "spans read 25 bars back (jesse ichimoku_cloud implementation)",
+  "15-minute bars"
+ ],
+ "intent_task_words": 88,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:47",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.62,
+  "engine_error": null,
+  "n_trades": 1159,
+  "n_long_trades": 1159,
+  "n_short_trades": 0,
+  "frac_bars_in_position": 0.22598567604716777,
+  "n_fills": 2318,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": -0.703573425391371,
+  "sharpe": -1.9371397451186994,
+  "maxdd": -0.7108031343352914,
+  "median_trade_bars": 11.0,
+  "exits_by_stop_or_take": 0,
+  "sandbox_seconds": 0.99,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.02,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 1159,
+  "entries_second": 1159,
+  "entries_both": 1159,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "jesse_indicator_differential": {
+   "bars_checked": 3768,
+   "event_bars": 2318,
+   "mismatches": 0,
+   "agreement": 1.0,
+   "first_mismatches": [],
+   "method": "data/real/diff_jesse.py: original conditions re-evaluated with jesse's own indicator modules (jesse-ai/jesse@7a01f999) on event bars + 1500 random bars"
+  }
+ }
+}

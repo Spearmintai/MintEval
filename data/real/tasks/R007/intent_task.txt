@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Always-long with a 1% trailing exit and a 31-day re-entry clock, 100% of equity. On the first bar, buy and start the clock. While long, track the highest close since entry, starting from the entry price. On each 15-minute close: if it is a new high, just record it; otherwise, if the close is more than 1% below that high, sell everything at market. Once out, stay flat until the clock ticks over: a new 31-day period starts every time 31 days of clock time (not bar counts) have passed since the start of the previous one, and at that bar you buy again. If you are still long when a new period starts, just keep holding.
+
+[Facts added beyond the original intent text to make behaviour unique: single symbol / 100 % sizing; 15-minute cadence; clock starts at the first strategy call.]

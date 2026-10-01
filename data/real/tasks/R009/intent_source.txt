@@ -1,0 +1,37 @@
+# intent_source for R009 - VERBATIM excerpts (exact line ranges) from the original source
+# License: Apache-2.0 (file header: 'Copyright 2014 QuantConnect Corporation. Licensed under the Apache License, Version 2.0')
+
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/OneCancelsOtherOrderRegressionAlgorithm.py
+LOCAL: data/real/sources/Lean/Algorithm.Python/OneCancelsOtherOrderRegressionAlgorithm.py
+---------------------------------------- lines 16-20 ----------------------------------------
+### <summary>
+### Regression algorithm asserting the behavior of the one_cancels_other_order helper method (OCO/OCA): a set of orders
+### working at the same time where the first one to fill cancels the rest. We use it to exit an existing position,
+### each time it's closed we open it again and submit a new set of exit orders.
+### </summary>
+---------------------------------------- lines 33-52 ----------------------------------------
+    def on_data(self, slice: Slice) -> None:
+        if self._tickets is not None:
+            if any(x.status in [OrderStatus.FILLED, OrderStatus.CANCELED, OrderStatus.INVALID] for x in self._tickets):
+                self._assert_completed_set()
+                self._tickets = None
+            return
+
+        if self.portfolio.invested or len(self.transactions.get_open_orders()) != 0:
+            raise RegressionTestException("Expected no position nor open orders before submitting a new set of orders")
+
+        self.market_order(self._symbol, 100)
+
+        price = self.securities[self._symbol].price
+        self._tickets = self.one_cancels_other_order([
+            self.order_factory.limit_order(self._symbol, -100, price * 1.003, tag="Take Profit"),
+            self.order_factory.stop_market_order(self._symbol, -100, price * 0.997, tag="Stop Loss"),
+            self.order_factory.stop_limit_order(self._symbol, -100, price * 0.99, price * 0.98, tag="Far Stop Loss")
+        ])
+
+        if len(self._tickets) != 3:
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+The summary describes the mechanism (re-open after each close, new OCO set); the 0.3 % levels and the one-data-point pause after a completed set are only in code. Position size (100 shares) has no BTC meaning -> size is an added fact. Regression test, not a trader's strategy.

@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Turtle-style breakout on 15-minute bars, long and short. Go long when the close is above the highest high of the previous 20 bars, above the 200-period SMA of completed 4-hour closes, Wilder ADX(14) is above 30 and Choppiness(14) is below 40 (100*log10(sum of last 14 true ranges / (14-bar high - 14-bar low)) / log10(14)). Shorts mirror it. Size: 1.8 x min(1, 3% of equity at risk over a 2.5 ATR stop), capped at 100%. Initial stop 2.5 ATR from entry; on every later bar move it to close minus 2.5 x current ATR(14) (plus for shorts) only if tighter. No other exit. No new entry on the bar a stop is hit.
+
+[Facts added beyond the original intent text to make behaviour unique: everything: the source has NO prose (code only); 15-minute bars; ADX/CHOP definitions; 4h SMA uses completed 4h candles; one-bar cooldown meaning of jesse's index-based passed_time; cap at 100 % equity.]

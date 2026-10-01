@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Intraday reversal during New York hours, long or short with 100% of equity, deciding only when an hourly candle completes. At each hourly close from 10:00 to 15:00 New York time inclusive (daylight saving aware), the view is long if the hourly close is below 1.001 x the 5-hour SMA, otherwise short. Act only when the view differs from the last view you acted on, a memory that carries over from day to day: then switch to that side, flipping if needed. Close whatever you hold at the 16:00 New York hourly close and stay flat until the window reopens.
+
+[Facts added beyond the original intent text to make behaviour unique: the 1.001 band (code, prose says 'crosses below SMA'); memory of the last direction across days; flatten at the 16:00 NY bar (strict insight expiry at 15:01); 100 % sizing with reversal.]

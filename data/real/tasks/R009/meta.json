@@ -1,0 +1,63 @@
+{
+ "id": "R009",
+ "source": "QuantConnect LEAN / OneCancelsOtherOrderRegressionAlgorithm",
+ "url": "https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/OneCancelsOtherOrderRegressionAlgorithm.py",
+ "license": "Apache-2.0",
+ "original_framework": "LEAN (classic API)",
+ "state_features": [
+  "long_only",
+  "always_in",
+  "oco_bracket",
+  "one_bar_pause_after_exit"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "minute -> 15m bars",
+  "100 SPY shares -> 100 % equity (added fact)",
+  "far stop-limit 0.99/0.98 dropped (never first to trigger)",
+  "LEAN strict fill comparisons vs engine >=/<="
+ ],
+ "added_facts": [
+  "size 100 % of equity",
+  "one-bar pause made explicit"
+ ],
+ "intent_task_words": 78,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:55",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.14,
+  "engine_error": null,
+  "n_trades": 16465,
+  "n_long_trades": 16465,
+  "n_short_trades": 0,
+  "frac_bars_in_position": 0.5235621789770672,
+  "n_fills": 32929,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": -0.9999999998985921,
+  "sharpe": -39.5027258331117,
+  "maxdd": -0.9999999998989348,
+  "median_trade_bars": 1.0,
+  "exits_by_stop_or_take": 8747,
+  "sandbox_seconds": 0.49,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.02,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 16465,
+  "entries_second": 16465,
+  "entries_both": 16465,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "second_impl_stop_agreement": 1.0,
+  "second_impl_stop_mismatch_bars": [],
+  "second_impl_take_agreement": 1.0,
+  "second_impl_take_mismatch_bars": []
+ },
+ "pilot_notes": "Economically degenerate: 16,465 round trips at 0.3% brackets; engine costs drive equity to ~0 (R = -1.0). Target/trade comparisons still work; abs_es is meaningless for this task."
+}

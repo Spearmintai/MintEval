@@ -1,0 +1,90 @@
+# intent_source for R006 - VERBATIM excerpts (exact line ranges) from the original source
+# License: Apache-2.0 (file header: 'Copyright 2014 QuantConnect Corporation. Licensed under the Apache License, Version 2.0')
+
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/Alphas/VIXDualThrustAlpha.py
+LOCAL: data/real/sources/Lean/Algorithm.Python/Alphas/VIXDualThrustAlpha.py
+---------------------------------------- lines 16-21 ----------------------------------------
+#
+# This is a demonstration algorithm. It trades UVXY.
+# Dual Thrust alpha model is used to produce insights.
+# Those input parameters have been chosen that gave acceptable results on a series
+# of random backtests run for the period from Oct, 2016 till Feb, 2019.
+#
+---------------------------------------- lines 25-31 ----------------------------------------
+    def initialize(self):
+
+        # -- STRATEGY INPUT PARAMETERS --
+        self.k1 = 0.63
+        self.k2 = 0.63
+        self.range_period = 20
+        self.consolidator_bars = 30
+---------------------------------------- lines 48-58 ----------------------------------------
+        # Alpha Model
+        self.set_alpha(DualThrustAlphaModel(self.k1, self.k2, self.range_period, self.universe_settings.resolution, self.consolidator_bars))
+
+        ## Portfolio Construction
+        self.set_portfolio_construction(EqualWeightingPortfolioConstructionModel())
+
+        ## Execution
+        self.set_execution(ImmediateExecutionModel())
+
+        ## Risk Management
+        self.set_risk_management(MaximumDrawdownPercentPerSecurity(0.03))
+---------------------------------------- lines 61-65 ----------------------------------------
+class DualThrustAlphaModel(AlphaModel):
+    '''Alpha model that uses dual-thrust strategy to create insights
+    https://medium.com/@FMZ_Quant/dual-thrust-trading-strategy-2cc74101a626
+    or here:
+    https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm'''
+---------------------------------------- lines 97-98 ----------------------------------------
+        # in 5 days after emission an insight is to be considered expired
+        self.period = timedelta(5)
+---------------------------------------- lines 100-122 ----------------------------------------
+    def update(self, algorithm, data):
+        insights = []
+
+        for symbol, symbol_data in self._symbol_data_by_symbol.items():
+            if not symbol_data.is_ready:
+                continue
+
+            holding = algorithm.portfolio[symbol]
+            price = algorithm.securities[symbol].price
+
+            # buying condition
+            # - (1) price is above upper line
+            # - (2) and we are not long. this is a first time we crossed the line lately
+            if price > symbol_data.upper_line and not holding.is_long:
+                insight_close_time_utc = algorithm.utc_time + self.period
+                insights.append(Insight.price(symbol, insight_close_time_utc, InsightDirection.UP))
+
+            # selling condition
+            # - (1) price is lower that lower line
+            # - (2) and we are not short. this is a first time we crossed the line lately
+            if price < symbol_data.lower_line and not holding.is_short:
+                insight_close_time_utc = algorithm.utc_time + self.period
+                insights.append(Insight.price(symbol, insight_close_time_utc, InsightDirection.DOWN))
+---------------------------------------- lines 154-166 ----------------------------------------
+            def on_data_consolidated(sender, consolidated):
+                # add new tradebar to
+                self.range_window.add(consolidated)
+
+                if self.range_window.is_ready:
+                    hh = max([x.high for x in self.range_window])
+                    hc = max([x.close for x in self.range_window])
+                    lc = min([x.close for x in self.range_window])
+                    ll = min([x.low for x in self.range_window])
+
+                    range = max([hh - lc, hc - ll])
+                    self.upper_line = consolidated.close + k1 * range
+                    self.lower_line = consolidated.close - k2 * range
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Framework/Risk/MaximumDrawdownPercentPerSecurity.py
+LOCAL: data/real/sources/Lean/Algorithm.Framework/Risk/MaximumDrawdownPercentPerSecurity.py
+---------------------------------------- lines 17-18 ----------------------------------------
+    '''Provides an implementation of IRiskManagementModel that limits the drawdown per holding to the specified percentage'''
+
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+Prose is thin ('Dual Thrust alpha model is used to produce insights'); the rules are in code comments and code (quoted). Framework semantics needed to make behaviour unique (not in the text): equal-weight portfolio construction = 100 % of equity per single insight, an opposite insight reverses the position, insight expiry flattens, the risk model cancels insights after a -3 % liquidation.

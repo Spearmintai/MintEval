@@ -1,0 +1,38 @@
+{
+ "R001": {
+  "bars_checked": 6970,
+  "event_bars": 5592,
+  "mismatches": 0,
+  "agreement": 1.0,
+  "first_mismatches": []
+ },
+ "R002": {
+  "bars_checked": 4777,
+  "event_bars": 3351,
+  "mismatches": 0,
+  "agreement": 1.0,
+  "first_mismatches": []
+ },
+ "R003": {
+  "bars_checked": 3768,
+  "event_bars": 2318,
+  "mismatches": 0,
+  "agreement": 1.0,
+  "first_mismatches": []
+ },
+ "R004": {
+  "bars_checked": 1761,
+  "event_bars": 265,
+  "mismatches": 0,
+  "agreement": 1.0,
+  "first_mismatches": []
+ },
+ "R005": {
+  "bars_checked": 4988,
+  "event_bars": 3566,
+  "mismatches": 0,
+  "agreement": 1.0,
+  "first_mismatches": []
+ },
+ "R004_atr_max_rel_diff": 1.0636914260508945e-07
+}

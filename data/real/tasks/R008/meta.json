@@ -1,0 +1,62 @@
+{
+ "id": "R008",
+ "source": "QuantConnect LEAN / IntradayReversalCurrencyMarketsAlpha",
+ "url": "https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/Alphas/IntradayReversalCurrencyMarketsAlpha.py",
+ "license": "Apache-2.0",
+ "original_framework": "LEAN (framework)",
+ "state_features": [
+  "long_short",
+  "time_of_day_window_ny_dst",
+  "hourly_decisions",
+  "direction_change_memory_across_days",
+  "daily_flatten",
+  "reversal"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "EURUSD -> BTCUSDT (24/7, weekends traded)",
+  "hourly bars = completed UTC hours (hist.htf(60))",
+  "NY time with the US DST rule computed from timestamps",
+  "zero-fee model replaced by engine costs"
+ ],
+ "added_facts": [
+  "the 1.001 band (code, prose says 'crosses below SMA')",
+  "memory of the last direction across days",
+  "flatten at the 16:00 NY bar (strict insight expiry at 15:01)",
+  "100 % sizing with reversal"
+ ],
+ "intent_task_words": 100,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:54",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.22,
+  "engine_error": null,
+  "n_trades": 1215,
+  "n_long_trades": 608,
+  "n_short_trades": 607,
+  "frac_bars_in_position": 0.17437603993344425,
+  "n_fills": 2430,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": -0.9025413687595062,
+  "sharpe": -4.25382344729558,
+  "maxdd": -0.9057616728567709,
+  "median_trade_bars": 8.0,
+  "exits_by_stop_or_take": 0,
+  "sandbox_seconds": 0.55,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.12,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 618,
+  "entries_second": 618,
+  "entries_both": 618,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0
+ }
+}

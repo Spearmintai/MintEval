@@ -1,0 +1,64 @@
+{
+ "id": "R006",
+ "source": "QuantConnect LEAN / VIXDualThrustAlpha (+ MaximumDrawdownPercentPerSecurity)",
+ "url": "https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/Alphas/VIXDualThrustAlpha.py",
+ "license": "Apache-2.0",
+ "original_framework": "LEAN (framework: alpha/PCM/risk)",
+ "state_features": [
+  "long_short",
+  "dual_thrust_breakout",
+  "htf_30m_range",
+  "reversal_on_opposite_signal",
+  "signal_expiry_5d",
+  "fixed_pct_stop"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "minute data -> 15m closes; 30m consolidator -> hist.htf(30)",
+  "risk model checks unrealised PnL each minute -> resting stop at entry*(1-/+0.03)",
+  "insight expiry strict (CloseTimeUtc < now), measured with bar timestamps",
+  "UTC close time passed to closeTimeLocal overload -> exactly +5 days for a UTC crypto symbol",
+  "zero-fee model of the source replaced by engine costs"
+ ],
+ "added_facts": [
+  "15-minute decision cadence",
+  "reversal and expiry semantics of LEAN's EqualWeighting PCM spelled out",
+  "3 % stop modelled as a resting stop at entry price -/+ 3 %"
+ ],
+ "intent_task_words": 128,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:52",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.47,
+  "engine_error": null,
+  "n_trades": 148,
+  "n_long_trades": 69,
+  "n_short_trades": 79,
+  "frac_bars_in_position": 0.5410402951602402,
+  "n_fills": 296,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": 0.25404046893484966,
+  "sharpe": 0.49544012370236923,
+  "maxdd": -0.3119536318758038,
+  "median_trade_bars": 197.0,
+  "exits_by_stop_or_take": 56,
+  "sandbox_seconds": 0.84,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.06,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 98,
+  "entries_second": 98,
+  "entries_both": 98,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "second_impl_stop_agreement": 1.0,
+  "second_impl_stop_mismatch_bars": []
+ }
+}

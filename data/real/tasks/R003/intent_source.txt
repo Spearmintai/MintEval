@@ -1,0 +1,47 @@
+# intent_source for R003 - VERBATIM excerpts (exact line ranges) from the original source
+# License: MIT (example-strategies LICENSE; docstring credits gabrielweich/jesse-strategies, MIT per GitHub API)
+
+====================================================================================================
+FILE: https://github.com/jesse-ai/example-strategies/blob/7c91e0a37bf62165790120d730442e4f6eb00364/SimpleBollinger/__init__.py
+LOCAL: data/real/sources/example-strategies/SimpleBollinger/__init__.py
+---------------------------------------- lines 1-10 ----------------------------------------
+"""
+Simple Bollinger Bands Strategy
+Timeframe: 1h
+Repo: https://github.com/gabrielweich/jesse-strategies
+When the price closes above the upperband in an uptrend (determined by the ichimoku cloud),
+it gives a long signal indicating a possible continuation of the uptrend.
+The position can also be closed when the price closes below lowerband, but the best results
+were achieved when using the middleband instead.
+"""
+
+---------------------------------------- lines 17-36 ----------------------------------------
+    @property
+    def bb(self):
+        # Bollinger bands using default parameters and hl2 as source
+        return ta.bollinger_bands(self.candles, source_type="hl2")
+
+    @property
+    def ichimoku(self):
+        return ta.ichimoku_cloud(self.candles)
+
+    def filter_trend(self):
+        # Only opens a long position when close is above ichimoku cloud
+        return self.close > self.ichimoku.span_a and self.close > self.ichimoku.span_b
+
+    def filters(self):
+        return [self.filter_trend]
+
+    def should_long(self) -> bool:
+        # Go long if candle closes above upperband
+        return self.close > self.bb[0]
+
+---------------------------------------- lines 51-54 ----------------------------------------
+    def update_position(self):
+        # Close the position when candle closes below middleband
+        if self.close < self.bb[1]:
+            self.liquidate()
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+Intent is clear but relies on jesse defaults for the numbers: Bollinger 20/2 SMA population-std on hl2 (from the comment 'default parameters and hl2'), Ichimoku 9/26/52 with displacement 26 (jesse ichimoku_cloud defaults; spans taken from candles ending 25 bars back). These defaults had to be added to make behaviour unique.

@@ -1,0 +1,69 @@
+{
+ "id": "R010",
+ "source": "QuantConnect LEAN / DataConsolidationAlgorithm (30-minute handler + OnEndOfDay)",
+ "url": "https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/DataConsolidationAlgorithm.py",
+ "license": "Apache-2.0",
+ "original_framework": "LEAN (classic API)",
+ "state_features": [
+  "long_short",
+  "pyramiding_stepwise_target",
+  "htf_30m_events",
+  "exposure_cap",
+  "daily_flatten_and_reset"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "SPY minute -> BTC 15m with hist.htf(30)",
+  "units re-expressed as equity fractions",
+  "OnEndOfDay (10 min before close) mapped to the 23:45 UTC decision for a 24/7 market"
+ ],
+ "added_facts": [
+  "unit = 10 % of equity",
+  "cap +/-100 % (LEAN would reject orders beyond buying power)",
+  "end-of-day time 23:45 UTC for a 24/7 market"
+ ],
+ "intent_task_words": 89,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:55",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.22,
+  "engine_error": null,
+  "n_trades": 4546,
+  "n_long_trades": 2247,
+  "n_short_trades": 2299,
+  "frac_bars_in_position": 0.8579324314548217,
+  "n_fills": 34249,
+  "distinct_abs_position_levels": [
+   0.1,
+   0.2,
+   0.3,
+   0.4,
+   0.5,
+   0.6,
+   0.7,
+   0.8,
+   0.9,
+   1.0
+  ],
+  "R": -0.8774572726242609,
+  "sharpe": -4.138757544339946,
+  "maxdd": -0.8870958863515453,
+  "median_trade_bars": 2.0,
+  "exits_by_stop_or_take": 0,
+  "sandbox_seconds": 0.53,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.07,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 4546,
+  "entries_second": 4546,
+  "entries_both": 4546,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0
+ },
+ "pilot_notes": "Catalog rates this source needs-approximation (unit sizing); included deliberately as the only permissive stepwise/pyramiding candidate."
+}

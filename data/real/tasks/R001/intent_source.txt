@@ -1,0 +1,41 @@
+# intent_source for R001 - VERBATIM excerpts (exact line ranges) from the original source
+# License: MIT (example-strategies LICENSE: 'MIT License / Copyright (c) 2020 jesse-ai')
+
+====================================================================================================
+FILE: https://github.com/jesse-ai/example-strategies/blob/7c91e0a37bf62165790120d730442e4f6eb00364/RSI2/__init__.py
+LOCAL: data/real/sources/example-strategies/RSI2/__init__.py
+---------------------------------------- lines 1-9 ----------------------------------------
+"""
+Connors' RSI2 Strategy
+2020-06-27 original implementation - FengkieJ (fengkiejunis@gmail.com)
+
+This strategy is a very basic mean reversion strategy, mainly using RSI(2) overbought and oversold levels to determine entry signals. 
+Originally developed by Larry Connors.
+
+Reference: - RSI(2) [ChartSchool]. Retrieved 27 June 2020, from https://school.stockcharts.com/doku.php?id=trading_strategies:rsi2
+"""
+---------------------------------------- lines 36-43 ----------------------------------------
+
+    def should_long(self) -> bool:
+        # Enter long if current price is above sma(200) and RSI(2) is below oversold threshold
+        return self.price > self.slow_sma and self.rsi <= self.vars["rsi_os_threshold"]
+
+    def should_short(self) -> bool:
+        # Enter long if current price is below sma(200) and RSI(2) is above oversold threshold
+        return self.price < self.slow_sma and self.rsi >= self.vars["rsi_ob_threshold"]
+---------------------------------------- lines 48-49 ----------------------------------------
+    def go_long(self):
+        # Open long position and use entire balance to buy
+---------------------------------------- lines 59-66 ----------------------------------------
+
+    def update_position(self):
+        # Exit long position if price is above sma(5)
+        if self.is_long and self.price > self.fast_sma:
+            self.liquidate()
+    
+        # Exit short position if price is below sma(5)
+        if self.is_short and self.price < self.fast_sma:
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+Sufficient for the trading rules (entries, exits, full-balance sizing are all stated in comments/docstring). Not stated: timeframe (none), behaviour when an exit and a new entry fall on the same candle (framework semantics: jesse re-checks entries right after a liquidation). Note the copy-paste comment on should_short ('Enter long ... above oversold threshold') contradicts its code (short, overbought); the code is followed.

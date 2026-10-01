@@ -1,0 +1,11 @@
+f80cf4d8dda948c689482d69f87a2f180a377be5e6d5483758a1b2c5d7cdf474
+                          compile_fail        spec_match        action_match        trade_f1           abs_es          
+                                  mean median       mean median         mean median     mean median      mean    median
+model             setting                                                                                              
+claude-haiku      closed         0.044    0.0      0.946   1.00        0.476  0.398    0.403  0.306  1240.750   612.907
+                  open           0.052    0.0        NaN    NaN        0.400  0.282    0.350  0.184  1558.159   752.016
+gpt-5.4-mini      closed         0.016    0.0      0.938   1.00        0.582  0.650    0.541  0.653  1087.841   361.916
+                  open           0.045    0.0        NaN    NaN        0.544  0.562    0.469  0.434  1123.813   441.895
+qwen2.5-coder-32b open           0.399    0.0        NaN    NaN        0.172  0.040    0.191  0.013  2421.246  1645.840
+qwen2.5-coder-7b  closed         0.512    1.0      0.741   0.75        0.058  0.016    0.021  0.000  3386.569  2781.347
+                  open           0.626    1.0        NaN    NaN        0.081  0.014    0.043  0.000  3131.378  2252.187

@@ -77,4 +77,5 @@ def client_from_cfg(m: dict) -> ChatClient:
     if kind == "openrouter":
         return ChatClient("https://openrouter.ai/api/v1", m["model"], os.environ.get("OPENROUTER_API_KEY"),
                           kind, m.get("extra"))
-    return ChatClient(m["base_url"], m["model"], m.get("api_key", "EMPTY"), kind, m.get("extra"))
+    # local vLLM in batch-invariant mode can take >300 s for an 8k-token answer under load
+    return ChatClient(m["base_url"], m["model"], m.get("api_key", "EMPTY"), kind, m.get("extra"), timeout=3600)

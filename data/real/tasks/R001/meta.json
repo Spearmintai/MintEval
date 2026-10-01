@@ -1,0 +1,66 @@
+{
+ "id": "R001",
+ "source": "jesse example-strategies / RSI2",
+ "url": "https://github.com/jesse-ai/example-strategies/blob/7c91e0a37bf62165790120d730442e4f6eb00364/RSI2/__init__.py",
+ "license": "MIT",
+ "original_framework": "jesse",
+ "state_features": [
+  "long_short",
+  "mean_reversion",
+  "signal_exit",
+  "same_bar_exit_and_reentry"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "timeframe: original timeframe-agnostic -> 15m bars, same bar counts",
+  "RSI seed: jesse Wilder RSI SMA-seeded on last 240 candles vs ind.rsi seeded on first value (numerically identical for n=2)",
+  "size: jesse size_to_qty(balance) with fee factor ~0.9985 -> 1.0"
+ ],
+ "added_facts": [
+  "15-minute bars",
+  "same-bar exit + new entry (jesse framework semantics, not stated in the source text)",
+  "Wilder RSI definition"
+ ],
+ "intent_task_words": 103,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:45",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.41,
+  "engine_error": null,
+  "n_trades": 2799,
+  "n_long_trades": 1384,
+  "n_short_trades": 1415,
+  "frac_bars_in_position": 0.16138320190986039,
+  "n_fills": 5597,
+  "distinct_abs_position_levels": [
+   1.0
+  ],
+  "R": -0.9544107065305526,
+  "sharpe": -6.709101716198854,
+  "maxdd": -0.9549368027171142,
+  "median_trade_bars": 3.0,
+  "exits_by_stop_or_take": 0,
+  "sandbox_seconds": 0.65,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.03,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 2796,
+  "entries_second": 2796,
+  "entries_both": 2796,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "jesse_indicator_differential": {
+   "bars_checked": 6970,
+   "event_bars": 5592,
+   "mismatches": 0,
+   "agreement": 1.0,
+   "first_mismatches": [],
+   "method": "data/real/diff_jesse.py: original conditions re-evaluated with jesse's own indicator modules (jesse-ai/jesse@7a01f999) on event bars + 1500 random bars"
+  }
+ }
+}

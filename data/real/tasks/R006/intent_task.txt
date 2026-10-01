@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Dual Thrust on BTC, long and short, always 100% of equity. On every completed 30-minute candle, over the last 20 such candles: range = max(highest high - lowest close, highest close - lowest low); upper line = that candle's close + 0.63 x range, lower line = its close - 0.63 x range. At each 15-minute close: above the upper line and not already long -> go long (flip a short); below the lower line and not already short -> go short (flip a long). A signal while already in that direction does nothing. A position is closed once more than 5 days have passed since the signal that opened it. Hard stop 3% against the entry price; after a stop, re-enter whenever the breakout condition holds again.
+
+[Facts added beyond the original intent text to make behaviour unique: 15-minute decision cadence; reversal and expiry semantics of LEAN's EqualWeighting PCM spelled out; 3 % stop modelled as a resting stop at entry price -/+ 3 %.]

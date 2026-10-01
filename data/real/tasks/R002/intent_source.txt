@@ -1,0 +1,44 @@
+# intent_source for R002 - VERBATIM excerpts (exact line ranges) from the original source
+# License: MIT (example-strategies LICENSE: 'MIT License / Copyright (c) 2020 jesse-ai'); idea credited to TradingView script Ru7qOVtp (Pine code not inspected)
+
+====================================================================================================
+FILE: https://github.com/jesse-ai/example-strategies/blob/7c91e0a37bf62165790120d730442e4f6eb00364/TradingView_RSI/__init__.py
+LOCAL: data/real/sources/example-strategies/TradingView_RSI/__init__.py
+---------------------------------------- lines 1-8 ----------------------------------------
+"""
+Based on https://www.tradingview.com/script/Ru7qOVtp-RSI-Trend-Crypto/
+
+Default Trading Rules:
+Long: RSI crosses over 35
+Close Long: RSI crosses under 75
+Emergency Exit: RSI crosses under 10
+"""
+---------------------------------------- lines 16-22 ----------------------------------------
+    def hyperparameters(self):
+        return [
+                {'name':'rsi', 'type': int, 'min': 10, 'max':30, 'default': 5},
+                {'name':'stop_loss', 'type': float, 'min': .5, 'max': .99, 'default': .95},
+                {'name':'take_profit', 'type': float, 'min': 1.1, 'max': 1.2, 'default': 1.1},
+                {'name':'xparam', 'type':int, 'min': 60, 'max': 90, 'default': 75}
+        ]
+---------------------------------------- lines 32-37 ----------------------------------------
+        if utils.crossed(self.rsi, 35, direction="above") and qty > 0 and self.available_margin > (qty * self.price):
+            return True
+
+    def should_short(self):
+        return False
+
+---------------------------------------- lines 42-46 ----------------------------------------
+    def go_long(self):
+        qty = utils.size_to_qty(self.balance, self.price, 3, fee_rate=self.fee_rate) 
+        self.buy = qty, self.price
+        self.stop_loss = qty, (self.price * self.hp['stop_loss'])        # Willing to lose 5%
+        self.take_profit = qty, (self.price * self.hp['take_profit'])     # Take profits at 10%
+---------------------------------------- lines 51-53 ----------------------------------------
+    def update_position(self):
+        if utils.crossed(self.rsi, self.hp['xparam'], direction="below") or  utils.crossed(self.rsi, 10, direction="below"):
+            self.liquidate()
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+The docstring gives the three RSI rules but not the RSI period (code default hp 'rsi' = 5) nor the 5 %/10 % bracket (only in code comments 'Willing to lose 5%' / 'Take profits at 10%'). Timeframe not stated. Behaviour is unique once the code defaults are added.

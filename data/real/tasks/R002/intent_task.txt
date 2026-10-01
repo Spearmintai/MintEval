@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Long-only RSI swing on 15-minute bars using a 5-period RSI. Buy with the whole account when RSI(5) crosses above 35. From the entry bar on, keep a stop 5% below the entry price and a take-profit 10% above it. Also exit at market if RSI(5) crosses below 75, or, as an emergency exit, crosses below 10. After any exit you can buy again on the next cross above 35, including on the very bar where the stop or target was hit.
+
+[Facts added beyond the original intent text to make behaviour unique: RSI period 5, 5 % stop, 10 % take, exit level 75 (code defaults; the docstring omits the period and the bracket); 15-minute bars; re-entry allowed on the stop/take bar.]

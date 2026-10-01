@@ -1,0 +1,40 @@
+# intent_source for R007 - VERBATIM excerpts (exact line ranges) from the original source
+# License: Apache-2.0 (file headers: 'Copyright 2014 QuantConnect Corporation. Licensed under the Apache License, Version 2.0')
+
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/TrailingStopRiskFrameworkRegressionAlgorithm.py
+LOCAL: data/real/sources/Lean/Algorithm.Python/TrailingStopRiskFrameworkRegressionAlgorithm.py
+---------------------------------------- lines 18-25 ----------------------------------------
+class TrailingStopRiskFrameworkRegressionAlgorithm(BaseFrameworkRegressionAlgorithm):
+    '''Show example of how to use the TrailingStopRiskManagementModel'''
+
+    def initialize(self):
+        super().initialize()
+        self.set_universe_selection(ManualUniverseSelectionModel([Symbol.create("AAPL", SecurityType.EQUITY, Market.USA)]))
+
+        self.set_risk_management(TrailingStopRiskManagementModel(0.01))
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/BaseFrameworkRegressionAlgorithm.py
+LOCAL: data/real/sources/Lean/Algorithm.Python/BaseFrameworkRegressionAlgorithm.py
+---------------------------------------- lines 15-18 ----------------------------------------
+
+### <summary>
+### Abstract regression framework algorithm for multiple framework regression tests
+### </summary>
+---------------------------------------- lines 40-40 ----------------------------------------
+        self.set_alpha(ConstantAlphaModel(InsightType.PRICE, InsightDirection.UP, timedelta(31), 0.025, None))
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Framework/Risk/TrailingStopRiskManagementModel.py
+LOCAL: data/real/sources/Lean/Algorithm.Framework/Risk/TrailingStopRiskManagementModel.py
+---------------------------------------- lines 16-22 ----------------------------------------
+class TrailingStopRiskManagementModel(RiskManagementModel):
+    '''Provides an implementation of IRiskManagementModel that limits the maximum possible loss
+    measured from the highest unrealized profit'''
+    def __init__(self, maximum_drawdown_percent = 0.05):
+        '''Initializes a new instance of the TrailingStopRiskManagementModel class
+        Args:
+            maximum_drawdown_percent: The maximum percentage drawdown allowed for algorithm portfolio compared with the highest unrealized profit, defaults to 5% drawdown'''
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+TOO THIN as prose: 'Show example of how to use the TrailingStopRiskManagementModel' + the model docstring ('limits the maximum possible loss measured from the highest unrealized profit'). The 31-day re-entry clock (ConstantAlphaModel period), the 100 % sizing and the strict '> 1 %' test come only from code. It is a regression/demo algorithm, not a trader's strategy.

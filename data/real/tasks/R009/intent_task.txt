@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Bracket scalper, always long 100% of equity. When you buy, take the close of the bar on which you decide to buy as the reference price and place a take-profit 0.3% above it and a stop 0.3% below it; whichever is hit first closes the whole trade and cancels the other. After an exit, do nothing at the close of the bar where it happened; buy again at the close of the following bar with a fresh bracket.
+
+[Facts added beyond the original intent text to make behaviour unique: size 100 % of equity; one-bar pause made explicit.]

@@ -26,7 +26,12 @@ and re-implemented by the model under test. Generated and reference programs are
 bar on identical market data and frictions, and compared on their actions rather than on code
 similarity or profit: alpha is differenced away. MintEval v0 contains \NTasks{} tasks on BTCUSDT
 15-minute data, stratified by an execution-measured state-span complexity $\tau$ that is decoupled
-from description length. \todo{one-sentence headline result, from Table 1 / Fig. 1 macros}
+from description length. On four models the best mean ActionMatch is \BestAMOpen{} and at most
+\BestExactOpen{} of tasks are reproduced exactly; between \SilentMin{} and \SilentMax{} of all tasks
+are silent failures (code runs, behaviour diverges). Given a menu of building blocks, models
+identify the strategy almost perfectly, yet \SpecOneBehaviourWrong{} of the implementations whose
+specification was read correctly still diverge on more than 10\% of active bars; accuracy falls with
+$\tau$ after controlling for description length and block identity.
 \end{abstract}
 
 \begin{CCSXML}
@@ -71,8 +76,8 @@ specification arrives as \emph{colloquial, jargon-laden} language, not as a docs
 \emph{behavioural equivalence} with a reference program under identical data and frictions.
 (2) A metric suite led by ActionMatch on active bars. (3) A generator of contamination-free tasks
 with two separated complexity axes: description length $K$ (generation side) and state span
-$\tau$ and register count $R$ (measured by instrumenting execution). (4) Results for
-\todo{N} models in an open and a closed setting.
+$\tau$ and register count $R$ (measured by instrumenting execution). (4) Results for four models in an open setting (instruction + interface only) and a closed
+diagnostic setting (with a menu of building blocks), separating understanding from implementation.
 
 \section{Task}
 A task $s$ consists of a reference program $c_s$, a colloquial instruction $q_s$ and fixed
@@ -169,14 +174,81 @@ SpecMatch equal to one and ActionMatch below 0.9 are highlighted.}
 \label{fig:spec}
 \end{figure}
 
-\todo{results text referencing macros only}
+\textbf{Models and setup.} Two low-cost closed models from different vendors (GPT-5.4-mini,
+Claude Haiku) and two open-weight coders (Qwen2.5-Coder 32B and 7B, served locally with vLLM in
+batch-invariant mode); temperature 0, one sample per task and setting.
+
+\textbf{Nobody is close to saturation} (Table~\ref{tab:leader}). In the open setting the strongest
+model reaches ActionMatch \ActionMatchGptOpen{} on compiled runs and reproduces \ExactGptOpen{} of
+tasks exactly; the median $|$ES$|$ is \ESmedGptOpen{}\,bp of initial equity. Compilation is not the
+bottleneck for the closed models (CompileOK \CompileOKGptOpen{} and \CompileOKHaikuOpen{}): most of
+their failures are silent, \SilentGptOpen{} and \SilentHaikuOpen{} of all tasks.
+
+\textbf{Understanding is not the bottleneck} (Fig.~\ref{fig:spec}). With the block menu, GPT-5.4-mini,
+Claude Haiku and Qwen-32B recover the specification with SpecMatch \SpecMatchGptClosed,
+\SpecMatchHaikuClosed{} and \SpecMatchQwenLClosed. Yet among the \NSpecOne{} compiled runs whose
+specification is fully correct, \SpecOneBehaviourWrong{} have ActionMatch below 0.9
+(GPT-5.4-mini \SpecOneWrongGpt, Haiku \SpecOneWrongHaiku, Qwen-32B \SpecOneWrongQwenL). The closed
+setting improves ActionMatch only modestly over the open one (e.g.\ \ActionMatchGptOpen{} $\to$
+\ActionMatchGptClosed), so most of the gap is in implementing persistent logic, not in reading
+the instruction.
+
+\textbf{State span matters} (Fig.~\ref{fig:tau}). For the two stronger models, ActionMatch falls
+from the shortest to the longest $\tau_{\max}$ quintile (GPT-5.4-mini open \AMQoneGptOpen{} $\to$
+\AMQfiveGptOpen; Haiku open \AMQoneHaikuOpen{} $\to$ \AMQfiveHaikuOpen). Pooling models, an OLS of
+ActionMatch on $\log_{10}\tau_{\max}$ with model dummies and task-clustered errors gives
+\RegOpenTauOnlyTau{} (s.e.\ \RegOpenTauOnlyTauSE) per decade in the open setting and
+\RegClosedTauOnlyTau{} (\RegClosedTauOnlyTauSE) in the closed one. Because the generator makes
+$\tau$ nearly orthogonal to description length ($\mathrm{corr}=\CorrTauK$), adding $K$ leaves the
+estimate unchanged (\RegOpenTauKTau, \RegClosedTauKTau). With signal and risk-block fixed effects and
+register count it shrinks to \RegOpenTauKFeTau{} ($p=\RegOpenTauKFeTauP$) and \RegClosedTauKFeTau{}
+($p=\RegClosedTauKFeTauP$); adding McCabe complexity and log trade count leaves \RegOpenTauKFeControlsTau{}
+($p=\RegOpenTauKFeControlsTauP$, borderline) and \RegClosedTauKFeControlsTau{}
+($p=\RegClosedTauKFeControlsTauP$). The within-block effect is therefore smaller than the raw
+gradient but does not vanish; the open-setting estimate under full controls is borderline and
+needs the larger v1 set. The Qwen models are near the floor, where no gradient can show.
+
+\textbf{What goes wrong.} For the open-weight models, failures that raise are dominated by
+interface misuse (Qwen-7B indexes the history object directly), state-type violations (storing
+\texttt{None}, which the interface forbids) and look-ahead: indexing a higher-timeframe series
+with the 15-minute bar index (e.g.\ \texttt{htf.close[t // 4]}), which reads the candle still in
+progress. In an engine without physical causality enforcement this silently leaks future data
+into the backtest. Silent failures we inspected include breakout levels computed over a window that
+contains the current bar (so the breakout can never trigger), stops re-anchored to the current
+close on every bar instead of to the entry, and HTF filters evaluated on the wrong candle. A
+systematic taxonomy is left to v1.
+
+\textbf{Sensitivity to the state rule.} Re-running every program that failed only because it stored
+\texttt{None} or a string in the state dictionary under a lenient engine raises CompileOK for
+Qwen-32B from \CompileOKQwenLOpen{} to \CompileLenientQwenLOpen{} (open) and for Qwen-7B from
+\CompileOKQwenSClosed{} to \CompileLenientQwenSClosed{} (closed), but leaves ActionMatch on compiled
+runs essentially unchanged (Qwen-32B open \ActionMatchQwenLOpen{} vs.\ \AMLenientQwenLOpen): the
+rescued programs are mostly silent failures. The strict rule moves failures between the loud and
+the silent column; it does not drive the conclusions.
 
 \section{Related Work}
-\todo{condense; see introduction citations; contamination \cite{jain2024livecodebench}; code hallucination \cite{tian2024codehalu,zhang2024hallucode}}
+\textbf{Code generation benchmarks} score functional correctness on unit tests
+\cite{chen2021humaneval,austin2021mbpp,liu2023evalplus,lai2023ds1000,zhuo2024bigcodebench} or on
+repository tests \cite{jimenez2024swebench}; LiveCodeBench addresses contamination by collecting
+problems after model cut-offs \cite{jain2024livecodebench}. MintEval instead generates tasks
+combinatorially and judges behaviour over thousands of stateful steps against a reference, which
+makes silent divergence measurable. \textbf{Code hallucination} studies catalogue incorrect but
+plausible code \cite{tian2024codehalu,zhang2024hallucode}; we quantify one consequential form of it.
+\textbf{LLMs in finance} have been studied mainly as forecasters and domain language models
+\cite{lopezlira2023chatgpt,wu2023bloomberggpt,yang2023fingpt}. Our metric borrows the logic of
+implementation shortfall \cite{perold1988implementation}: the gap between the intended and the
+executed strategy, with alpha differenced away. Backtest overfitting \cite{bailey2014pseudo,bailey2016pbo}
+and operational failures \cite{sec2013knight} motivate treating implementation fidelity as a
+first-class risk.
 
 \section{Limitations}\label{sec:limits}
-v0 is small: one instrument (BTCUSDT), one data window, \NTasks{} tasks and \todo{N} models with
-one sample each. A human baseline and a human-rewritten instruction subset are in progress; until
+MintEval is a \emph{diagnostic} benchmark: controlled generation lets us vary $\tau$, $K$ and block
+type independently, which a benchmark of naturally occurring tasks cannot do, but it does not
+sample the distribution of real strategies. A real subset (strategies ported from open-source
+frameworks and exchange product specifications, with human-written intents and human-verified
+reference ports) is under construction; its role is to test whether model rankings and the $\tau$
+effect transfer. v0 is small: one instrument (BTCUSDT), one data window, \NTasks{} tasks and four
+models with one sample each. A human baseline and a human-rewritten instruction subset are in progress; until
 then, instructions are LLM-written and may be friendlier to LLMs than real traders' messages, and
 the slang dictionary is still under human review. Latency is deliberately excluded: fidelity and
 latency are orthogonal goals. The unit of observation is the bar-level action and the complete

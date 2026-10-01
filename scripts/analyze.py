@@ -71,23 +71,34 @@ for ax, s in zip(axes, ["open", "closed"]):
     ax.set_title(f"{s} setting", color=INK); ax.set_xticks(range(5)); ax.set_xlabel(r"$\tau_{\max}$ quintile (1 = shortest state span)")
     ax.set_xticklabels([str(i + 1) for i in range(5)])
 axes[0].set_ylabel("ActionMatch (compiled runs)")
-axes[1].legend(frameon=False, fontsize=7, loc="lower left")
-fig.tight_layout(); fig.savefig(out / "figs/fig1_tau.pdf"); plt.close(fig)
+h, l = axes[0].get_legend_handles_labels()
+fig.legend(h, l, frameon=False, fontsize=7, loc="lower center", ncol=len(l), bbox_to_anchor=(0.5, -0.01))
+fig.tight_layout(rect=(0, 0.08, 1, 1)); fig.savefig(out / "figs/fig1_tau.pdf"); fig.savefig(out / "figs/fig1_tau.png", dpi=200); plt.close(fig)
 
 # ------------------------------------------------------------- Fig 2: SpecMatch vs ActionMatch
 g = df[(df.setting == "closed") & (df.compile_fail == 0)]
-fig, ax = plt.subplots(figsize=(3.4, 2.6))
-rng = np.random.default_rng(0)
-ax.axvspan(0.97, 1.03, ymin=0, ymax=0.9 / 1.05, color="#e34948", alpha=0.08, lw=0)
-for m in models:
-    h = g[g.model == m]; c, mk = style[m]
-    ax.scatter(h.spec_match + rng.uniform(-0.025, 0.025, len(h)), h.action_match, s=8, color=c, marker=mk,
-               alpha=0.55, lw=0, label=m)
+fig, ax = plt.subplots(figsize=(3.4, 2.7))
+levels = [0.0, 0.25, 0.5, 0.75, 1.0]
+w = 0.18
+ax.add_patch(plt.Rectangle((4 - 0.45, 0), 0.9, 0.9, color="#e34948", alpha=0.08, lw=0, zorder=0))
+for i, m in enumerate(models):
+    c, mk = style[m]
+    data = [g[(g.model == m) & (g.spec_match == lv)].action_match.values for lv in levels]
+    pos = [j + (i - (len(models) - 1) / 2) * w for j in range(len(levels))]
+    keep = [(p_, d_) for p_, d_ in zip(pos, data) if len(d_) >= 5]
+    if not keep: continue
+    bp = ax.boxplot([d_ for _, d_ in keep], positions=[p_ for p_, _ in keep], widths=w * 0.85, patch_artist=True,
+                    showfliers=False, medianprops={"color": "white", "lw": 1.2}, whiskerprops={"color": c, "lw": 1},
+                    capprops={"color": c, "lw": 1})
+    for patch in bp["boxes"]:
+        patch.set_facecolor(c); patch.set_edgecolor(c)
+    ax.plot([], [], color=c, marker="s", ls="", ms=5, label=m)
 ax.axhline(0.9, color=MUTED, lw=0.8, ls="--")
+ax.set_xticks(range(len(levels))); ax.set_xticklabels(["0", ".25", ".5", ".75", "1"])
 ax.set_xlabel("SpecMatch (fraction of 4 slots exact)"); ax.set_ylabel("ActionMatch")
-ax.set_xlim(-0.08, 1.08); ax.set_ylim(0, 1.05); ax.legend(frameon=False, fontsize=6, markerscale=1.5, loc="lower right")
-ax.text(0.94, 0.45, "spec right,\nbehaviour wrong", ha="right", fontsize=6.5, color=INK)
-fig.tight_layout(); fig.savefig(out / "figs/fig2_spec_vs_action.pdf"); plt.close(fig)
+ax.set_ylim(0, 1.02); ax.set_xlim(-0.5, 4.5)
+fig.legend(frameon=False, fontsize=6.5, loc="lower center", ncol=2, bbox_to_anchor=(0.5, -0.01))
+fig.tight_layout(rect=(0, 0.13, 1, 1)); fig.savefig(out / "figs/fig2_spec_vs_action.pdf"); fig.savefig(out / "figs/fig2_spec_vs_action.png", dpi=200); plt.close(fig)
 sm1 = g[g.spec_match == 1]
 A["fig2"] = {m: {"n_spec1": int((sm1.model == m).sum()),
                  "frac_spec1_am_lt_0_9": float((sm1[sm1.model == m].action_match < 0.9).mean()) if (sm1.model == m).any() else None}
@@ -99,7 +110,7 @@ taus = np.array([t["tau_max"] for t in tasks])
 fig, ax = plt.subplots(figsize=(3.4, 2.2))
 ax.hist(np.log10(taus), bins=30, color=COLORS[0], edgecolor="white", linewidth=1)
 ax.set_xlabel(r"$\log_{10}\,\tau_{\max}$ (bars)"); ax.set_ylabel("tasks")
-fig.tight_layout(); fig.savefig(out / "figs/fig3_tau_hist.pdf"); plt.close(fig)
+fig.tight_layout(); fig.savefig(out / "figs/fig3_tau_hist.pdf"); fig.savefig(out / "figs/fig3_tau_hist.png", dpi=200); plt.close(fig)
 
 # ------------------------------------------------------------- regressions (primitive fixed effects)
 tk = pd.DataFrame([{"strategy_id": t["strategy_id"], "risk_ids": "+".join(r["id"] for r in t["spec"]["risk"])}
@@ -132,16 +143,39 @@ A["corr_tau_K"] = float(np.corrcoef(np.log10(taus), [t["K_bits"] for t in tasks]
 def mac(name, v, fmt="{:.3f}"):
     return f"\\newcommand{{\\{name}}}{{{fmt.format(v) if v == v else '--'}}}"
 L = [mac("NTasks", len(tasks), "{}"), mac("NRows", len(df), "{}"), mac("CorrTauK", A["corr_tau_K"], "{:.2f}")]
-key = lambda m: "".join(ch for ch in m.title() if ch.isalpha())
+KEYS = {"gpt-5.4-mini": "Gpt", "claude-haiku": "Haiku", "qwen2.5-coder-32b": "QwenL", "qwen2.5-coder-7b": "QwenS"}
+key = lambda m: KEYS.get(m) or "".join(ch for ch in m.title() if ch.isalpha())
+assert len({key(m) for m in models}) == len(models), "macro key collision"
 for r in A["table1"]:
     k = key(r["model"]) + r["setting"].title()
     for col in ["CompileOK", "ActionMatch", "TradeF1", "silent", "exact"]:
-        L.append(mac(f"{col.replace('silent','Silent').replace('exact','Exact')}{k}", r[col]))
+        L.append(mac(f"{col.replace('silent','Silent').replace('exact','Exact').replace('TradeF1','TradeFone')}{k}", r[col]))
     L.append(mac(f"ESmed{k}", r["ES_med"], "{:.0f}"))
     if r["setting"] == "closed": L.append(mac(f"SpecMatch{k}", r["SpecMatch"]))
 if A["fig2"]["all"]["frac_spec1_am_lt_0_9"] is not None:
     L.append(mac("SpecOneBehaviourWrong", A["fig2"]["all"]["frac_spec1_am_lt_0_9"]))
     L.append(mac("NSpecOne", A["fig2"]["all"]["n_spec1"], "{}"))
+for m in models:
+    f2 = A["fig2"].get(m)
+    if f2 and f2["frac_spec1_am_lt_0_9"] is not None:
+        L += [mac(f"SpecOneWrong{key(m)}", f2["frac_spec1_am_lt_0_9"]), mac(f"NSpecOne{key(m)}", f2["n_spec1"], "{}")]
+    for s_ in ["open", "closed"]:
+        st = A["fig1"].get(f"{m}|{s_}")
+        if st:
+            L += [mac(f"AMQone{key(m)}{s_.title()}", st[0][0]), mac(f"AMQfive{key(m)}{s_.title()}", st[4][0])]
+T["silent_n"] = 0
+L.append(mac("SilentMin", T.silent.min()))
+L.append(mac("SilentMax", T.silent.max()))
+L.append(mac("BestAMOpen", T[T.setting == "open"].ActionMatch.max()))
+L.append(mac("BestAMClosed", T[T.setting == "closed"].ActionMatch.max()))
+L.append(mac("BestExactOpen", T[T.setting == "open"].exact.max()))
+import os
+if os.path.exists("results/sensitivity_state_summary.csv"):
+    S = pd.read_csv("results/sensitivity_state_summary.csv")
+    for _, r in S.iterrows():
+        k = key(r.model) + r.setting.title()
+        L += [mac(f"CompileLenient{k}", r.CompileOK_lenient), mac(f"AMLenient{k}", r.AM_lenient),
+              mac(f"NStateFail{k}", r.n_state_type_fail, "{}")]
 for k, v in reg.items():
     if "log_tau" in v:
         n = "Reg" + "".join(ch for ch in k.title() if ch.isalpha())
@@ -162,5 +196,7 @@ L += [mac("NValidPrompts", sum(p["valid"] for p in PR), "{}"), mac("NRoundTripOK
       mac("MedWords", float(np.median([p["prompt_len"] for p in PR])), "{:.0f}"),
       mac("MedJargon", float(np.median([p["n_jargon"] for p in PR])), "{:.0f}"),
       mac("FirstTryValid", float(np.mean([p["n_attempts"] == 1 and p["valid"] for p in PR])), "{:.2f}")]
+bad_names = [l for l in L if any(ch.isdigit() for ch in l.split("}")[0])]
+assert not bad_names, f"macro names with digits: {bad_names[:3]}"
 (out / "numbers.tex").write_text("% AUTO-GENERATED by scripts/analyze.py from " + csv + " -- do not edit\n" + "\n".join(L) + "\n")
 print(T.round(3).to_string()); print(json.dumps(reg, indent=0)[:3000])

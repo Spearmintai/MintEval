@@ -1,0 +1,76 @@
+{
+ "id": "R005",
+ "source": "ysdede jesse_strategies / SimplEma",
+ "url": "https://github.com/ysdede/jesse_strategies/blob/ade9f4ba42cec11207c766d267b9d8feb8bce648/simplema/strategies/SimplEma/__init__.py",
+ "license": "CC0-1.0",
+ "original_framework": "jesse",
+ "state_features": [
+  "long_only",
+  "ema_cross",
+  "pump_dump_filter",
+  "loss_streak_martingale_sizing",
+  "fixed_pct_stop",
+  "pnl_take_on_close",
+  "signal_exit"
+ ],
+ "approximations": [
+  "fills at the next 15m open instead of the source's fill convention (universal engine difference)",
+  "target rounded to the 0.05 grid; engine fees 5 bp + slippage 1 bp per fill regardless of the source's fee model",
+  "timeframe 30m ETH -> 15m BTC",
+  "0.001-coin size bump and fee factor dropped",
+  "sizes rounded to grid: 0.1, 0.15 (0.166), 0.3 (0.2756), 0.45 (0.457), 0.75 (0.759)",
+  "EMA SMA-seeded (jesse) vs first-value seed: identical after warm-up",
+  "README says long and short; code is long-only (followed)",
+  "martingale never resets because on_take_profit never fires (code behaviour ported)"
+ ],
+ "added_facts": [
+  "all numbers (hyperparameter defaults)",
+  "15-minute bars",
+  "'capital' = current equity",
+  "multiplier never resets (code quirk made explicit)"
+ ],
+ "intent_task_words": 117,
+ "status": "PENDING_HUMAN_VERIFICATION",
+ "port_checks": {
+  "checked_at": "2026-10-01 14:46:51",
+  "sandbox_static_ok": true,
+  "soft_violations": [],
+  "engine_seconds": 0.25,
+  "engine_error": null,
+  "n_trades": 1783,
+  "n_long_trades": 1783,
+  "n_short_trades": 0,
+  "frac_bars_in_position": 0.49400274904145264,
+  "n_fills": 3566,
+  "distinct_abs_position_levels": [
+   0.1
+  ],
+  "R": -0.17668505702276527,
+  "sharpe": -2.644601024986768,
+  "maxdd": -0.18019734612759641,
+  "median_trade_bars": 13.0,
+  "exits_by_stop_or_take": 0,
+  "sandbox_seconds": 0.61,
+  "sandbox_error": null,
+  "sandbox_ok": true,
+  "second_impl_seconds": 0.03,
+  "second_impl_target_agreement": 1.0,
+  "second_impl_target_mismatch_bars": [],
+  "entries_ref": 1783,
+  "entries_second": 1783,
+  "entries_both": 1783,
+  "entry_jaccard": 1.0,
+  "entry_bar_agreement_while_flat": 1.0,
+  "second_impl_stop_agreement": 1.0,
+  "second_impl_stop_mismatch_bars": [],
+  "jesse_indicator_differential": {
+   "bars_checked": 4988,
+   "event_bars": 3566,
+   "mismatches": 0,
+   "agreement": 1.0,
+   "first_mismatches": [],
+   "method": "data/real/diff_jesse.py: original conditions re-evaluated with jesse's own indicator modules (jesse-ai/jesse@7a01f999) on event bars + 1500 random bars"
+  }
+ },
+ "pilot_notes": "DORMANT STATE on BTCUSDT 15m 2022-2023: 0 stop-outs (worst intrabar adverse move in a trade -4.5% vs 17.2% stop), 0 PnL-take exits (max open gain 13.5% vs 15.3%), so the martingale multiplier never changes and every position is 0.10. Only the EMA cross and the pump/dump filter (blocks 22 of 1805 cross-ups) are live."
+}

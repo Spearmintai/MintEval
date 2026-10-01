@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+30-minute momentum stepping on BTC. Use 30-minute candles (UTC). Each time a 30m candle closes above the previous 30m candle's close, add one unit long; when it closes below, take one unit off, which can take you net short. Equal closes: do nothing. One unit is 10% of equity and the net position never goes beyond 100% either way; skip a unit that would exceed it. Every day at 23:45 UTC close everything and forget the reference candle; the 23:30-00:00 candle then becomes the new reference without a trade.
+
+[Facts added beyond the original intent text to make behaviour unique: unit = 10 % of equity; cap +/-100 % (LEAN would reject orders beyond buying power); end-of-day time 23:45 UTC for a 24/7 market.]

@@ -1,0 +1,275 @@
+%% MintEval v0.  Build:  tectonic main.tex
+%% arXiv version : \documentclass[sigconf,anonymous,review]{acmart}
+%% submission    : \documentclass[sigconf,anonymous,review]{acmart}
+\documentclass[sigconf,anonymous,review]{acmart}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\newcommand{\todo}[1]{{\color{red}\textbf{[TODO: #1]}}}
+\input{numbers.tex}   % every result number: auto-generated from results/minteval_v0.csv
+
+\begin{document}
+\title{MintEval: Do LLMs Implement the Trading Strategy You Asked For?}
+\subtitle{A Behavioural-Equivalence Benchmark for Natural-Language-to-Strategy Code}
+
+\author{\todo{author list and order must be fixed before the abstract deadline}}
+\affiliation{\institution{\todo{affiliation}}\country{}}
+
+\begin{abstract}
+Large language models are moving from producing trading \emph{signals} to writing the code that
+executes them. The failure mode of the second role is silent: generated code runs, a backtest
+plots, yet the risk logic that the trader described is not the logic being executed. Existing
+code benchmarks test functional correctness on unit tests and finance benchmarks test forecasting;
+neither measures whether an implementation \emph{behaves} like the strategy that was asked for.
+We introduce MintEval, a benchmark in which reference strategies are generated programmatically
+from a library of composable building blocks, back-translated into colloquial trader instructions,
+and re-implemented by the model under test. Generated and reference programs are executed bar by
+bar on identical market data and frictions, and compared on their actions rather than on code
+similarity or profit: alpha is differenced away. MintEval v0 contains \NTasks{} tasks on BTCUSDT
+15-minute data, stratified by an execution-measured state-span complexity $\tau$ that is decoupled
+from description length. On four models the best mean ActionMatch is \BestAMOpen{} and at most
+\BestExactOpen{} of tasks are reproduced exactly; between \SilentMin{} and \SilentMax{} of all tasks
+are silent failures (code runs, behaviour diverges). Given a menu of building blocks, models
+identify the strategy almost perfectly, yet \SpecOneBehaviourWrong{} of the implementations whose
+specification was read correctly still diverge on more than 10\% of active bars; accuracy falls with
+$\tau$ after controlling for description length and block identity.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept><concept_id>10011007.10011074.10011099</concept_id>
+<concept_desc>Software and its engineering~Software verification and validation</concept_desc>
+<concept_significance>500</concept_significance></concept>
+<concept><concept_id>10010147.10010178.10010179</concept_id>
+<concept_desc>Computing methodologies~Natural language processing</concept_desc>
+<concept_significance>300</concept_significance></concept>
+<concept><concept_id>10010405.10010481.10010487</concept_id>
+<concept_desc>Applied computing~Forecasting</concept_desc>
+<concept_significance>100</concept_significance></concept>
+</ccs2012>
+\end{CCSXML}
+\ccsdesc[500]{Software and its engineering~Software verification and validation}
+\ccsdesc[300]{Computing methodologies~Natural language processing}
+\ccsdesc[100]{Applied computing~Forecasting}
+\keywords{LLM evaluation, code generation, benchmark, algorithmic trading, behavioural equivalence, stateful programs}
+
+\maketitle
+
+\section{Introduction}
+LLMs are increasingly asked not only for a market view \cite{lopezlira2023chatgpt,wu2023bloomberggpt,yang2023fingpt}
+but for the code that turns a trader's intent into orders. In that role an error is not a bad
+forecast but an implementation shortfall \cite{perold1988implementation} between the strategy that
+was intended and the one that runs. Such errors are \emph{silent}: the code compiles, the backtest
+completes and produces a plausible equity curve, and nothing signals that, say, the breakeven stop
+never moves or the cooldown resets every bar. Operational failures of trading code are costly
+\cite{sec2013knight}, and backtests are already a fragile basis for decisions \cite{bailey2014pseudo,bailey2016pbo}.
+
+Code benchmarks such as HumanEval \cite{chen2021humaneval}, MBPP \cite{austin2021mbpp},
+EvalPlus \cite{liu2023evalplus}, DS-1000 \cite{lai2023ds1000}, BigCodeBench \cite{zhuo2024bigcodebench}
+and SWE-bench \cite{jimenez2024swebench} score functional correctness against unit tests that a
+human wrote for a precise specification. Trading strategies differ in three ways that make that
+template insufficient: (i) they are \emph{stateful} over thousands of steps, and the hard part is
+the persistent state (an entry price, a ratcheted stop, a cooldown clock); (ii) they have
+\emph{zero tolerance}: a single mis-timed exit changes every later decision; (iii) the
+specification arrives as \emph{colloquial, jargon-laden} language, not as a docstring.
+
+\textbf{Contributions.} (1) A task definition, $\Phi: q_s \mapsto \hat c_s$, scored by bar-level
+\emph{behavioural equivalence} with a reference program under identical data and frictions.
+(2) A metric suite led by ActionMatch on active bars. (3) A generator of contamination-free tasks
+with two separated complexity axes: description length $K$ (generation side) and state span
+$\tau$ and register count $R$ (measured by instrumenting execution). (4) Results for four models in an open setting (instruction + interface only) and a closed
+diagnostic setting (with a menu of building blocks), separating understanding from implementation.
+
+\section{Task}
+A task $s$ consists of a reference program $c_s$, a colloquial instruction $q_s$ and fixed
+market data $D$ with frictions $F$. The model under test receives $q_s$ and an interface
+document (engine semantics, the indicator library, and desk conventions such as ``entry
+price is the close of the signal bar'') and returns $\hat c_s$. Both programs implement
+\texttt{strategy(hist, state, pos, ind)}, are called at every bar close, and return a target
+position in $[-1,1]$ plus optional stop and take-profit levels for the next bar. We call
+$\hat c_s$ \emph{behaviourally equivalent} to $c_s$ on $(D,F)$ if their quantised target
+sequences coincide on every bar. Equivalence is a property of behaviour, not of code: two
+programs with different structure are equivalent if they act identically, and two programs
+that differ by one comparison operator are not.
+
+The engine enforces causality physically: bar $t$ is copied into the visible buffers right
+before the call, indicators are revealed bar by bar, and any access to $t{+}1$ raises an error
+that cannot be swallowed. State is a flat dictionary of scalars whose reads and writes are logged.
+Generated code runs in a subprocess sandbox (imports limited to \texttt{math}/\texttt{numpy}, no
+I/O, 10\,s budget).
+
+\section{Metric Suite}
+\textbf{ActionMatch} (primary) is the fraction of \emph{active} bars on which the two quantised
+targets are equal, where a bar is active if either program holds or targets a non-zero position.
+Restricting to active bars matters: flat periods are trivially matched and would otherwise
+inflate every score. \textbf{TradeF1} matches round trips exactly (direction, entry bar, exit bar).
+$|\mathrm{ES}|$ is the absolute difference in total return in basis points of initial equity; we
+take the absolute value because an implementation error that happens to make money is still an
+error, and signed errors would cancel across tasks. We also report $\Delta$Sharpe and $\Delta$MaxDD.
+A run that raises, times out or looks ahead is \textbf{CompileOK}$=0$; its other metrics are left
+missing rather than imputed. In the closed setting, \textbf{SpecMatch} scores the model's
+structured reading of $q_s$ slot by slot. A \emph{silent failure} is a run with CompileOK$=1$
+and ActionMatch$<0.9$.
+
+\section{Benchmark Construction}
+\textbf{Building blocks.} The library has \NBlocksSignal{} signal, \NBlocksFilter{} filter,
+\NBlocksSizing{} sizing and \NBlocksRisk{} risk blocks, each
+with a discrete parameter grid and a precise English template. Programs combine one signal,
+a direction, a filter, a sizing rule and 1--3 risk layers; hard combinations include moving
+boxes, scaling out, pyramiding, multi-timeframe filters, breakout-then-retest state machines and
+risk layers that read each other's state (a trailing stop that arms only after breakeven).
+
+\textbf{Two complexity axes.} $K$ (bits) is the description length of the program in the
+generator's grammar. $\tau_{\max}$ and $\tau_{p90}$ are the maximum and 90th percentile, over all
+value reads of the state dictionary during the reference backtest, of the number of bars since
+the key was last written; $R$ counts keys with at least one cross-bar read. Across the task set
+$\mathrm{corr}(\log\tau_{\max},K)=\CorrTauK$. Several blocks vary $\tau$ through a parameter
+alone (time stop, cooldown, retest window), which lets us estimate the effect of $\tau$ within a
+block via block fixed effects.
+
+\textbf{Selection.} We sample \NPool{} candidate programs and keep the \NPoolKept{} that make at least
+20 round trips, are not flat throughout and do not lose half their equity in the first 5\% of bars
+(\NFewTrades{} removed for too few trades, \NAlwaysFlat{} for never trading). Because programs with
+short state spans trade more often and therefore pay more fees, $\tau$ and reference return are
+confounded in the raw pool. We therefore stratify jointly: within each $\tau_{\max}$ quintile we draw
+32 tasks from each of five equal-width bands of reference return, giving \NTasks{} tasks with median
+reference return \RMedBinA, \RMedBinB, \RMedBinC, \RMedBinD{} and \RMedBinE{} across the five quintiles.
+
+\textbf{Back-translation.} An LLM translator (a third vendor, not among the models under test)
+rewrites each program, given its precise template description and source, as a 40--120 word desk
+message in one of eight rotating voices. Deterministic gates require every parameter value to appear,
+at least three expressions from a slang dictionary (drafted with LLM help, under human review), no
+code-like tokens, and the conventional phrasing for formula-level rules; failures are fed back for up
+to six attempts. A round-trip reader from a fourth vendor then recovers the block-level spec from the
+message; a mismatch is fed back as well. \NValidPrompts{} of \NTasks{} messages pass all gates
+(\NRoundTripOK{} round-trip verified, \NRoundTripNA{} unverifiable because the reader failed); median
+length \MedWords{} words with \MedJargon{} slang hits. The reader sees the block menu, so it verifies
+identification rather than sufficiency; two ambiguities it missed during calibration were resolved
+with explicit desk conventions (\S\ref{sec:limits}).
+
+\textbf{Contamination.} Tasks are sampled from a combinatorial space at build time; neither the
+instruction nor the reference program exists on the web.
+
+\section{Preliminary Results}
+\begin{table*}[t]\centering\small
+\caption{Leaderboard on \NTasks{} tasks. ActionMatch, TradeF1 and $|$ES$|$ are over compiled runs;
+Silent = share of all tasks that compile but have ActionMatch $<0.9$.}
+\label{tab:leader}
+\input{table1.tex}
+\end{table*}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{figs/fig1_tau.pdf}
+\caption{ActionMatch by $\tau_{\max}$ quintile (mean, 95\% bootstrap CI).}
+\Description{Two panels, open and closed setting, showing mean ActionMatch with confidence
+intervals for each model across five quintiles of state span.}
+\label{fig:tau}
+\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{figs/fig2_spec_vs_action.pdf}
+\caption{Closed setting: SpecMatch vs ActionMatch per task. Shaded: specification fully correct
+but behaviour diverges.}
+\Description{Scatter plot of ActionMatch against SpecMatch for each task and model; points with
+SpecMatch equal to one and ActionMatch below 0.9 are highlighted.}
+\label{fig:spec}
+\end{figure}
+
+\textbf{Models and setup.} Two low-cost closed models from different vendors (GPT-5.4-mini,
+Claude Haiku) and two open-weight coders (Qwen2.5-Coder 32B and 7B, served locally with vLLM in
+batch-invariant mode); temperature 0, one sample per task and setting.
+
+\textbf{Nobody is close to saturation} (Table~\ref{tab:leader}). In the open setting the strongest
+model reaches ActionMatch \ActionMatchGptOpen{} on compiled runs and reproduces \ExactGptOpen{} of
+tasks exactly; the median $|$ES$|$ is \ESmedGptOpen{}\,bp of initial equity. Compilation is not the
+bottleneck for the closed models (CompileOK \CompileOKGptOpen{} and \CompileOKHaikuOpen{}): most of
+their failures are silent, \SilentGptOpen{} and \SilentHaikuOpen{} of all tasks.
+
+\textbf{Understanding is not the bottleneck} (Fig.~\ref{fig:spec}). With the block menu, GPT-5.4-mini,
+Claude Haiku and Qwen-32B recover the specification with SpecMatch \SpecMatchGptClosed,
+\SpecMatchHaikuClosed{} and \SpecMatchQwenLClosed. Yet among the \NSpecOne{} compiled runs whose
+specification is fully correct, \SpecOneBehaviourWrong{} have ActionMatch below 0.9
+(GPT-5.4-mini \SpecOneWrongGpt, Haiku \SpecOneWrongHaiku, Qwen-32B \SpecOneWrongQwenL). The closed
+setting improves ActionMatch only modestly over the open one (e.g.\ \ActionMatchGptOpen{} $\to$
+\ActionMatchGptClosed), so most of the gap is in implementing persistent logic, not in reading
+the instruction.
+
+\textbf{State span matters} (Fig.~\ref{fig:tau}). For the two stronger models, ActionMatch falls
+from the shortest to the longest $\tau_{\max}$ quintile (GPT-5.4-mini open \AMQoneGptOpen{} $\to$
+\AMQfiveGptOpen; Haiku open \AMQoneHaikuOpen{} $\to$ \AMQfiveHaikuOpen). Pooling models, an OLS of
+ActionMatch on $\log_{10}\tau_{\max}$ with model dummies and task-clustered errors gives
+\RegOpenTauOnlyTau{} (s.e.\ \RegOpenTauOnlyTauSE) per decade in the open setting and
+\RegClosedTauOnlyTau{} (\RegClosedTauOnlyTauSE) in the closed one. Because the generator makes
+$\tau$ nearly orthogonal to description length ($\mathrm{corr}=\CorrTauK$), adding $K$ leaves the
+estimate unchanged (\RegOpenTauKTau, \RegClosedTauKTau). With signal and risk-block fixed effects and
+register count it shrinks to \RegOpenTauKFeTau{} ($p=\RegOpenTauKFeTauP$) and \RegClosedTauKFeTau{}
+($p=\RegClosedTauKFeTauP$); adding McCabe complexity and log trade count leaves \RegOpenTauKFeControlsTau{}
+($p=\RegOpenTauKFeControlsTauP$, borderline) and \RegClosedTauKFeControlsTau{}
+($p=\RegClosedTauKFeControlsTauP$). The within-block effect is therefore smaller than the raw
+gradient but does not vanish; the open-setting estimate under full controls is borderline and
+needs the larger v1 set. The Qwen models are near the floor, where no gradient can show.
+
+\textbf{What goes wrong.} For the open-weight models, failures that raise are dominated by
+interface misuse (Qwen-7B indexes the history object directly), state-type violations (storing
+\texttt{None}, which the interface forbids) and look-ahead: indexing a higher-timeframe series
+with the 15-minute bar index (e.g.\ \texttt{htf.close[t // 4]}), which reads the candle still in
+progress. In an engine without physical causality enforcement this silently leaks future data
+into the backtest. Silent failures we inspected include breakout levels computed over a window that
+contains the current bar (so the breakout can never trigger), stops re-anchored to the current
+close on every bar instead of to the entry, and HTF filters evaluated on the wrong candle. A
+systematic taxonomy is left to v1.
+
+\textbf{Sensitivity to the state rule.} Re-running every program that failed only because it stored
+\texttt{None} or a string in the state dictionary under a lenient engine raises CompileOK for
+Qwen-32B from \CompileOKQwenLOpen{} to \CompileLenientQwenLOpen{} (open) and for Qwen-7B from
+\CompileOKQwenSClosed{} to \CompileLenientQwenSClosed{} (closed), but leaves ActionMatch on compiled
+runs essentially unchanged (Qwen-32B open \ActionMatchQwenLOpen{} vs.\ \AMLenientQwenLOpen): the
+rescued programs are mostly silent failures. The strict rule moves failures between the loud and
+the silent column; it does not drive the conclusions.
+
+\section{Related Work}
+\textbf{Code generation benchmarks} score functional correctness on unit tests
+\cite{chen2021humaneval,austin2021mbpp,liu2023evalplus,lai2023ds1000,zhuo2024bigcodebench} or on
+repository tests \cite{jimenez2024swebench}; LiveCodeBench addresses contamination by collecting
+problems after model cut-offs \cite{jain2024livecodebench}. MintEval instead generates tasks
+combinatorially and judges behaviour over thousands of stateful steps against a reference, which
+makes silent divergence measurable. \textbf{Code hallucination} studies catalogue incorrect but
+plausible code \cite{tian2024codehalu,zhang2024hallucode}; we quantify one consequential form of it.
+\textbf{LLMs in finance} have been studied mainly as forecasters and domain language models
+\cite{lopezlira2023chatgpt,wu2023bloomberggpt,yang2023fingpt}. Our metric borrows the logic of
+implementation shortfall \cite{perold1988implementation}: the gap between the intended and the
+executed strategy, with alpha differenced away. Backtest overfitting \cite{bailey2014pseudo,bailey2016pbo}
+and operational failures \cite{sec2013knight} motivate treating implementation fidelity as a
+first-class risk.
+
+\section{Limitations}\label{sec:limits}
+MintEval is a \emph{diagnostic} benchmark: controlled generation lets us vary $\tau$, $K$ and block
+type independently, which a benchmark of naturally occurring tasks cannot do, but it does not
+sample the distribution of real strategies. A real subset (strategies ported from open-source
+frameworks and exchange product specifications, with human-written intents and human-verified
+reference ports) is under construction; its role is to test whether model rankings and the $\tau$
+effect transfer. v0 is small: one instrument (BTCUSDT), one data window, \NTasks{} tasks and four
+models with one sample each. A human baseline and a human-rewritten instruction subset are in progress; until
+then, instructions are LLM-written and may be friendlier to LLMs than real traders' messages, and
+the slang dictionary is still under human review. Latency is deliberately excluded: fidelity and
+latency are orthogonal goals. The unit of observation is the bar-level action and the complete
+round trip; we do not model intra-position dynamics such as fills inside a bar beyond stop/take
+priority. Finally, a mismatch can stem from an ambiguous instruction rather than from the model;
+the round-trip reader bounds but does not eliminate this.
+
+\section*{Ethics Statement}
+MintEval evaluates implementation fidelity, not profitability; no strategy in it is
+investment advice, and most reference strategies lose money after costs. Market data are public
+(data.binance.vision). No personal data are used. Model-generated code runs in a sandbox
+without network or file access.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\appendix
+\section{$\tau_{\max}$ distribution}
+\begin{figure}[h]\centering
+\includegraphics[width=0.8\linewidth]{figs/fig3_tau_hist.pdf}
+\caption{Histogram of $\log_{10}\tau_{\max}$ over the task set.}
+\Description{Histogram of the base-10 logarithm of maximum state span across tasks.}
+\end{figure}
+\end{document}

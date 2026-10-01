@@ -1,0 +1,5 @@
+PLACEHOLDER — pending human rewrite
+
+Long-only Bollinger breakout on 15-minute bars with an Ichimoku trend filter. Build the bands on the bar midpoint (high+low)/2: 20-bar SMA middle, plus/minus 2 population standard deviations. Buy with the whole account whenever a bar closes above the upper band while flat, but only if that close is also above both Ichimoku cloud spans as charted under the current bar (9/26/52 settings, displacement 26, so the spans are computed from the bars ending 25 bars ago). Sell everything when a bar closes below the middle band. No stops.
+
+[Facts added beyond the original intent text to make behaviour unique: Bollinger 20 / 2 std (population) / SMA middle on hl2 and Ichimoku 9/26/52/26 = jesse defaults, spelled out; spans read 25 bars back (jesse ichimoku_cloud implementation); 15-minute bars.]

@@ -1,0 +1,92 @@
+# intent_source for R004 - VERBATIM excerpts (exact line ranges) from the original source
+# License: MIT (gpt-instructions LICENSE: 'MIT License / Copyright (c) 2025 Jesse')
+
+====================================================================================================
+FILE: https://github.com/jesse-ai/gpt-instructions/blob/64873bfdbafd32ce55c6a244956247977ca48b34/instructions.md
+LOCAL: data/real/sources/jesse-gpt-instructions/instructions.md
+---------------------------------------- lines 1659-1739 ----------------------------------------
+=== Example Strategy #6:
+```
+from jesse.strategies import Strategy, cached
+import jesse.indicators as ta
+from jesse import utils
+
+
+class TurtleAI(Strategy):
+    last_closed_index = 0
+
+    @property
+    def long_term_candles(self):
+        return self.get_candles(self.exchange, self.symbol, '4h')
+
+    @property
+    def passed_time(self):
+        return self.index - self.last_closed_index > 0
+
+    @property
+    def longterm_ma(self):
+        return ta.sma(self.long_term_candles, 200)
+
+    @property
+    def adx(self):
+        return ta.adx(self.candles) > 30
+
+    @property
+    def chop(self):
+        return ta.chop(self.candles) < 40
+
+    @property
+    def donchian(self):
+        return ta.donchian(self.candles[:-1], period=20)
+
+    def should_long(self) -> bool:
+        return self.price > self.donchian.upperband and self.price > self.longterm_ma and self.adx and self.passed_time and self.chop
+
+    def go_long(self):
+        entry = self.price
+        stop = self.price - ta.atr(self.candles) * 2.5
+        qty = utils.risk_to_qty(self.available_margin, 3, entry, stop, fee_rate=self.fee_rate) * 1.8
+        self.buy = qty, entry
+
+    def should_short(self) -> bool:
+        return self.price < self.donchian.lowerband and self.price < self.longterm_ma and self.adx and self.passed_time and self.chop
+
+    def go_short(self):
+        entry = self.price
+        stop = self.price + ta.atr(self.candles) * 2.5
+        qty = utils.risk_to_qty(self.available_margin, 3, entry, stop, fee_rate=self.fee_rate) * 1.8
+        self.sell = qty, entry
+
+    def should_cancel_entry(self) -> bool:
+        return True
+
+    def on_open_position(self, order) -> None:
+        if self.is_long:
+            self.stop_loss = self.position.qty, self.price - ta.atr(self.candles) * 2.5
+        elif self.is_short:
+            self.stop_loss = self.position.qty, self.price + ta.atr(self.candles) * 2.5
+
+    def update_position(self) -> None:
+        if self.is_long:
+            self.stop_loss = self.position.qty, max(self.average_stop_loss, self.price - ta.atr(self.candles) * 2.5)
+        elif self.is_short:
+            self.stop_loss = self.position.qty, min(self.average_stop_loss, self.price + ta.atr(self.candles) * 2.5)
+
+    def after(self) -> None:
+        self.add_line_to_candle_chart('upperband', self.donchian.upperband)
+        self.add_line_to_candle_chart('lowerband', self.donchian.lowerband)
+
+    def on_close_position(self, order) -> None:
+        self.last_closed_index = self.index
+```
+
+=== Example Strategy #7:
+```py
+from jesse.strategies import Strategy
+import jesse.indicators as ta
+from jesse import utils
+
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+TOO THIN: there is NO prose intent at all - the example is introduced only as '=== Example Strategy #6:' and the class name 'TurtleAI'. The only 'intent' is the code itself (quoted above verbatim). Everything in intent_task.txt is derived from the code + jesse semantics (Donchian on candles[:-1], ADX/CHOP definitions, risk_to_qty cap, index-based cooldown).

@@ -1,0 +1,101 @@
+# intent_source for R008 - VERBATIM excerpts (exact line ranges) from the original source
+# License: Apache-2.0 (file header: 'Copyright 2014 QuantConnect Corporation. Licensed under the Apache License, Version 2.0')
+
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/Alphas/IntradayReversalCurrencyMarketsAlpha.py
+LOCAL: data/real/sources/Lean/Algorithm.Python/Alphas/IntradayReversalCurrencyMarketsAlpha.py
+---------------------------------------- lines 16-24 ----------------------------------------
+#
+# Reversal strategy that goes long when price crosses below SMA and Short when price crosses above SMA.
+# The trading strategy is implemented only between 10AM - 3PM (NY time). Research suggests this is due to
+# institutional trades during market hours which need hedging with the USD. Source paper:
+# LeBaron, Zhao: Intraday Foreign Exchange Reversals
+# http://people.brandeis.edu/~blebaron/wps/fxnyc.pdf
+# http://www.fma.org/Reno/Papers/ForeignExchangeReversalsinNewYorkTime.PDF
+#
+# This alpha is part of the Benchmark Alpha Series created by QuantConnect which are open sourced so the community and client funds can see an example of an alpha.
+---------------------------------------- lines 32-54 ----------------------------------------
+        self.set_cash(100000)
+
+        # Set zero transaction fees
+        self.set_security_initializer(lambda security: security.set_fee_model(ConstantFeeModel(0)))
+
+        # Select resolution
+        resolution = Resolution.HOUR
+
+        # Reversion on the USD.
+        symbols = [Symbol.create("EURUSD", SecurityType.FOREX, Market.OANDA)]
+
+        # Set requested data resolution
+        self.universe_settings.resolution = resolution
+        self.set_universe_selection(ManualUniverseSelectionModel(symbols))
+        self.set_alpha(IntradayReversalAlphaModel(5, resolution))
+
+        # Equally weigh securities in portfolio, based on insights
+        self.set_portfolio_construction(EqualWeightingPortfolioConstructionModel())
+
+        # Set Immediate Execution Model
+        self.set_execution(ImmediateExecutionModel())
+
+        # Set Null Risk Management Model
+---------------------------------------- lines 61-101 ----------------------------------------
+class IntradayReversalAlphaModel(AlphaModel):
+    '''Alpha model that uses a Price/SMA Crossover to create insights on Hourly Frequency.
+    Frequency: Hourly data with 5-hour simple moving average.
+    Strategy:
+    Reversal strategy that goes Long when price crosses below SMA and Short when price crosses above SMA.
+    The trading strategy is implemented only between 10AM - 3PM (NY time)'''
+
+    # Initialize variables
+    def __init__(self, period_sma = 5, resolution = Resolution.HOUR):
+        self.period_sma = period_sma
+        self.resolution = resolution
+        self.cache = {} # Cache for SymbolData
+        self.name = 'IntradayReversalAlphaModel'
+
+    def update(self, algorithm, data):
+        # Set the time to close all positions at 3PM
+        time_to_close = algorithm.time.replace(hour=15, minute=1, second=0)
+
+        insights = []
+        for kvp in algorithm.active_securities:
+
+            symbol = kvp.key
+
+            if self.should_emit_insight(algorithm, symbol) and symbol in self.cache:
+
+                price = kvp.value.price
+                symbol_data = self.cache[symbol]
+
+                direction = InsightDirection.UP if symbol_data.is_uptrend(price) else InsightDirection.DOWN
+
+                # Ignore signal for same direction as previous signal (when no crossover)
+                if direction == symbol_data.previous_direction:
+                    continue
+
+                # Save the current Insight Direction to check when the crossover happens
+                symbol_data.previous_direction = direction
+
+                # Generate insight
+                insights.append(Insight.price(symbol, time_to_close, direction))
+
+        return insights
+---------------------------------------- lines 109-122 ----------------------------------------
+    def should_emit_insight(self, algorithm, symbol):
+        '''Time to control when to start and finish emitting (10AM to 3PM)'''
+        time_of_day = algorithm.time.time()
+        return algorithm.securities[symbol].has_data and time_of_day >= time(10) and time_of_day <= time(15)
+
+
+class SymbolData:
+
+    def __init__(self, algorithm, symbol, period_sma, resolution):
+        self.previous_direction = InsightDirection.FLAT
+        self.price_sma = algorithm.sma(symbol, period_sma, resolution)
+
+    def is_uptrend(self, price):
+        return self.price_sma.is_ready and price < round(self.price_sma.current.value * 1.001, 6)
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+Prose gives the idea and the 10AM-3PM NY window. Needed from code: 5-hour SMA, the 1.001 band (the prose says 'crosses below SMA', code uses price < SMA*1.001), 'act only when the direction changes' with the previous direction remembered ACROSS days, insights expiring at 15:01 NY (flatten at the 16:00 bar), 100 % equal-weight sizing with reversal.

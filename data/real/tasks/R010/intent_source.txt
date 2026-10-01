@@ -1,0 +1,46 @@
+# intent_source for R010 - VERBATIM excerpts (exact line ranges) from the original source
+# License: Apache-2.0 (file header: 'Copyright 2014 QuantConnect Corporation. Licensed under the Apache License, Version 2.0')
+
+====================================================================================================
+FILE: https://github.com/QuantConnect/Lean/blob/41c6e603e5671ca7b5d3de0cbe13b3c4b109bba4/Algorithm.Python/DataConsolidationAlgorithm.py
+LOCAL: data/real/sources/Lean/Algorithm.Python/DataConsolidationAlgorithm.py
+---------------------------------------- lines 16-30 ----------------------------------------
+### <summary>
+### Example algorithm giving an introduction into using IDataConsolidators.
+### This is an advanced QC concept and requires a certain level of comfort using C# and its event system.
+###
+### What is an IDataConsolidator?
+### IDataConsolidator is a plugin point that can be used to transform your data more easily.
+### In this example we show one of the simplest consolidators, the TradeBarConsolidator.
+### This type is capable of taking a timespan to indicate how long each bar should be, or an
+### integer to indicate how many bars should be aggregated into one.
+###
+### When a new 'consolidated' piece of data is produced by the IDataConsolidator, an event is fired
+### with the argument of the new data.
+### </summary>
+### <meta name="tag" content="using data" />
+### <meta name="tag" content="consolidating data" />
+---------------------------------------- lines 116-134 ----------------------------------------
+    def on_end_of_day(self, symbol):
+        # close up shop each day and reset our 'last' value so we start tomorrow fresh
+        self.liquidate("SPY")
+        self.__last = None
+
+    def thirty_minute_bar_handler(self, sender, consolidated):
+        '''This is our event handler for our 30 minute trade bar defined above in Initialize(). So each time the
+        consolidator produces a new 30 minute bar, this function will be called automatically. The 'sender' parameter
+         will be the instance of the IDataConsolidator that invoked the event, but you'll almost never need that!'''
+
+        if self.__last is not None and consolidated.close > self.__last.close:
+            self.log(f"{consolidated.time} >> SPY >> LONG  >> 100 >> {self.portfolio['SPY'].quantity}")
+            self.order("SPY", 100)
+
+        elif self.__last is not None and consolidated.close < self.__last.close:
+            self.log(f"{consolidated.time} >> SPY >> SHORT  >> 100 >> {self.portfolio['SPY'].quantity}")
+            self.order("SPY", -100)
+
+        self.__last = consolidated
+
+====================================================================================================
+ASSESSMENT OF THE ORIGINAL INTENT TEXT (by the porter, not part of the source):
+TOO THIN: the docstring is about data consolidators; the trading rule is only in the 30-minute handler code and one comment ('close up shop each day and reset our last value'). Unit size (100 shares), the exposure cap and the time of the end-of-day flatten for a 24/7 market had to be added.

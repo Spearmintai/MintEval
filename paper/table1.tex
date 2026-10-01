@@ -1,0 +1,15 @@
+\begin{tabular}{llrrrrrr}
+\toprule
+Model & Set. & CompileOK & SpecMatch & ActionMatch & TradeF1 & $|$ES$|$ med (bp) & Silent \\
+\midrule
+gpt-5.4-mini & open & 0.955 & -- & 0.544 & 0.469 & 442 & 0.729 \\
+claude-haiku & open & 0.948 & -- & 0.400 & 0.350 & 752 & 0.806 \\
+qwen2.5-coder-32b & open & 0.601 & -- & 0.172 & 0.191 & 1646 & 0.586 \\
+qwen2.5-coder-7b & open & 0.374 & -- & 0.081 & 0.043 & 2252 & 0.372 \\
+\midrule
+gpt-5.4-mini & closed & 0.984 & 0.938 & 0.582 & 0.541 & 362 & 0.665 \\
+claude-haiku & closed & 0.956 & 0.946 & 0.476 & 0.403 & 613 & 0.755 \\
+qwen2.5-coder-32b & closed & 0.613 & 0.935 & 0.240 & 0.185 & 1360 & 0.576 \\
+qwen2.5-coder-7b & closed & 0.488 & 0.741 & 0.058 & 0.021 & 2781 & 0.487 \\
+\bottomrule
+\end{tabular}
