@@ -1,8 +1,9 @@
 """TrackedState: a flat str -> float|int|bool mapping that logs every read and write.
 
-Log entries are (t, key, op) with op in {"r", "w", "d"}. A read of a key that is
-absent (e.g. ``"k" in state`` returning False, or ``state.get("k", 0)`` on a missing
-key) is logged as op "m" (miss) and never contributes to tau.
+Log entries are (t, key, op) with op in {"r", "w", "d", "c", "m"}. Only value reads
+("r": ``state[k]``, ``state.get(k)`` on a live key) contribute to tau. A value read
+of an absent key is "m" (miss); a membership test ``k in state`` is "c". Neither
+contributes to tau: tau measures the age of the *values* a program consumes.
 """
 from __future__ import annotations
 
@@ -70,7 +71,9 @@ class TrackedState:
         return self._d.get(key, default)
 
     def __contains__(self, key):
-        self._r(key)
+        # membership is logged ("c") but is not a value read: it never contributes to tau
+        if self._track:
+            self.log.append((self._t, key, "c"))
         return key in self._d
 
     def __setitem__(self, key, value):

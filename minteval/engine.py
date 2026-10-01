@@ -35,6 +35,7 @@ class EngineConfig:
     slippage_bp: float = 1.0
     quant_delta: float = 0.05
     bars_per_year: int = 35040
+    warmup_bars: int = 960          # strategy is first called at the close of this bar
     interval_minutes: int = 15
 
     @classmethod
@@ -84,7 +85,7 @@ def _validate(out, t):
 
 
 def run_backtest(strategy, prices: dict, cfg: EngineConfig, track_state: bool = False,
-                 start_bar: int = 0, end_bar: int | None = None) -> BacktestResult:
+                 end_bar: int | None = None) -> BacktestResult:
     feed = Feed(prices, cfg.interval_minutes)
     n = feed.n if end_bar is None else end_bar
     O, H, L, C = (feed._full[f] for f in ("open", "high", "low", "close"))
@@ -128,6 +129,10 @@ def run_backtest(strategy, prices: dict, cfg: EngineConfig, track_state: bool = 
         if new_k != 0 and (old_k == 0 or (new_k > 0) != (old_k > 0)):
             open_info = (1 if new_k > 0 else -1, t, eq_before)
 
+    start_bar = min(cfg.warmup_bars, n)
+    for t in range(start_bar):          # warm-up: history only, no decisions, flat
+        feed.reveal(t)
+        equity[t] = cash
     for t in range(start_bar, n):
         o, h, l, c = O[t], H[t], L[t], C[t]
         # ---- 1. execute pending decision at the open -----------------------

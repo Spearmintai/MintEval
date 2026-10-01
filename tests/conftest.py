@@ -17,4 +17,4 @@ def prices():
 @pytest.fixture(scope="session")
 def cfg():
     from minteval.engine import EngineConfig
-    return EngineConfig()
+    return EngineConfig(warmup_bars=0)

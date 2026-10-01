@@ -1,0 +1,14 @@
+{
+ "n": 800,
+ "compile_fail": 0,
+ "action_match_min": 1.0,
+ "trade_f1_min": 1.0,
+ "abs_es_max": 0.0,
+ "spec_match_min": 1.0,
+ "errors": {},
+ "csv_sha256": [
+  "bb37c0393a1d9c60333b5d85b777308877bcbd11626ef65b2ce754abfdfaf989",
+  "bb37c0393a1d9c60333b5d85b777308877bcbd11626ef65b2ce754abfdfaf989"
+ ],
+ "deterministic": true
+}

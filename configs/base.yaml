@@ -13,7 +13,23 @@ engine:
   slippage_bp: 1.0            # adverse price slippage per fill
   quant_delta: 0.05           # target-position grid (calibrated in step 5, see PROGRESS.md)
   bars_per_year: 35040
+  warmup_bars: 960            # 10 days; strategy first called at the close of bar 960
 sandbox:
   timeout_s: 10
   memory_mb: 2048
   allowed_imports: [math, numpy]
+pool:
+  n_candidates: 15000         # spec said 3000; 15000 needed so every (tau bin x R band) cell can be filled
+  min_trades: 20
+  bust_frac_bars: 0.05        # "no blow-up in the first 5% of bars": equity >= 50% of initial
+  bust_equity_frac: 0.5
+  n_bins: 5
+  per_bin: 160
+  bin_on: tau_max
+  r_match:                    # match the R_bench distribution across tau bins (common support)
+    lo: -0.85
+    hi: 0.15
+    n_bands: 5
+sampler:
+  risk_size_p: [0.25, 0.35, 0.40]   # P(1, 2, 3 risk layers): skewed hard on purpose
+  filter_p: 0.35

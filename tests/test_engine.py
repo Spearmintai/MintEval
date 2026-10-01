@@ -161,7 +161,7 @@ def _synthetic(o, h, l, c):
 
 
 def test_fill_next_open_and_stop_priority():
-    cfg = EngineConfig(fee_bp=0.0, slippage_bp=0.0)
+    cfg = EngineConfig(fee_bp=0.0, slippage_bp=0.0, warmup_bars=0)
     # bar0 decide long with stop 95 & take 105; bar1 opens 100, low 90, high 110 -> stop first
     P = _synthetic([100, 100, 100], [100, 110, 100], [100, 90, 100], [100, 100, 100])
 
@@ -176,7 +176,7 @@ def test_fill_next_open_and_stop_priority():
 
 
 def test_gap_through_stop_fills_at_open():
-    cfg = EngineConfig(fee_bp=0.0, slippage_bp=0.0)
+    cfg = EngineConfig(fee_bp=0.0, slippage_bp=0.0, warmup_bars=0)
     P = _synthetic([100, 100, 90, 90], [100, 100, 91, 90], [100, 99, 85, 90], [100, 100, 90, 90])
 
     def s(hist, state, pos, ind):
@@ -188,7 +188,7 @@ def test_gap_through_stop_fills_at_open():
 
 
 def test_costs_charged():
-    cfg = EngineConfig(fee_bp=5.0, slippage_bp=1.0)
+    cfg = EngineConfig(fee_bp=5.0, slippage_bp=1.0, warmup_bars=0)
     P = _synthetic([100] * 4, [100] * 4, [100] * 4, [100] * 4)
 
     def s(hist, state, pos, ind):
@@ -200,7 +200,7 @@ def test_costs_charged():
 
 
 def test_flip_creates_two_round_trips():
-    cfg = EngineConfig(fee_bp=0.0, slippage_bp=0.0)
+    cfg = EngineConfig(fee_bp=0.0, slippage_bp=0.0, warmup_bars=0)
     P = _synthetic([100] * 6, [100] * 6, [100] * 6, [100] * 6)
 
     def s(hist, state, pos, ind):
