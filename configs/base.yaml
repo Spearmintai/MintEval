@@ -33,3 +33,21 @@ pool:
 sampler:
   risk_size_p: [0.25, 0.35, 0.40]   # P(1, 2, 3 risk layers): skewed hard on purpose
   filter_p: 0.35
+translate:
+  model: {kind: openrouter, model: google/gemini-3.5-flash-lite}
+  min_words: 40
+  max_words: 120
+  max_attempts: 6
+  temperature: 0.7
+  roundtrip: {enabled: true,   # fidelity gate; see PROGRESS.md step 4
+              model: {kind: openrouter, model: deepseek/deepseek-v4-flash}}
+models:                       # subjects under test; temperature 0, one sample per task
+  - {name: gpt-5.4-mini, kind: openrouter, model: openai/gpt-5.4-mini}
+  - {name: claude-haiku, kind: openrouter, model: "~anthropic/claude-haiku-latest"}
+  - {name: qwen2.5-coder-7b, kind: vllm, base_url: "http://127.0.0.1:18007/v1", model: qwen2.5-coder-7b}
+  - {name: qwen2.5-coder-32b, kind: vllm, base_url: "http://127.0.0.1:18032/v1", model: qwen2.5-coder-32b}
+generation:
+  temperature: 0.0
+  max_tokens: 32768           # 8000 truncated reasoning models in the smoke test (PROGRESS step 4)
+  settings: [open, closed]
+  workers: {openrouter: 16, vllm: 32}

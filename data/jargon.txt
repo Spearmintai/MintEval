@@ -1,0 +1,88 @@
+# MintEval jargon dictionary  —  STATUS: AI-DRAFTED, PENDING HUMAN REVIEW
+# Rule 6 of the task spec: this file must be provided/approved by a human trader.
+# Every entry below was drafted by an AI (Claude) from general knowledge; none was scraped.
+# Reviewer: change the status column to OK / EDIT:<new text> / DROP, add missing expressions.
+# Format: expression <TAB> gloss <TAB> status
+go long	open a long position	PENDING
+get long	open a long position	PENDING
+get short	open a short position	PENDING
+flip short	turn bearish / go short	PENDING
+flat	no position	PENDING
+get flat	close everything	PENDING
+sit on hands	do nothing / wait	PENDING
+sit out	skip trading for a while	PENDING
+stand aside	do not trade	PENDING
+bag	a position	PENDING
+size in	enter a position	PENDING
+size up	increase position size	PENDING
+half size	50% of normal size	PENDING
+full port	100% of equity	PENDING
+quarter size	25% of equity	PENDING
+add to winners	pyramid into a profitable position	PENDING
+pyramid	add to a winning position	PENDING
+scale in	enter in pieces	PENDING
+scale out	exit in pieces	PENDING
+take some off the table	reduce the position, lock part of the profit	PENDING
+pay yourself	take partial profit	PENDING
+bank half	close half the position at a profit	PENDING
+let the rest ride	keep the remainder open	PENDING
+let it run	do not take profit early	PENDING
+cut it	close the position	PENDING
+bail	exit quickly	PENDING
+dump it	sell / close the position	PENDING
+stopped out	position closed by the stop	PENDING
+hard stop	resting stop order	PENDING
+SL	stop loss	PENDING
+TP	take profit	PENDING
+stop to BE	move the stop to the entry price	PENDING
+breakeven	entry price as the stop level	PENDING
+free trade	trade whose stop sits at breakeven	PENDING
+risk-free	stop at breakeven (colloquial)	PENDING
+trail it	use a trailing stop	PENDING
+trailing stop	stop that follows the best price	PENDING
+ratchet the stop	move the stop only in the favourable direction	PENDING
+lock in	secure profit with a stop	PENDING
+give it room	use a wide stop	PENDING
+tight stop	stop close to price	PENDING
+wick	intrabar high/low excursion	PENDING
+candle	bar	PENDING
+the 15	the 15-minute chart	PENDING
+the 1h	the one-hour chart	PENDING
+the 4h	the four-hour chart	PENDING
+HTF	higher timeframe	PENDING
+LTF	lower timeframe	PENDING
+golden cross	fast MA crosses above slow MA	PENDING
+death cross	fast MA crosses below slow MA	PENDING
+crossover	one line crossing another	PENDING
+MACD flips	MACD line crosses its signal line	PENDING
+oversold bounce	RSI turns back up from oversold	PENDING
+overbought fade	sell as RSI turns down from overbought	PENDING
+fade the move	trade against the move	PENDING
+breakout	price leaves a range	PENDING
+breakdown	price breaks below support	PENDING
+range	sideways price box	PENDING
+box	price range / consolidation	PENDING
+chop	directionless market	PENDING
+retest	price returns to a broken level	PENDING
+buy the retest	enter long when price comes back to the breakout level	PENDING
+flip level	broken resistance acting as support	PENDING
+new highs	price above the recent high	PENDING
+Donchian	highest-high / lowest-low channel	PENDING
+ATR	average true range	PENDING
+vol	volatility	PENDING
+in the green	in profit	PENDING
+in the red	at a loss	PENDING
+runner	the remaining part of a scaled-out position	PENDING
+cooldown	waiting period after a trade	PENDING
+revenge trade	immediate re-entry after a loss (to avoid)	PENDING
+overtrading	taking too many trades	PENDING
+one and done	only one trade per day	PENDING
+max N a day	at most N trades per day	PENDING
+time out	time-based exit	PENDING
+dead money	position that is not moving	PENDING
+reload	re-enter	PENDING
+trend filter	only trade in the higher-timeframe direction	PENDING
+above the EMA	price above the exponential moving average	PENDING
+bull regime	uptrend conditions	PENDING
+long-only	never short	PENDING
+both ways	trade long and short	PENDING

@@ -63,6 +63,10 @@ def _gen_job(args):
     sid, model, code, price_file, cfg, timeout = args
     if code is None:
         return sid, model, {"error": "NoCode: no code block in model output", "error_bar": -1}
+    if code.startswith("# TRUNCATED"):
+        return sid, model, {"error": "Truncated: output hit max_tokens before any code", "error_bar": -1}
+    if code.startswith("# API_ERROR"):
+        return sid, model, {"error": "APIError: request failed after retries", "error_bar": -1}
     return sid, model, run_sandboxed(code, price_file, cfg, timeout_s=timeout)
 
 
