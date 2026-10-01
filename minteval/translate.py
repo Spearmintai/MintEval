@@ -218,7 +218,7 @@ def translate_task(task: dict, client, jargon: list[str], lo=40, hi=120, max_att
         if v["ok"] and reader is not None:
             rt = roundtrip_check(task, text, reader, tag_suffix=str(a))
             v["recovery"] = rt["recovery"]
-            if rt["recovery"] < 1.0:
+            if rt["recovery"] < 1.0:   # NaN (reader failure) passes through ungated
                 v["ok"] = False
                 v["problems"] = ["a reader misunderstood it: " + "; ".join(
                     _slot_diff(task["spec"], rt["recovered_spec"])) +
@@ -256,6 +256,9 @@ def roundtrip_check(task: dict, q: str, client, tag_suffix: str = "") -> dict:
     from .metrics import spec_match
     from .prompts import extract_json, menu_text
     out = client.chat([{"role": "user", "content": ROUNDTRIP_PROMPT.format(menu=menu_text(), q=q)}],
-                      temperature=0.0, max_tokens=3000, tag=f"roundtrip-{task['strategy_id']}-{tag_suffix}")
+                      temperature=0.0, max_tokens=16000, tag=f"roundtrip-{task['strategy_id']}-{tag_suffix}")
     spec = extract_json(out.get("text"))
+    if out.get("error") or out.get("finish_reason") == "length":
+        # reader failure is not evidence against the translation: do not gate on it
+        return {"recovered_spec": spec, "recovery": float("nan"), "reader_error": out.get("error") or "length"}
     return {"recovered_spec": spec, "recovery": spec_match(task["spec"], spec)}

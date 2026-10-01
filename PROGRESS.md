@@ -54,3 +54,39 @@ copied from pipeline outputs (files named in each entry).
   |ES| = 0 for 800/800, 0 compile failures. Acceptance test 4: two scoring runs, identical CSV
   SHA256 (`results/selftest/summary.json`). Pool generation determinism: pytest `test_pool_deterministic`.
 - Mutation sanity (one risk parameter shifted one grid step, 8 tasks): ActionMatch 0.24-0.96, all < 1.
+
+## Step 4 — back-translation (`minteval/translate.py`, `results/tasks/prompts.jsonl`)
+- Jargon dictionary `data/jargon.txt`: 83 expressions, **all AI-drafted and marked PENDING human
+  review** (rule 6). Nothing scraped.
+- Translator: `google/gemini-3.5-flash-lite` (T=0.7, seeded), 40-120 words, >=3 slang hits, every
+  parameter value present (with accepted renderings: 16 bars = 4 hours, 0.5 = 50%/half, ...), no code-like
+  tokens; up to 6 attempts with the failed checks fed back.
+- Pilot iterations (6 tasks, all outputs kept in the LLM cache):
+  1. v1 prompt: valid 4/4 but every message opened with "Yo"; boundary looseness ("under 3 ATR" for <=).
+  2. v2: 8 rotating voices + "preserve boundaries exactly" -> text became spec-like ("strictly above"
+     everywhere), defeating the realism goal (review point 4).
+  3. v3: boundary words made a *desk convention* (above/below/breaks/crosses = strict; at least/at most/
+     within = inclusive), stated in both the translator prompt and the model-facing interface doc; "never
+     write 'strictly'". Natural text, but 2/6 had fidelity errors ("2 steps of 2 ATR", "multiplier 1").
+  4. -> enabled the round-trip reader as a fidelity gate (spec says it may be off in v0; turned on because
+     of (3)). On a mismatch the translator gets the slot-level diff and rewrites.
+- Round-trip reader bugs/variants (each logged):
+  a. deepseek-v4-flash, max_tokens 3000: most calls truncated in reasoning (finish=length) and were
+     scored as "reader failed" -> spurious rewrites. **Bug**: fixed by (i) not gating on reader failures
+     (recovery = NaN, passes ungated, counted), (ii) raising max_tokens to 16000.
+  b. flash @16000: 3/6 still truncated. Variant sweep on the two failing tasks (no cache):
+     flash effort=low 7-13k tok, 1.0/1.0; flash no-reasoning 3 s but 1.0/0.75; flash reasoning cap 2k
+     (ignored) 1.0/1.0; **deepseek-v4-pro effort=low 3-5k tok, 1.0/1.0 (chosen)**; qwen3.7-flash 3k tok
+     1.0/1.0 (rejected: Qwen is a subject family -> gate would favour it); kimi-k2.5 8-10k tok 1.0/1.0.
+- Budget: account had $0.07 left at the start of this step; the user topped it up.
+
+## Smoke tests (6 pilot tasks; `results/smoke/`)
+- DeepSeek-flash as a throw-away subject: 5/6 compile failures were `finish=length` at max_tokens 8000
+  (**harness bug, not model failure**). Fixed: max_tokens 32768 for API models; truncation and API errors
+  get their own error types (`Truncated`, `APIError`). Closed setting: SpecMatch 1.0 on 6/6, i.e. the menu
+  makes the reading step easy (supports review point 1: open setting is primary).
+- Local Qwen2.5-Coder 7B/32B (vLLM, bf16, seed 0, VLLM_BATCH_INVARIANT=1, `--generation-config vllm`,
+  max-model-len 32768, so max_tokens 8192 for these two). Low scores were audited by reading the code:
+  32B open S0003 LookaheadError is genuine (`htf.close[t // 16]` indexes the 4h series with a 15m index);
+  32B closed S0790 ActionMatch 0 with SpecMatch 1 is genuine (`highest(high,32)[-1]` includes the current
+  bar, so `close > box_top` can never hold; stop re-anchored to the current close each bar).

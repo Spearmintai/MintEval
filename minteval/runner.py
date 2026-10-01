@@ -9,8 +9,8 @@ from .llm import client_from_cfg
 from .prompts import STEP2_TASK, closed_prompt_step1, extract_code, extract_json, open_prompt
 
 
-def generate_one(client, q: str, setting: str, gcfg: dict, sid: str) -> dict:
-    kw = dict(temperature=gcfg["temperature"], max_tokens=gcfg["max_tokens"])
+def generate_one(client, q: str, setting: str, gcfg: dict, sid: str, max_tokens=None) -> dict:
+    kw = dict(temperature=gcfg["temperature"], max_tokens=max_tokens or gcfg["max_tokens"])
     if setting == "open":
         msgs = [{"role": "user", "content": open_prompt(q)}]
         out = client.chat(msgs, tag=f"open-{sid}", **kw)
@@ -40,7 +40,7 @@ def run_model(mcfg: dict, prompts: dict, setting: str, gcfg: dict, out_dir="resu
     sids = sorted(prompts)
 
     def f(sid):
-        return sid, generate_one(client, prompts[sid], setting, gcfg, sid)
+        return sid, generate_one(client, prompts[sid], setting, gcfg, sid, mcfg.get("max_tokens"))
     with ThreadPoolExecutor(workers) as ex:
         res = dict(ex.map(f, sids))
     p = Path(out_dir) / f"{mcfg['name']}__{setting}.jsonl"
