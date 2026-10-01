@@ -1,0 +1,14 @@
+{
+ "n_bars": 70075,
+ "expected_bars": 70080,
+ "missing_bars": 5,
+ "gaps": [
+  {
+   "after_bar": 42962,
+   "from": "2023-03-24 12:30:00",
+   "to": "2023-03-24 14:00:00",
+   "missing_bars": 5
+  }
+ ],
+ "bad_ohlc": 0
+}

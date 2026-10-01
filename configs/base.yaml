@@ -1,0 +1,19 @@
+# MintEval v0 base configuration. Every tunable lives here.
+seed: 20260101
+data:
+  symbol: BTCUSDT
+  interval_minutes: 15
+  start: "2022-01-01"
+  end: "2024-01-01"          # exclusive
+  raw_dir: data/prices/raw
+  price_file: data/prices/BTCUSDT_15m_2022_2023.csv
+engine:
+  initial_equity: 10000.0
+  fee_bp: 5.0                 # taker fee per fill, basis points of notional
+  slippage_bp: 1.0            # adverse price slippage per fill
+  quant_delta: 0.05           # target-position grid (calibrated in step 5, see PROGRESS.md)
+  bars_per_year: 35040
+sandbox:
+  timeout_s: 10
+  memory_mb: 2048
+  allowed_imports: [math, numpy]
