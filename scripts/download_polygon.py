@@ -63,3 +63,9 @@ for t in ("SPY", "QQQ"):
                  "regular_days": int(et[df.session == "regular"].dt.date.nunique())}
 json.dump(report, open(OUT / "download_report.json", "w"), indent=1)
 print(json.dumps(report, indent=1))
+
+# engine-format regular-hours files (open, high, low, close, volume, open_time), used by scripts/frl_equity_examples.py
+for t in ("SPY", "QQQ"):
+    df = pd.read_csv(OUT / f"{t}_15m.csv")
+    df = df[df.session == "regular"][["open", "high", "low", "close", "volume", "open_time"]]
+    df.sort_values("open_time").to_csv(f"data/prices/{t}_15m_rth_2024_2026.csv", index=False)

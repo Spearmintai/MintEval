@@ -1,6 +1,8 @@
 """FRL Fig 2: three silent failures, each a three-layer panel on a shared bar axis.
+(a), (b) BTCUSDT (MintEval v0 data); (c) QQQ regular-hours bars, the same programs re-run on equity data
+(candidate search: scripts/frl_equity_examples.py -> results/frl/equity_candidates.csv).
 Top: position held (reference solid/filled, model hatched). Middle: 15m candles with the level that matters
-for the failure (stop, box top or take). Bottom: cumulative return rebased at the window start.
+for the failure (stop or box top). Bottom: cumulative return rebased at the window start.
 Cases were chosen from results/frl/fig2_candidates.csv (scripts/frl_examples.py) after reading the code;
 the cause of each divergence is stated in CASES and was verified against the traces (asserts below)."""
 import sys, json
@@ -10,7 +12,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-from scripts.frl_examples import traced, tasks, GEN, P
+from scripts.frl_examples import traced, tasks, GEN, P as P_BTC
+from scripts.frl_equity_examples import EQ, ECFG as ECFG_EQ
 
 CASES = [
     dict(key=("S0798", "gpt-5.4-mini"), level="stop", tag="(a)", leg=("upper right", "lower left"),
@@ -19,13 +22,19 @@ CASES = [
     dict(key=("S0264", "gpt-5.4-mini"), level="box", tag="(b)", leg=("lower right", "upper left"),
          title="GPT-5.4-mini, S0264: breakout box includes the current bar",
          cause="close can never exceed a high that includes its own bar, so no entry is taken"),
-    dict(key=("S0697", "claude-opus-5.5"), level="signal", tag="(c)", leg=("upper center", None),
-         title="Claude Opus 5.5, S0697: trend filter also gates the exit",
-         cause="opposite RSI signal ignored while the 4h trend disagrees, so the position is held"),
+    dict(key=("S0661", "gpt-5.4-mini"), level="gap", tag="(c)", leg=("upper left", "lower left"), ticker="QQQ",
+         title="GPT-5.4-mini, S0661, QQQ: breakeven stop lapses before a gap",
+         cause="stop returned only while the close is 1.5 ATR in profit, so it lapses; the reference's "
+               "latched stop is gapped through overnight and filled at the open, the model stays short"),
 ]
 PRE, LEN = 40, 300
-H, L, O, Cl = P["high"], P["low"], P["open"], P["close"]
-T0 = pd.to_datetime(P["open_time"], unit="ms")
+
+
+def use(prices, tz):
+    global P, H, L, O, Cl, T0
+    P = prices
+    H, L, O, Cl = P["high"], P["low"], P["open"], P["close"]
+    T0 = pd.to_datetime(P["open_time"], unit="ms", utc=True).tz_convert(tz)
 
 
 def highest(x, n, include_current):
@@ -58,8 +67,11 @@ outer = fig.add_gridspec(3, 1, hspace=0.42)
 info = []
 for i, cs in enumerate(CASES):
     sid, m = cs["key"]
-    rr, lr = traced(tasks[sid]["source"])
-    rg, lg = traced(GEN[cs["key"]], check=True)
+    tk = cs.get("ticker")
+    use(EQ[tk], "America/New_York") if tk else use(P_BTC, "UTC")
+    kw = dict(prices=P, ecfg=ECFG_EQ) if tk else {}
+    rr, lr = traced(tasks[sid]["source"], **kw)
+    rg, lg = traced(GEN[cs["key"]], check=True, **kw)
     assert rg.error is None
     t0 = int(np.nonzero(rr.pos_q != rg.pos_q)[0][0])
     # window starts before the first difference in the level the case is about (if any) and before t0
@@ -67,9 +79,17 @@ for i, cs in enumerate(CASES):
         d = np.nonzero(np.isfinite(lr["stop"][:t0]) != np.isfinite(lg["stop"][:t0]))[0]
         a = (int(d[0]) if len(d) else t0) - PRE
         assert np.isnan(lg["stop"]).all()          # (a) the model never returns a stop at all
+    elif cs["level"] == "gap":
+        # reference short with a latched stop that the open of t0 gaps through; the model has no stop then
+        assert rr.pos_q[t0 - 1] < 0 and rr.pos_q[t0] == 0 and rg.pos_q[t0] < 0
+        assert O[t0] >= lr["stop"][t0 - 1] and np.isnan(lg["stop"][t0 - 1])
+        assert T0[t0].date() != T0[t0 - 1].date()
+        ent = int(np.nonzero(rr.pos_q[:t0] == 0)[0][-1]) + 1      # bar the reference's trade opened
+        assert np.isfinite(lg["stop"][ent:t0]).any()                # model did set the stop, then let it lapse
+        a = t0 - 45                                                # 120 bars, so the 4-bar stop episode is visible
     else:
         a = t0 - PRE
-    b = min(a + LEN, len(Cl))
+    b = min(a + (120 if cs["level"] == "gap" else LEN), len(Cl))
     assert (rr.pos_q[:t0] == rg.pos_q[:t0]).all()
     if cs["level"] == "box":
         assert (rg.pos_q == 0).all()               # (b) the model never trades
@@ -95,13 +115,20 @@ for i, cs in enumerate(CASES):
         a1.plot(x, highest(H, 64, False)[a:b], color="black", lw=1.1, label="box top, reference (prior 64 bars)")
         a1.plot(x, highest(H, 64, True)[a:b], color="black", ls="--", lw=1.1, label="box top, model (incl. current bar)")
     else:
-        # the opposite (RSI 25 up-cross) signal on which the reference covers its short at the next open
-        assert rr.pos_q[t0 - 1] < 0 and rr.pos_q[t0] == 0 and rg.pos_q[t0] < 0
-        a1.plot([t0 - 1], [L[t0 - 1] * 0.996], marker="^", color="black", ms=6, ls="none",
-                label="opposite signal (reference covers;\nmodel requires 4h downtrend to agree)")
-    a1.set_ylabel("BTCUSDT")
+        a1.plot(x, lr["stop"][a:b], color="black", lw=0, marker="_", ms=7, mew=1.6, label="stop, reference (latched)")
+        a1.plot(x, lg["stop"][a:b], color="black", lw=0, marker="o", ms=3, mfc="white", mew=0.8,
+                label="stop, model (lapses)")
+        a1.annotate(f"overnight gap: open {O[t0]:.2f}\nabove reference stop {lr['stop'][t0 - 1]:.2f}",
+                    (t0, O[t0]), xytext=(30, -4), textcoords="offset points", fontsize=6.5, va="top",
+                    arrowprops=dict(arrowstyle="-", lw=0.6))
+        for t in range(a + 1, b):                                   # session boundaries
+            if T0[t].date() != T0[t - 1].date():
+                for ax in (a0, a1, a2):
+                    ax.axvline(t - 0.5, color="0.85", lw=0.5, zorder=0)
+    a1.set_ylabel(tk or "BTCUSDT")
     a1.legend(frameon=False, fontsize=6.5, loc=cs["leg"][0])
-    a1.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:,.0f}"))
+    if not tk:
+        a1.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:,.0f}"))
     # bottom: cumulative return rebased at a
     for r, ls, lab in ((rr, "-", "reference"), (rg, "--", "model")):
         a2.plot(x, (r.equity[a:b] / r.equity[a] - 1) * 100, color="black", ls=ls, lw=1.0, label=lab)
@@ -118,7 +145,7 @@ for i, cs in enumerate(CASES):
     ticks = np.linspace(a, b - 1, 5).astype(int)
     a2.set_xticks(ticks, [T0[t].strftime("%Y-%m-%d\n%H:%M") for t in ticks])
     a2.set_xlim(a - 1, b)
-    info.append(dict(case=cs["tag"], sid=sid, model=m, t0=t0, date=str(T0[t0]), window=(a, b),
+    info.append(dict(case=cs["tag"], ticker=tk or "BTCUSDT", sid=sid, model=m, t0=t0, date=str(T0[t0]), window=(a, b),
                      gap_bp=round(float(gap)), cause=cs["cause"]))
 fig.savefig("paper_frl/figs/fig2_examples.pdf", bbox_inches="tight")
 fig.savefig("paper_frl/figs/fig2_examples.png", dpi=170, bbox_inches="tight")

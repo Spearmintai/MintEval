@@ -12,8 +12,14 @@ from minteval.evaluate import load_tasks, reference_runs, score
 from minteval.pool import compile_strategy
 
 cfg = yaml.safe_load(open("configs/base.yaml")); MA = cfg["multiasset"]
-asset = sys.argv[1]; A = MA["assets"][asset]; stages = sys.argv[2:] or ["refs", "gens", "inert"]
+asset = sys.argv[1]; A = MA["assets"][asset]
+FORCE = "--force" in sys.argv
+stages = [a for a in sys.argv[2:] if a != "--force"] or ["refs", "gens", "inert"]
 OUT = f"results/multiasset/{asset}"; os.makedirs(OUT, exist_ok=True)
+_done = {"refs": "refs.csv", "gens": "gens.csv", "inert": "inert_blocks.csv"}
+if not FORCE:   # skip stages already completed (lets the overnight supervisor resume without redoing work)
+    stages = [st for st in stages if not os.path.exists(f"{OUT}/{_done[st]}")]
+    print(asset, "stages to run:", stages, flush=True)
 ecfg = dict(cfg["engine"], fee_bp=A["fee_bp"], slippage_bp=A["slippage_bp"], bars_per_year=A["bars_per_year"])
 PF = A["price_file"]
 tasks = load_tasks()

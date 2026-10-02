@@ -352,8 +352,19 @@ $\tau$ re-measured on the new series; \MAEthSurvive{} of \NTasks{} references su
 and reference return become correlated (Spearman \MAEthRho, $p=\MAEthRhoP$), so we control for
 reference return: the low-cost models still lose \MAEthLowTau{} ActionMatch per decade of $\tau$
 ($p=\MAEthLowTauP$) and the frontier models remain flat (\MAEthFrontTau, $p=\MAEthFrontTauP$); Opus
-5.5 reaches \MAEthAMOpus{} with \MAEthSilentOpus{} silent failures, as on BTC. The findings are
-properties of the programs, not of one price path.
+5.5 reaches \MAEthAMOpus{} with \MAEthSilentOpus{} silent failures, as on BTC. We did the same on
+the S\&P~500 ETF (SPY; 15-minute regular-session bars of Dukascopy's SPY CFD as a free proxy, 0.5\,bp
+half-spread plus 0.1\,bp commission, positions held overnight with stops gapped through filled at the
+next open). \MASpySurvive{} references survive; with equity frictions they are no longer losing
+strategies (median return \MASpyRMed\%, \MASpyProfitable{} profitable), which removes the concern that
+the gap is measured on unprofitable strategies, yet the picture is unchanged: low-cost models lose
+\MASpyLowTau{} per decade of $\tau$ ($p=\MASpyLowTauP$, controlling for reference return), frontier
+models are flat (\MASpyFrontTau, $p=\MASpyFrontTauP$), and Opus 5.5 reaches \MASpyAMOpus{} with
+\MASpySilentOpus{} silent failures. The findings are properties of the programs, not of one price
+path. One block family does not transfer cleanly: with 26 bars per session, the daily entry cap no
+longer binds in \MASpyInertDailyCap{} of SPY tasks (\MABtcInertDailyCap{} on BTC), measured by
+removing the block and checking for bit-identical behaviour; ATR-scaled blocks transfer by
+construction, and no block is specified in fixed price units.
 
 \textbf{Sensitivity to the state rule.} Re-running every program that failed only because it stored
 \texttt{None} or a string in the state dictionary under a lenient engine raises CompileOK for

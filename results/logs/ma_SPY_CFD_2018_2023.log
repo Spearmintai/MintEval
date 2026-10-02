@@ -1,0 +1,10 @@
+SPY_CFD_2018_2023 stages to run: ['refs', 'gens', 'inert']
+SPY_CFD_2018_2023 refs: pass_filter 741 / 800
+SPY_CFD_2018_2023 scored claude-haiku__open.jsonl
+SPY_CFD_2018_2023 scored gpt-5.4-mini__open.jsonl
+SPY_CFD_2018_2023 scored qwen2.5-coder-32b__open.jsonl
+SPY_CFD_2018_2023 scored qwen2.5-coder-7b__open.jsonl
+SPY_CFD_2018_2023 scored claude-opus-5.5__open.jsonl
+SPY_CFD_2018_2023 scored deepseek-v4-pro__open.jsonl
+SPY_CFD_2018_2023 scored qwen3.8-max__open.jsonl
+SPY_CFD_2018_2023 inert check done 1439

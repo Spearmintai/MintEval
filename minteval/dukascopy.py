@@ -24,10 +24,13 @@ def _url(sym, d: date):
     return f"{BASE}/{sym}/{d.year}/{d.month - 1:02d}/{d.day:02d}/BID_candles_min_1.bi5"
 
 
-def download(sym: str, start: str, end: str, out_dir: str, workers: int = 2, pause_s: float = 1.0):
+def download(sym: str, start: str, end: str, out_dir: str, workers: int = 2, pause_s: float = 1.0,
+             reverse: bool = False):
     out = Path(out_dir) / sym; out.mkdir(parents=True, exist_ok=True)
     d0, d1 = date.fromisoformat(start), date.fromisoformat(end)
     days = [d0 + timedelta(i) for i in range((d1 - d0).days) if (d0 + timedelta(i)).weekday() < 5]
+    if reverse:
+        days = days[::-1]
     log = []
 
     def get(d):
@@ -76,7 +79,8 @@ def build_15m(sym: str, raw_dir: str, out_csv: str, scale: float = 1000.0) -> di
     b = b[(bm >= 570) & (bm < 960)]
     per_day = b.groupby(b.index.tz_convert("America/New_York").date).size()
     out = b.reset_index().rename(columns={"t": "open_time"})
-    out["open_time"] = out.open_time.astype("int64") // 10**6
+    # explicit unit: pandas may store datetimes in us (not ns), so integer division by 10**6 is wrong
+    out["open_time"] = (out.open_time - pd.Timestamp(0, tz="UTC")) // pd.Timedelta(milliseconds=1)
     out[["open_time", "open", "high", "low", "close", "volume"]].to_csv(out_csv, index=False)
     bad = int(((out.high < out[["open", "close"]].max(axis=1)) | (out.low > out[["open", "close"]].min(axis=1))).sum())
     return {"n_bars": len(out), "n_days": int(len(per_day)), "bars_per_day_median": float(per_day.median()),

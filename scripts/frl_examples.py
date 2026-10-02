@@ -23,13 +23,14 @@ for f, m in (("results/generations/gpt-5.4-mini__open.jsonl", "gpt-5.4-mini"),
         GEN[(g["strategy_id"], m)] = g["code"]
 
 
-def traced(src, check=False):
+def traced(src, check=False, prices=None, ecfg=None):
+    prices, ecfg = prices or P, ecfg or ECFG
     if check:
         check_source(src)
     g = {"__name__": "s"}
     exec(compile(src, "<s>", "exec"), g)
     f = g["strategy"]
-    lv = {k: np.full(len(P["close"]), np.nan) for k in ("stop", "take")}
+    lv = {k: np.full(len(prices["close"]), np.nan) for k in ("stop", "take")}
 
     def w(hist, state, pos, ind):
         out = f(hist, state, pos, ind)
@@ -38,7 +39,7 @@ def traced(src, check=False):
             if v is not None:
                 lv[k][len(hist.close) - 1] = float(v)
         return out
-    r = run_backtest(w, P, ECFG)
+    r = run_backtest(w, prices, ecfg)
     return r, lv
 
 

@@ -295,6 +295,8 @@ if MAR:
                 L += [mac(f"MA{k}{gk}Tau", rr["ltau"]["b"], "{:+.3f}"), mac(f"MA{k}{gk}TauP", rr["ltau"]["p"], "{:.1g}")]
         for m_, v_ in r_["by_model"].items():
             L += [mac(f"MA{k}AM{key(m_)}", v_["AM"]), mac(f"MA{k}Silent{key(m_)}", v_["silent"])]
+        for blk, v_ in (r_.get("inert_share_by_block") or {}).items():
+            L.append(mac(f"MA{k}Inert{''.join(w.title() for w in blk.split('_'))}", v_, "{:.2f}"))
 for k, v in reg.items():
     if "log_tau" in v:
         n = "Reg" + "".join(ch for ch in k.title() if ch.isalpha())
