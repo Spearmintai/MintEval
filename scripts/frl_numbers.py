@@ -210,7 +210,7 @@ if not VIX:
                 mac(f"FrlDivVar{nm}{k}", float(np.mean(xs)) if len(xs) == len(vals) else None, "{:.1f}")
             TL.append(f"{MNAME[m]} & \\FrlDivRho{k} & \\FrlDivVarTen{k} & \\FrlDivVarFifty{k} \\\\")
         mac("FrlDivIndepTen", 100 / 10, "{:.1f}"); mac("FrlDivIndepFifty", 100 / 50, "{:.1f}"); mac("FrlDivIndepRho", 0.0, "{:.0f}")
-        TL += [r"\midrule", r"Independent errors & 0 & \FrlDivIndepTen & \FrlDivIndepFifty \\", r"\bottomrule", r"\end{tabular}"]
+        TL += [r"\midrule", r"Independent errors & \FrlDivIndepRho & \FrlDivIndepTen & \FrlDivIndepFifty \\", r"\bottomrule", r"\end{tabular}"]
         open(f"{OUT}/table_frl_div.tex", "w").write("\n".join(TL) + "\n")
     else:
         for n in ("FrlDivCorrMin", "FrlDivCorrMax", "FrlDivVarMin", "FrlDivVarMax"): mac(n, None)
