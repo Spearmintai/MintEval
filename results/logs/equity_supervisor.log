@@ -1,1 +1,7 @@
 SPYUSUSD {'cached': 1035, 'ok': 528, 'fail': 2}
+USATECHIDXUSD {'cached': 844, 'ok': 716, 'fail': 5}
+round 1 fails=7
+SPYUSUSD {'cached': 1565}
+USATECHIDXUSD {'cached': 1562, 'ok': 3}
+round 2 fails=0
+{'SPYUSUSD': {'n_bars': 39064, 'n_days': 1509, 'bars_per_day_median': 26.0, 'short_days(<26)': 22, 'bad_ohlc': 0, 'first': '2018-01-02 14:30:00+00:00', 'last': '2023-12-29 20:45:00+00:00'}, 'USATECHIDXUSD': {'n_bars': 39617, 'n_days': 1546, 'bars_per_day_median': 26.0, 'short_days(<26)': 50, 'bad_ohlc': 0, 'first': '2018-01-02 14:30:00+00:00', 'last': '2023-12-29 20:45:00+00:00'}}

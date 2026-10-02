@@ -23,7 +23,9 @@ done
 $P - <<'PY' >> results/logs/equity_supervisor.log 2>&1
 import sys, json; sys.path.insert(0, ".")
 from minteval.dukascopy import build_15m
-rep = {s: build_15m(s, "data/prices/raw_dukascopy", f"data/prices/{s}_15m_RTH_2018_2023.csv") for s in ["SPYUSUSD", "USATECHIDXUSD"]}
+rep = {"SPYUSUSD": build_15m("SPYUSUSD", "data/prices/raw_dukascopy", "data/prices/SPYUSUSD_15m_RTH_2018_2023.csv")}
+rep["USATECHIDXUSD"] = build_15m("USATECHIDXUSD", "data/prices/raw_dukascopy", "data/prices/USATECHIDXUSD_15m_RTH_2018_2023.csv",
+                                 calendar_csv="data/prices/SPYUSUSD_15m_RTH_2018_2023.csv")   # drop exchange holidays
 json.dump(rep, open("results/multiasset/equity_build_report.json", "w"), indent=1); print(rep)
 PY
 for a in SPY_CFD_2018_2023 NDX_CFD_2018_2023; do $P scripts/multiasset.py $a >> results/logs/ma_$a.log 2>&1; done

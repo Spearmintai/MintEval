@@ -239,3 +239,15 @@ Attempt log (all runs kept under `results/archive/`):
   inert sets identical on BTC and ETH -> structural dominance (e.g. fixed 2 ATR stop beside 1.5 ATR trail),
   ~10% of those layers; v1 should filter dominated layers at generation. Data-dependent: daily_cap,
   time_stop, cooldown differ by asset.
+- Equities (Dukascopy CFD proxies, 2018-2023, regular session): download throttled (HTTP 503; GPU-box IP also
+  throttled via its proxy); solved with a resumable detached supervisor + extra forward/reverse/mid-range
+  downloaders on disjoint day ranges. **Bug caught before use:** pandas stores datetimes in microseconds ->
+  `astype(int64)//10**6` produced seconds, not ms (fixed with explicit unit). HTF candles verified on session
+  data (0 violations / 6,000 bars). **Nasdaq CFD quoted on 37 US exchange holidays** (off futures) -> restricted
+  to SPY's exchange calendar; NDX reference cache deleted and NDX re-run (cache key does not include the file).
+  Prices spot-checked against real SPY / NDX closes (within ~0.1%).
+- Results (`results/multiasset/minteval_multiasset.csv`, 15,200 rows; `report.json`): survivors BTC 800, ETH 752,
+  SPY 741, NDX 741. Equity references are profitable (median +5.5% / +7.9%, ~70% profitable) yet the
+  findings are unchanged: low-cost tau effect -0.075 (ETH) / -0.106 (SPY) / -0.105 (NDX) per decade controlling
+  R_bench; frontier flat on every asset; Opus AM 0.889-0.906, silent 0.27-0.28. Daily cap inert in 54% of
+  equity tasks (26 bars/session) vs 21-26% on crypto; no block uses fixed price units.

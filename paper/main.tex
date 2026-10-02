@@ -360,7 +360,10 @@ strategies (median return \MASpyRMed\%, \MASpyProfitable{} profitable), which re
 the gap is measured on unprofitable strategies, yet the picture is unchanged: low-cost models lose
 \MASpyLowTau{} per decade of $\tau$ ($p=\MASpyLowTauP$, controlling for reference return), frontier
 models are flat (\MASpyFrontTau, $p=\MASpyFrontTauP$), and Opus 5.5 reaches \MASpyAMOpus{} with
-\MASpySilentOpus{} silent failures. The findings are properties of the programs, not of one price
+\MASpySilentOpus{} silent failures. The Nasdaq-100 (index CFD as a QQQ proxy, restricted to exchange sessions) gives
+the same result: \MANdxSurvive{} survivors, median reference return \MANdxRMed\%, low-cost $\tau$
+effect \MANdxLowTau{} ($p=\MANdxLowTauP$), frontier \MANdxFrontTau{} ($p=\MANdxFrontTauP$), Opus 5.5
+\MANdxAMOpus{} with \MANdxSilentOpus{} silent failures. The findings are properties of the programs, not of one price
 path. One block family does not transfer cleanly: with 26 bars per session, the daily entry cap no
 longer binds in \MASpyInertDailyCap{} of SPY tasks (\MABtcInertDailyCap{} on BTC), measured by
 removing the block and checking for bit-identical behaviour; ATR-scaled blocks transfer by
@@ -405,8 +408,9 @@ type independently, which a benchmark of naturally occurring tasks cannot do, bu
 sample the distribution of real strategies. A real subset (strategies ported from open-source
 frameworks and exchange product specifications, with human-written intents and human-verified
 reference ports) is under construction; its role is to test whether model rankings and the $\tau$
-effect transfer. v0 is small: one instrument (BTCUSDT), one data window, \NTasks{} tasks and four
-models with one sample each. A human baseline and a human-rewritten instruction subset are in progress; until
+effect transfer. v0 is small: \NTasks{} tasks generated and calibrated on one instrument (BTCUSDT 2022--2023) and
+re-run on three others; the equity series are free CFD proxies (Dukascopy), not exchange data; one
+sample per task and model. A human baseline and a human-rewritten instruction subset are in progress; until
 then, instructions are LLM-written and may be friendlier to LLMs than real traders' messages, and
 the slang dictionary is still under human review. Latency is deliberately excluded: fidelity and
 latency are orthogonal goals. The unit of observation is the bar-level action and the complete

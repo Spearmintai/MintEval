@@ -1,0 +1,21 @@
+{
+ "SPYUSUSD": {
+  "n_bars": 39064,
+  "n_days": 1509,
+  "bars_per_day_median": 26.0,
+  "short_days(<26)": 22,
+  "bad_ohlc": 0,
+  "first": "2018-01-02 14:30:00+00:00",
+  "last": "2023-12-29 20:45:00+00:00"
+ },
+ "USATECHIDXUSD": {
+  "n_bars": 39099,
+  "n_days": 1509,
+  "bars_per_day_median": 26.0,
+  "short_days(<26)": 13,
+  "bad_ohlc": 0,
+  "dropped_non_session_days": 37,
+  "first": "2018-01-02 14:30:00+00:00",
+  "last": "2023-12-29 20:45:00+00:00"
+ }
+}

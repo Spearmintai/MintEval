@@ -55,7 +55,9 @@ def download(sym: str, start: str, end: str, out_dir: str, workers: int = 2, pau
     return log
 
 
-def build_15m(sym: str, raw_dir: str, out_csv: str, scale: float = 1000.0) -> dict:
+def build_15m(sym: str, raw_dir: str, out_csv: str, scale: float = 1000.0, calendar_csv: str | None = None) -> dict:
+    """calendar_csv: a 15m file whose session days define the exchange calendar (index CFDs keep quoting
+    off futures on US exchange holidays, e.g. Thanksgiving; those days are not cash sessions)."""
     rows = []
     for f in sorted((Path(raw_dir) / sym).glob("*.bi5")):
         b = f.read_bytes()
@@ -77,6 +79,13 @@ def build_15m(sym: str, raw_dir: str, out_csv: str, scale: float = 1000.0) -> di
         {"open": "first", "high": "max", "low": "min", "close": "last", "volume": "sum"}).dropna()
     bny = b.index.tz_convert("America/New_York"); bm = bny.hour * 60 + bny.minute
     b = b[(bm >= 570) & (bm < 960)]
+    dropped_holidays = 0
+    if calendar_csv:
+        cal = pd.read_csv(calendar_csv)
+        cal_days = set(pd.to_datetime(cal.open_time, unit="ms", utc=True).dt.tz_convert("America/New_York").dt.date)
+        bd = pd.Series(b.index.tz_convert("America/New_York").date, index=b.index)
+        dropped_holidays = int(bd[~bd.isin(cal_days)].nunique())
+        b = b[bd.isin(cal_days).values]
     per_day = b.groupby(b.index.tz_convert("America/New_York").date).size()
     out = b.reset_index().rename(columns={"t": "open_time"})
     # explicit unit: pandas may store datetimes in us (not ns), so integer division by 10**6 is wrong
@@ -84,5 +93,5 @@ def build_15m(sym: str, raw_dir: str, out_csv: str, scale: float = 1000.0) -> di
     out[["open_time", "open", "high", "low", "close", "volume"]].to_csv(out_csv, index=False)
     bad = int(((out.high < out[["open", "close"]].max(axis=1)) | (out.low > out[["open", "close"]].min(axis=1))).sum())
     return {"n_bars": len(out), "n_days": int(len(per_day)), "bars_per_day_median": float(per_day.median()),
-            "short_days(<26)": int((per_day < 26).sum()), "bad_ohlc": bad,
+            "short_days(<26)": int((per_day < 26).sum()), "bad_ohlc": bad, "dropped_non_session_days": dropped_holidays,
             "first": str(b.index[0]), "last": str(b.index[-1])}

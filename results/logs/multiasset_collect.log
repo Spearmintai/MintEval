@@ -1,0 +1,85 @@
+asset              subset       model            
+BTCUSDT_2022_2023  frontier200  claude-opus-5.5      200
+                                deepseek-v4-pro      200
+                                qwen3.8-max          200
+                   full800      claude-haiku         800
+                                gpt-5.4-mini         800
+                                qwen2.5-coder-32b    800
+                                qwen2.5-coder-7b     800
+ETHUSDT_2018_2023  frontier200  claude-opus-5.5      200
+                                deepseek-v4-pro      200
+                                qwen3.8-max          200
+                   full800      claude-haiku         800
+                                gpt-5.4-mini         800
+                                qwen2.5-coder-32b    800
+                                qwen2.5-coder-7b     800
+NDX_CFD_2018_2023  frontier200  claude-opus-5.5      200
+                                deepseek-v4-pro      200
+                                qwen3.8-max          200
+                   full800      claude-haiku         800
+                                gpt-5.4-mini         800
+                                qwen2.5-coder-32b    800
+                                qwen2.5-coder-7b     800
+SPY_CFD_2018_2023  frontier200  claude-opus-5.5      200
+                                deepseek-v4-pro      200
+                                qwen3.8-max          200
+                   full800      claude-haiku         800
+                                gpt-5.4-mini         800
+                                qwen2.5-coder-32b    800
+                                qwen2.5-coder-7b     800
+
+== BTCUSDT_2022_2023: survive 800/800  spearman(logtau,R)=0.054 (p=0.13)  R_med=-0.351 profitable=0.09
+   low_cost|tau {'ltau': (-0.065, '1e-06')}
+   low_cost|tau_R {'ltau': (-0.063, '1.9e-06'), 'R_bench': (-0.109, '6.2e-05')}
+   frontier|tau {'ltau': (0.015, '0.6')}
+   frontier|tau_R {'ltau': (0.014, '0.61'), 'R_bench': (0.011, '0.92')}
+   claude-haiku       cOK 0.948 AM 0.400 silent 0.806
+   claude-opus-5.5    cOK 1.000 AM 0.889 silent 0.275
+   deepseek-v4-pro    cOK 0.910 AM 0.782 silent 0.405
+   gpt-5.4-mini       cOK 0.955 AM 0.544 silent 0.729
+   qwen2.5-coder-32b  cOK 0.601 AM 0.172 silent 0.586
+   qwen2.5-coder-7b   cOK 0.374 AM 0.081 silent 0.372
+   qwen3.8-max        cOK 1.000 AM 0.819 silent 0.390
+   inert: {'box_shift': 0.0, 'breakeven': 0.099, 'cooldown': 0.019, 'daily_cap': 0.258, 'fixed_stop': 0.095, 'partial_take': 0.06, 'take_profit': 0.007, 'time_stop': 0.163, 'trailing_hwm': 0.056}
+
+== ETHUSDT_2018_2023: survive 752/800  spearman(logtau,R)=0.161 (p=9.7e-06)  R_med=-0.612 profitable=0.18
+   low_cost|tau {'ltau': (-0.078, '8.3e-09')}
+   low_cost|tau_R {'ltau': (-0.075, '5.7e-08'), 'R_bench': (-0.007, '0.15')}
+   frontier|tau {'ltau': (-0.013, '0.66')}
+   frontier|tau_R {'ltau': (0.0, '0.99'), 'R_bench': (-0.064, '0.087')}
+   claude-haiku       cOK 0.951 AM 0.401 silent 0.802
+   claude-opus-5.5    cOK 1.000 AM 0.889 silent 0.278
+   deepseek-v4-pro    cOK 0.898 AM 0.790 silent 0.392
+   gpt-5.4-mini       cOK 0.953 AM 0.540 silent 0.723
+   qwen2.5-coder-32b  cOK 0.618 AM 0.160 silent 0.605
+   qwen2.5-coder-7b   cOK 0.375 AM 0.075 silent 0.374
+   qwen3.8-max        cOK 1.000 AM 0.833 silent 0.369
+   inert: {'box_shift': 0.0, 'breakeven': 0.099, 'cooldown': 0.012, 'daily_cap': 0.214, 'fixed_stop': 0.095, 'partial_take': 0.06, 'take_profit': 0.0, 'time_stop': 0.138, 'trailing_hwm': 0.051}
+
+== SPY_CFD_2018_2023: survive 741/800  spearman(logtau,R)=0.139 (p=0.00015)  R_med=0.055 profitable=0.70
+   low_cost|tau {'ltau': (-0.105, '9.3e-12')}
+   low_cost|tau_R {'ltau': (-0.106, '1.7e-11'), 'R_bench': (0.01, '0.81')}
+   frontier|tau {'ltau': (0.022, '0.43')}
+   frontier|tau_R {'ltau': (0.023, '0.41'), 'R_bench': (-0.037, '0.53')}
+   claude-haiku       cOK 0.945 AM 0.432 silent 0.780
+   claude-opus-5.5    cOK 1.000 AM 0.906 silent 0.270
+   deepseek-v4-pro    cOK 0.910 AM 0.814 silent 0.395
+   gpt-5.4-mini       cOK 0.953 AM 0.579 silent 0.702
+   qwen2.5-coder-32b  cOK 0.640 AM 0.186 silent 0.625
+   qwen2.5-coder-7b   cOK 0.360 AM 0.097 silent 0.359
+   qwen3.8-max        cOK 1.000 AM 0.852 silent 0.365
+   inert: {'box_shift': 0.0, 'breakeven': 0.099, 'cooldown': 0.031, 'daily_cap': 0.541, 'fixed_stop': 0.095, 'partial_take': 0.06, 'take_profit': 0.014, 'time_stop': 0.192, 'trailing_hwm': 0.056}
+
+== NDX_CFD_2018_2023: survive 741/800  spearman(logtau,R)=0.112 (p=0.0023)  R_med=0.081 profitable=0.72
+   low_cost|tau {'ltau': (-0.105, '1.3e-11')}
+   low_cost|tau_R {'ltau': (-0.109, '3.3e-12'), 'R_bench': (0.066, '0.021')}
+   frontier|tau {'ltau': (0.008, '0.76')}
+   frontier|tau_R {'ltau': (0.005, '0.86'), 'R_bench': (0.063, '0.17')}
+   claude-haiku       cOK 0.945 AM 0.427 silent 0.787
+   claude-opus-5.5    cOK 1.000 AM 0.902 silent 0.275
+   deepseek-v4-pro    cOK 0.910 AM 0.811 silent 0.400
+   gpt-5.4-mini       cOK 0.953 AM 0.577 silent 0.707
+   qwen2.5-coder-32b  cOK 0.636 AM 0.182 silent 0.621
+   qwen2.5-coder-7b   cOK 0.360 AM 0.098 silent 0.359
+   qwen3.8-max        cOK 1.000 AM 0.849 silent 0.370
+   inert: {'box_shift': 0.009, 'breakeven': 0.121, 'cooldown': 0.025, 'daily_cap': 0.541, 'fixed_stop': 0.095, 'partial_take': 0.067, 'take_profit': 0.007, 'time_stop': 0.212, 'trailing_hwm': 0.062}
