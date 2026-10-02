@@ -228,6 +228,13 @@ def test_static_rejects(bad):
         check_source(bad)
 
 
+def test_constant_arithmetic_allowed():
+    check_source("DAY_MS = 24 * 3600 * 1000\nA = -2.0 / (14 + 1)\n"
+                 "def strategy(hist, state, pos, ind):\n    return {}\n")
+    with pytest.raises(SandboxViolation):
+        check_source("X = [1] * 3\ndef strategy(hist, state, pos, ind):\n    return {}\n")
+
+
 def test_state_must_be_flat(prices, cfg):
     def s(hist, state, pos, ind):
         state["x"] = [1, 2]

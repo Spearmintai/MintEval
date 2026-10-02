@@ -1,0 +1,32 @@
+{
+ "claude-opus-5.5": {
+  "noclose": {
+   "n": 13,
+   "silent": 12
+  },
+  "close": {
+   "n": 16,
+   "silent": 9
+  }
+ },
+ "deepseek-v4-pro": {
+  "noclose": {
+   "n": 12,
+   "silent": 12
+  },
+  "close": {
+   "n": 15,
+   "silent": 14
+  }
+ },
+ "qwen3.8-max": {
+  "noclose": {
+   "n": 13,
+   "silent": 13
+  },
+  "close": {
+   "n": 16,
+   "silent": 15
+  }
+ }
+}

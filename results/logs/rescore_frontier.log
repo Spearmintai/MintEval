@@ -1,0 +1,7 @@
+58f46da2043ad17fed7056dd29fdfe387b9ccb0dcea1256f0adea3b9a9762dd9
+                        compile_fail        spec_match        action_match        trade_f1          abs_es        
+                                mean median       mean median         mean median     mean median     mean  median
+model           setting                                                                                           
+claude-opus-5.5 open            0.00    0.0        NaN    NaN        0.889  1.000    0.871  1.000  285.121   0.000
+deepseek-v4-pro open            0.09    0.0        NaN    NaN        0.782  0.967    0.734  0.972  620.226  91.767
+qwen3.8-max     open            0.00    0.0        NaN    NaN        0.819  0.989    0.765  0.985  372.459  22.968

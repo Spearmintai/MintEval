@@ -184,3 +184,33 @@ Attempt log (all runs kept under `results/archive/`):
 - FRL export: `results/frl/minteval_v0_frl.csv` (+ DATA_DICTIONARY.json) with realized_vol (annualised,
   over the reference's in-position bars) and R_bench_gross; includes the frontier200 rows.
 - Budget: OpenRouter key exhausted ($0.11 left).
+
+## 2026-10-02 (cont.) — zero-cost analyses, frontier families, judges, graded negative control
+- |ES| regression (`scripts/es_regression.py`, `results/es_regression.json`): winsorized |ES| ~ log tau x vol
+  (+ trades, K; 99/95% winsor; high-vol dummy). Vol main effect robust for low-cost models (GPT-mini open
+  161 bp/SD p=0.01; Haiku larger); tau main effect positive; tau x vol significant in 1/15 cells -> no
+  evidence of amplification in v0 (single window: realized_vol SD only 0.083). Opus: nothing.
+- Opus silent-failure structure (`scripts/opus_structure.py`): breakout-retest 0.72 vs 0.20 (p=5e-8),
+  HTF filter 0.50 vs 0.17, trailing 0.43 vs 0.22; not risk-layer count/box/cooldown. Audit: no clustering of
+  first divergence on HTF-completing bars; most divergences in-trade. Retest tasks: instruction omits
+  "close" -> 12/13 silent vs 9/16 (`results/ambiguity_check.json`) => partly instruction insufficiency
+  (identification-vs-sufficiency weakness of the round-trip gate).
+- tau CIs on the 200 subset (`scripts/tau_ci_frontier.py`, Fig 4): Opus +0.017 [-0.036,+0.070], Qwen3.8-Max
+  +0.010 [-0.052,+0.072], DeepSeek-V4-Pro +0.018 [-0.053,+0.088] vs GPT-mini -0.168 [-0.241,-0.094],
+  Haiku -0.194. Flat is real, not noise; decision-table row "all frontier flat" applies.
+- Provider block: since the cap change, OpenAI/Anthropic/Google return HTTP 403 "violation of provider
+  ToS" for every request incl. "Say OK" (DeepSeek/Qwen/Kimi fine). Blocked: GPT-5.5, Gemini judge,
+  Sonnet-4 judge fill-in (26). Substitutes: non-Anthropic frontier subjects Qwen3.8-Max (effort low; default
+  ran 1000 s to the 32k cap) and DeepSeek-V4-Pro (effort high; it is also the round-trip reader — caveat);
+  interim judge Kimi K2.5 (not a subject, not in the pipeline).
+- Concurrency: 16 -> 64 workers after the cap was removed (per-call latency 130-150 s was the bottleneck).
+- Harness fairness fix: module-level constant arithmetic (`DAY_MS = 24*3600*1000`) was rejected; now allowed
+  (test added). Everything rescored; main CSV hash unchanged (fdd0384e...), determinism re-confirmed.
+- Graded negative control (`scripts/make_mutants.py`, `score_mutants.py`): 5 types x 30. My first cmp_reverse
+  injection hit a `while` bound -> infinite loop (not a realistic bug); restricted to `if` conditions.
+  AM<0.9 share 0.67-1.00 per type; Kimi judge passes 120/129 behaviourally divergent mutants, 30/30 of
+  window-includes-current-bar (AM 0.009, almost never trades).
+- Kimi judge over all subset runs: passes 55/55 Opus, 77/78 Qwen3.8-Max, 80/81 DeepSeek, 139/142 GPT-mini
+  silent failures; rejects much of Qwen2.5-Coder-7B (pass 0.47).
+- Paper: abstract/main line rewritten per the decision table; frontier table (3 families), Fig 4, judge,
+  mutants, cost-of-errors and structure paragraphs; limitations updated. 7 pages.

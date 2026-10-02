@@ -45,10 +45,13 @@ models:                       # subjects under test; temperature 0, one sample p
   - {name: gpt-5.4-mini, kind: openrouter, model: openai/gpt-5.4-mini}
   - {name: claude-haiku, kind: openrouter, model: "~anthropic/claude-haiku-latest"}
   - {name: claude-opus-5.5, kind: openrouter, model: anthropic/claude-opus-5.5}   # frontier reference, subset only
+  - {name: gpt-5.5, kind: openrouter, model: openai/gpt-5.5}                     # non-Anthropic frontier (blocked: provider 403)
+  - {name: qwen3.8-max, kind: openrouter, model: qwen/qwen3.8-max-0902, extra: {reasoning: {effort: low}}}   # default effort hit 32k tokens / 1000 s
+  - {name: deepseek-v4-pro, kind: openrouter, model: deepseek/deepseek-v4-pro, extra: {reasoning: {effort: high}}}  # also the round-trip reader (bias caveat)
   - {name: qwen2.5-coder-7b, kind: vllm, base_url: "http://127.0.0.1:18007/v1", model: qwen2.5-coder-7b, max_tokens: 8192}
   - {name: qwen2.5-coder-32b, kind: vllm, base_url: "http://127.0.0.1:18032/v1", model: qwen2.5-coder-32b, max_tokens: 8192}
 generation:
   temperature: 0.0
   max_tokens: 32768           # 8000 truncated reasoning models in the smoke test (PROGRESS step 4)
   settings: [open, closed]
-  workers: {openrouter: 4, vllm: 64}       # 24 caused HTTP 402 (in-flight credit check) near the budget end
+  workers: {openrouter: 64, vllm: 64}       # 24 caused HTTP 402 (in-flight credit check) near the budget end

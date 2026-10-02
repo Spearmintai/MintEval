@@ -26,13 +26,14 @@ and re-implemented by the model under test. Generated and reference programs are
 bar on identical market data and frictions, and compared on their actions rather than on code
 similarity or profit: alpha is differenced away. MintEval v0 contains \NTasks{} tasks on BTCUSDT
 15-minute data, stratified by an execution-measured state-span complexity $\tau$ that is decoupled
-from description length. Low-cost models reach a mean ActionMatch of at most \BestAMOpen{} and reproduce at most
-\BestExactOpen{} of tasks exactly; on a stratified subset of \NSub{} tasks a frontier model (Claude
-Opus 5.5) reaches \AMSubOpus{} and reproduces \ExactSubOpus{} exactly, yet still fails silently on
-\SilentSubOpus{} of tasks. Given a menu of building blocks, models identify the strategy almost
-perfectly, yet \SpecOneBehaviourWrong{} of the implementations whose specification was read correctly
-diverge on more than 10\% of active bars. The LLM judge of a recent strategy-generation benchmark,
-applied verbatim, accepts every one of these silent failures.
+from description length. Three frontier models from three vendors (Claude Opus 5.5, Qwen3.8-Max, DeepSeek-V4-Pro) reach
+mean ActionMatch \AMSubOpus, \AMSubQMax{} and \AMSubDSPro{} on a stratified subset of \NSub{} tasks, yet
+\SilentSubOpus, \SilentSubQMax{} and \SilentSubDSPro{} of their tasks are silent failures: the code runs
+and trades but behaves differently on more than 10\% of active bars. The LLM judge of a recent
+strategy-generation benchmark, applied verbatim, passes every one of Opus's silent failures, and passes
+programs with a single injected error even when that error leaves the strategy almost never trading.
+Low-cost models degrade with the execution-measured state span $\tau$ of a task; frontier models do
+not, so their residual errors are not a matter of state depth.
 \end{abstract}
 
 \begin{CCSXML}
@@ -169,7 +170,7 @@ with explicit desk conventions (\S\ref{sec:limits}).
 \textbf{Contamination.} Tasks are sampled from a combinatorial space at build time; neither the
 instruction nor the reference program exists on the web.
 
-\section{Preliminary Results}
+\section{Preliminary Results}\label{sec:results}
 \begin{table*}[t]\centering\small
 \caption{Leaderboard on \NTasks{} tasks. ActionMatch, TradeF1 and $|$ES$|$ are over compiled runs;
 Silent = share of all tasks that compile but have ActionMatch $<0.9$.}
@@ -204,14 +205,37 @@ tasks exactly; the median $|$ES$|$ is \ESmedGptOpen{}\,bp of initial equity. Com
 bottleneck for the closed models (CompileOK \CompileOKGptOpen{} and \CompileOKHaikuOpen{}): most of
 their failures are silent, \SilentGptOpen{} and \SilentHaikuOpen{} of all tasks.
 
-\textbf{A frontier model narrows the gap but does not close it} (Table~\ref{tab:frontier}). Budget
-allowed one frontier model on a subset of \NSub{} tasks (40 per $\tau$ quintile, open setting). Claude
-Opus 5.5 compiles every task, reaches ActionMatch \AMSubOpus{} and reproduces \ExactSubOpus{} of tasks
-exactly, against \AMSubGpt{} and \ExactSubGpt{} for GPT-5.4-mini on the same tasks; but
-\SilentSubOpus{} of its tasks are still silent failures, and unlike the weaker models it shows no
-$\tau$ gradient (\AMQoneSubOpus{} in the first quintile, \AMQfiveSubOpus{} in the last). At the
-frontier, the residual errors are not concentrated in long-state tasks; v1 needs harder tasks and
-frontier models from other families (see Limitations on authorship).
+\textbf{Frontier models narrow the gap but do not close it} (Table~\ref{tab:frontier},
+Fig.~\ref{fig:taufrontier}). On a subset of \NSub{} tasks (40 per $\tau$ quintile, open setting), Claude
+Opus 5.5, Qwen3.8-Max and DeepSeek-V4-Pro reach ActionMatch \AMSubOpus, \AMSubQMax{} and \AMSubDSPro{}
+and reproduce \ExactSubOpus, \ExactSubQMax{} and \ExactSubDSPro{} of tasks exactly, against \AMSubGpt{}
+and \ExactSubGpt{} for GPT-5.4-mini on the same tasks; but \SilentSubOpus, \SilentSubQMax{} and
+\SilentSubDSPro{} of their tasks remain silent failures. None of the three shows a $\tau$ gradient: the
+slope of ActionMatch per decade of $\tau_{\max}$ is \SlopeOpus{} (95\% CI \SlopeLoOpus{} to \SlopeHiOpus),
+\SlopeQMax{} (\SlopeLoQMax{} to \SlopeHiQMax) and \SlopeDSPro{} (\SlopeLoDSPro{} to \SlopeHiDSPro), and each
+interval excludes the slopes of GPT-5.4-mini (\SlopeGpt) and Claude Haiku (\SlopeHaiku). The flat profile
+is therefore not noise and not specific to one model family; the $\tau$ effect of
+Section~\ref{sec:results} is a property of the low-cost models.
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{figs/fig4_tau_frontier.pdf}
+\caption{ActionMatch by $\tau_{\max}$ quintile on the \NSub-task subset (mean, 95\% bootstrap CI).}
+\Description{Mean ActionMatch with confidence intervals across five state-span quintiles for three
+frontier models, which are flat, and two low-cost models, which decline.}
+\label{fig:taufrontier}
+\end{figure}
+
+\textbf{Where frontier silent failures concentrate.} For Opus 5.5 they cluster in the stateful
+breakout-then-retest signal (\OpusSilRetestWith{} silent with it vs.\ \OpusSilRetestWithout{} without,
+Fisher $p=\OpusSilRetestP$), the higher-timeframe trend filter (\OpusSilHtfWith{} vs.\
+\OpusSilHtfWithout, $p=\OpusSilHtfP$) and the trailing stop (\OpusSilTrailWith{} vs.\
+\OpusSilTrailWithout, $p=\OpusSilTrailP$), not in the number of stacked risk layers, the moving box
+(\OpusSilBoxWith{} vs.\ \OpusSilBoxWithout) or the cooldown. Part of this concentration is the benchmark's,
+not the model's: in the retest tasks whose instruction does not say that the breakout is measured on
+the \emph{close}, \AmbNoCloseSil{} of \AmbNoCloseN{} Opus runs fail silently (Opus arms on the intrabar
+high, a defensible reading of ``prints a new high''), against \AmbCloseSil{} of \AmbCloseN{} when it does.
+Our round-trip gate verifies that a reader can \emph{identify} each block, not that the message
+\emph{suffices} to fix its behaviour; at the frontier, that difference matters (Limitations).
 
 \begin{table}[t]\centering\scriptsize\setlength{\tabcolsep}{3pt}
 \caption{Same \NSub{} tasks (40 per $\tau_{\max}$ quintile), open setting. ActionMatch and the
@@ -284,6 +308,43 @@ instruction with code written for a different task using a different signal fami
 implemented wrongly. This is the gap behavioural equivalence closes, and it applies to any
 evaluation whose final check reads code rather than executing it against a reference.
 
+\textbf{A second judge and graded errors.} Re-running the same prompt with a second judge (Kimi K2.5,
+thinking off; the OpenAI and Google judges we planned were unavailable to our API account) gives the
+same picture across all models: it passes \KimiOpusPassBad{} of Opus's \KimiOpusBad{} silent failures,
+\KimiQMaxPassBad{} of \KimiQMaxBad{} for Qwen3.8-Max and \KimiGptPassBad{} of \KimiGptBad{} for
+GPT-5.4-mini; it does reject much of Qwen2.5-Coder-7B's output (pass rate \KimiQwenSPass). To locate the
+judge's resolution we injected one known error into reference programs (Table~\ref{tab:mutants}). Every
+type changes behaviour substantially, yet the judge passes \KimiMutPassBad{} of the \KimiMutBad{}
+behaviourally divergent mutants, including all breakout windows that wrongly contain the current bar,
+an error that leaves the strategy almost never trading.
+
+\begin{table}[t]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Graded negative control: one injected error per program (30 per type). Judge = Kimi K2.5
+with the QuantCode-Bench prompt.}
+\label{tab:mutants}
+\begin{tabular}{lrrrr}
+\toprule
+Injected error & AM & AM$<$.9 & $|$ES$|$ bp & Judge pass\\
+\midrule
+stop at current close & \MutStopAnchorAM & \MutStopAnchorBad & \MutStopAnchorES & \KimiMutStopAnchorPass\\
+window incl.\ current bar & \MutWindowInclAM & \MutWindowInclBad & \MutWindowInclES & \KimiMutWindowInclPass\\
+cooldown reset each bar & \MutCooldownResetAM & \MutCooldownResetBad & \MutCooldownResetES & \KimiMutCooldownResetPass\\
+parameter one step off & \MutParamStepAM & \MutParamStepBad & \MutParamStepES & \KimiMutParamStepPass\\
+comparison reversed & \MutCmpReverseAM & \MutCmpReverseBad & \MutCmpReverseES & \KimiMutCmpReversePass\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{What the errors cost.} Regressing winsorized $|$ES$|$ (bp of initial equity) on
+$\log_{10}\tau_{\max}$, realised volatility over the reference's holding bars and their interaction,
+with trade count and $K$ as controls, implementation errors cost more in volatile holding periods for
+the low-cost models (GPT-5.4-mini open: \ESvolGptOpen{}\,bp per standard deviation of volatility,
+$p=\ESvolPGptOpen$; Haiku: \ESvolHaikuOpen{}\,bp, $p=\ESvolPHaikuOpen$) and in long-state tasks
+(\EStauGptOpen{} and \EStauHaikuOpen{}\,bp per decade of $\tau$). The interaction is significant in only
+\ESnTxvSig{} of \ESnCells{} model$\times$setting cells, which we read as no evidence of amplification in
+v0; realised volatility varies little within a single two-year window, and the multi-window data of v1
+are needed to test it. For Opus 5.5 neither term is distinguishable from zero.
+
 \textbf{Sensitivity to the state rule.} Re-running every program that failed only because it stored
 \texttt{None} or a string in the state dictionary under a lenient engine raises CompileOK for
 Qwen-32B from \CompileOKQwenLOpen{} to \CompileLenientQwenLOpen{} (open) and for Qwen-7B from
@@ -329,7 +390,11 @@ then, instructions are LLM-written and may be friendlier to LLMs than real trade
 the slang dictionary is still under human review. Latency is deliberately excluded: fidelity and
 latency are orthogonal goals. The unit of observation is the bar-level action and the complete
 round trip; we do not model intra-position dynamics such as fills inside a bar beyond stop/take
-priority. The reference library, interface document and desk conventions were written with the help of
+priority. The judge comparison uses Claude Sonnet 4 (the default of the original repository) and, as an
+interim second judge, Kimi K2.5; OpenAI and Google judges were planned but were refused by their
+providers for our account at the time of writing. DeepSeek-V4-Pro also served as the round-trip
+reader, which may slightly favour it; Qwen3.8-Max ran at low reasoning effort because its default
+setting exhausted the token budget. The reference library, interface document and desk conventions were written with the help of
 Claude Opus 5.5, the same family as our frontier model; shared conventions may favour it, and
 replicating the frontier result with models from other families is a priority for v1. Finally, a mismatch can stem from an ambiguous instruction rather than from the model;
 the round-trip reader bounds but does not eliminate this.

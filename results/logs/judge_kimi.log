@@ -1,0 +1,15 @@
+moonshotai/kimi-k2.5 rows 1305 api_err 0 parse_fail 0 cost 2.21
+                              n  judge_pass  pass&bad  fail&bad  pass&ok  fail&ok
+kind   who                                                                       
+mutant cmp_reverse         30.0       0.900      27.0       3.0      0.0      0.0
+       cooldown_reset      30.0       0.900      18.0       2.0      9.0      1.0
+       param_step          30.0       0.900      22.0       2.0      5.0      1.0
+       stop_anchor         30.0       0.900      23.0       2.0      4.0      1.0
+       window_incl         30.0       1.000      30.0       0.0      0.0      0.0
+run    claude-haiku       191.0       0.990     162.0       2.0     27.0      0.0
+       claude-opus-5.5    200.0       1.000      55.0       0.0    145.0      0.0
+       deepseek-v4-pro    182.0       0.995      80.0       1.0    101.0      0.0
+       gpt-5.4-mini       189.0       0.984     139.0       3.0     47.0      0.0
+       qwen2.5-coder-32b  127.0       0.819     100.0      23.0      4.0      0.0
+       qwen2.5-coder-7b    66.0       0.470      31.0      35.0      0.0      0.0
+       qwen3.8-max        200.0       0.995      77.0       1.0    122.0      0.0

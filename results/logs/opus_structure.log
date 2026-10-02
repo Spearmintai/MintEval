@@ -1,0 +1,58 @@
+
+=== claude-opus-5.5: n=200 silent=0.275
+                 feature  n_with  silent_with  silent_without     fisher_p
+signal=breakout_pullback      29        0.724           0.199          NaN
+         stateful_signal      29        0.724           0.199 5.110000e-08
+              htf_filter      64        0.500           0.169 2.630000e-06
+        has_trailing_hwm      53        0.434           0.218 3.860000e-03
+        has_partial_take      40        0.400           0.244 7.320000e-02
+         has_take_profit      48        0.354           0.250 1.940000e-01
+              long_short     134        0.328           0.167 1.830000e-02
+                n_risk=3      72        0.319           0.250          NaN
+       multi_stop_layers      35        0.314           0.267 5.410000e-01
+     signal=box_breakout      26        0.308           0.270          NaN
+       sizing=fixed_frac      82        0.305           0.254          NaN
+                n_risk=2      72        0.292           0.266          NaN
+          has_fixed_stop      35        0.286           0.273 8.380000e-01
+         sizing=atr_risk      62        0.274           0.275          NaN
+           has_time_stop      50        0.260           0.280 8.560000e-01
+            has_cooldown      40        0.250           0.281 8.430000e-01
+           has_breakeven      56        0.250           0.285 7.250000e-01
+          sizing=pyramid      56        0.232           0.292          NaN
+   signal=donchian_break      39        0.231           0.286          NaN
+           has_daily_cap      62        0.226           0.297 3.920000e-01
+         signal=ma_cross      28        0.214           0.285          NaN
+       signal=rsi_revert      43        0.209           0.293          NaN
+             cross_state       5        0.200           0.277 1.000000e+00
+                n_risk=1      56        0.196           0.306          NaN
+           has_box_shift      32        0.156           0.298 1.310000e-01
+       signal=macd_cross      35        0.057           0.321          NaN
+
+=== gpt-5.4-mini: n=189 silent=0.751
+                 feature  n_with  silent_with  silent_without  fisher_p
+signal=breakout_pullback      27        1.000           0.710       NaN
+             cross_state       5        1.000           0.745  0.334000
+         stateful_signal      27        1.000           0.710  0.000431
+         has_take_profit      46        0.891           0.706  0.010900
+            has_cooldown      39        0.872           0.720  0.061200
+     signal=box_breakout      23        0.870           0.735       NaN
+        has_trailing_hwm      50        0.840           0.719  0.126000
+        has_partial_take      35        0.829           0.734  0.285000
+         sizing=atr_risk      58        0.828           0.718       NaN
+              long_short     130        0.815           0.610  0.003570
+                n_risk=2      66        0.803           0.724       NaN
+                n_risk=3      69        0.797           0.725       NaN
+       signal=rsi_revert      43        0.791           0.740       NaN
+       multi_stop_layers      33        0.788           0.744  0.664000
+          has_fixed_stop      32        0.781           0.745  0.823000
+              htf_filter      61        0.770           0.742  0.722000
+         signal=ma_cross      28        0.750           0.752       NaN
+           has_breakeven      51        0.745           0.754  1.000000
+          sizing=pyramid      54        0.741           0.756       NaN
+   signal=donchian_break      36        0.722           0.758       NaN
+           has_box_shift      31        0.710           0.759  0.650000
+           has_daily_cap      61        0.705           0.773  0.368000
+       sizing=fixed_frac      77        0.701           0.786       NaN
+           has_time_stop      48        0.646           0.787  0.055800
+                n_risk=1      54        0.630           0.800       NaN
+       signal=macd_cross      32        0.438           0.815       NaN

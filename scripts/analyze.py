@@ -143,9 +143,12 @@ A["corr_tau_K"] = float(np.corrcoef(np.log10(taus), [t["K_bits"] for t in tasks]
 def mac(name, v, fmt="{:.3f}"):
     return f"\\newcommand{{\\{name}}}{{{fmt.format(v) if v == v else '--'}}}"
 L = [mac("NTasks", len(tasks), "{}"), mac("NRows", len(df), "{}"), mac("CorrTauK", A["corr_tau_K"], "{:.2f}")]
-KEYS = {"gpt-5.4-mini": "Gpt", "claude-haiku": "Haiku", "qwen2.5-coder-32b": "QwenL", "qwen2.5-coder-7b": "QwenS"}
+KEYS = {"gpt-5.4-mini": "Gpt", "claude-haiku": "Haiku", "qwen2.5-coder-32b": "QwenL", "qwen2.5-coder-7b": "QwenS",
+        "claude-opus-5.5": "Opus", "qwen3.8-max": "QMax", "deepseek-v4-pro": "DSPro"}
+FRONTIER = ["claude-opus-5.5", "qwen3.8-max", "deepseek-v4-pro"]
 key = lambda m: KEYS.get(m) or "".join(ch for ch in m.title() if ch.isalpha())
 assert len({key(m) for m in models}) == len(models), "macro key collision"
+models = [m for m in models if m not in FRONTIER]   # main tables: full-800 models only
 for r in A["table1"]:
     k = key(r["model"]) + r["setting"].title()
     for col in ["CompileOK", "ActionMatch", "TradeF1", "silent", "exact"]:
@@ -197,7 +200,6 @@ if os.path.exists("results/returns_check.json"):
 if os.path.exists("results/minteval_v0_frontier.csv"):
     FR = pd.read_csv("results/minteval_v0_frontier.csv"); ids = set(FR.strategy_id)
     SUB = pd.concat([FR, df[(df.setting == "open") & df.strategy_id.isin(ids)]])
-    KEYS["claude-opus-5.5"] = "Opus"
     for m_, g in SUB.groupby("model"):
         ok = g[g.compile_fail == 0]; k = "Sub" + key(m_)
         L += [mac(f"CompileOK{k}", 1 - g.compile_fail.mean()), mac(f"AM{k}", ok.action_match.mean()),
@@ -207,7 +209,7 @@ if os.path.exists("results/minteval_v0_frontier.csv"):
         L += [mac(f"AMQone{k}", bt.get(0, float("nan"))), mac(f"AMQfive{k}", bt.get(4, float("nan")))]
     L.append(mac("NSub", len(ids), "{}"))
     rows = []
-    for m_ in ["claude-opus-5.5"] + models:
+    for m_ in FRONTIER + models:
         g = SUB[SUB.model == m_]
         if g.empty: continue
         ok = g[g.compile_fail == 0]
@@ -229,6 +231,56 @@ if os.path.exists("results/judge_vs_behaviour.json"):
     NC = json.load(open("results/judge_negative_control.json"))
     nc = [r for r in NC if r["judge_pass"] is not None]
     L += [mac("NegCtlN", len(nc), "{}"), mac("NegCtlRejected", sum(not r["judge_pass"] for r in nc), "{}")]
+# ---- post-v0 analyses (each from its own results/*.json; skipped if absent)
+def J(path):
+    return json.load(open(path)) if os.path.exists(path) else None
+ES = J("results/es_regression.json")
+if ES:
+    for kk, nm in [("full800|gpt-5.4-mini|open", "GptOpen"), ("full800|claude-haiku|open", "HaikuOpen"),
+                   ("full800|gpt-5.4-mini|closed", "GptClosed"), ("full800|claude-haiku|closed", "HaikuClosed"),
+                   ("frontier200|claude-opus-5.5|open", "OpusSub")]:
+        c = ES[kk]["w99_ctrl"]
+        L += [mac(f"ESvol{nm}", c["vol"]["b"], "{:.0f}"), mac(f"ESvolP{nm}", c["vol"]["p"], "{:.2g}"),
+              mac(f"EStau{nm}", c["ltau"]["b"], "{:.0f}"), mac(f"EStauP{nm}", c["ltau"]["p"], "{:.2g}"),
+              mac(f"EStxv{nm}", c["ltau:vol"]["b"], "{:.0f}"), mac(f"EStxvP{nm}", c["ltau:vol"]["p"], "{:.2g}")]
+    ps = [v["w99_ctrl"]["ltau:vol"]["p"] for v in ES.values()]
+    L += [mac("ESnCells", len(ps), "{}"), mac("ESnTxvSig", sum(p < 0.05 for p in ps), "{}")]
+ST = J("results/opus_structure.json")
+if ST:
+    F = {r["feature"]: r for r in ST["claude-opus-5.5"]["features"]}
+    for feat, nm in [("stateful_signal", "Retest"), ("htf_filter", "Htf"), ("has_trailing_hwm", "Trail"), ("long_short", "LS"),
+                     ("multi_stop_layers", "MultiStop"), ("has_box_shift", "Box"), ("has_cooldown", "Cool")]:
+        r = F[feat]
+        L += [mac(f"OpusSil{nm}With", r["silent_with"]), mac(f"OpusSil{nm}Without", r["silent_without"]),
+              mac(f"OpusSil{nm}P", r["fisher_p"], "{:.1g}"), mac(f"OpusSil{nm}N", r["n_with"], "{}")]
+AC = J("results/ambiguity_check.json")
+if AC and "claude-opus-5.5" in AC:
+    a = AC["claude-opus-5.5"]
+    L += [mac("AmbNoCloseN", a["noclose"]["n"], "{}"), mac("AmbNoCloseSil", a["noclose"]["silent"], "{}"),
+          mac("AmbCloseN", a["close"]["n"], "{}"), mac("AmbCloseSil", a["close"]["silent"], "{}")]
+TC = J("results/tau_ci_frontier.json")
+if TC:
+    for m_, v in TC.items():
+        k = {"claude-opus-5.5": "Opus", "qwen3.8-max": "QMax", "deepseek-v4-pro": "DSPro", "gpt-5.4-mini": "Gpt", "claude-haiku": "Haiku"}[m_]
+        L += [mac(f"Slope{k}", v["slope"], "{:+.3f}"), mac(f"SlopeLo{k}", v["slope_ci"][0], "{:+.3f}"),
+              mac(f"SlopeHi{k}", v["slope_ci"][1], "{:+.3f}"), mac(f"SlopeP{k}", v["slope_p"], "{:.2g}")]
+if os.path.exists("results/mutants/mutant_scores.csv"):
+    MS = pd.read_csv("results/mutants/mutant_scores.csv")
+    for t_, g in MS.groupby("type"):
+        k = "".join(w.title() for w in t_.split("_"))
+        L += [mac(f"Mut{k}AM", g.action_match.mean()), mac(f"Mut{k}Bad", (g.action_match < 0.9).mean()),
+              mac(f"Mut{k}ES", g.abs_es.median(), "{:.0f}")]
+if os.path.exists("results/judges/kimi_k2.5.csv"):
+    KJ = pd.read_csv("results/judges/kimi_k2.5.csv"); KJ = KJ[KJ.judge_pass.notna()]
+    KJ["jp"] = KJ.judge_pass.astype(bool); KJ["bad"] = KJ.action_match < 0.9
+    for (kind, who), g in KJ.groupby(["kind", "who"]):
+        k = ("Mut" + "".join(w.title() for w in who.split("_"))) if kind == "mutant" else \
+            {"claude-opus-5.5": "Opus", "qwen3.8-max": "QMax", "deepseek-v4-pro": "DSPro", "gpt-5.4-mini": "Gpt",
+             "claude-haiku": "Haiku", "qwen2.5-coder-32b": "QwenL", "qwen2.5-coder-7b": "QwenS"}[who]
+        L += [mac(f"Kimi{k}Pass", g.jp.mean()), mac(f"Kimi{k}PassBad", int((g.jp & g.bad).sum()), "{}"),
+              mac(f"Kimi{k}Bad", int(g.bad.sum()), "{}"), mac(f"Kimi{k}N", len(g), "{}")]
+    mu = KJ[KJ.kind == "mutant"]
+    L += [mac("KimiMutPassBad", int((mu.jp & mu.bad).sum()), "{}"), mac("KimiMutBad", int(mu.bad.sum()), "{}")]
 for k, v in reg.items():
     if "log_tau" in v:
         n = "Reg" + "".join(ch for ch in k.title() if ch.isalpha())

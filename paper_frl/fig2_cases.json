@@ -1,0 +1,41 @@
+[
+ {
+  "case": "(a)",
+  "sid": "S0798",
+  "model": "gpt-5.4-mini",
+  "t0": 1215,
+  "date": "2022-01-13 15:45:00",
+  "window": [
+   1070,
+   1370
+  ],
+  "gap_bp": 261,
+  "cause": "entry price never stored, so the trigger compares the close with itself"
+ },
+ {
+  "case": "(b)",
+  "sid": "S0264",
+  "model": "gpt-5.4-mini",
+  "t0": 1027,
+  "date": "2022-01-11 16:45:00",
+  "window": [
+   987,
+   1287
+  ],
+  "gap_bp": -72,
+  "cause": "close can never exceed a high that includes its own bar, so no entry is taken"
+ },
+ {
+  "case": "(c)",
+  "sid": "S0697",
+  "model": "claude-opus-5.5",
+  "t0": 2491,
+  "date": "2022-01-26 22:45:00",
+  "window": [
+   2451,
+   2751
+  ],
+  "gap_bp": 317,
+  "cause": "opposite RSI signal ignored while the 4h trend disagrees, so the position is held"
+ }
+]

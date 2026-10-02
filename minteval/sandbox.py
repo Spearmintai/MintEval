@@ -35,7 +35,25 @@ class SandboxViolation(Exception):
     pass
 
 
+_NUM_OPS = (ast.Add, ast.Sub, ast.Mult, ast.Div, ast.FloorDiv, ast.Mod, ast.Pow, ast.USub, ast.UAdd)
+
+
+def _const_arith(node) -> bool:
+    """Arithmetic on numeric literals only (e.g. 24 * 3600 * 1000): immutable and side-effect free."""
+    if isinstance(node, ast.Constant):
+        return isinstance(node.value, (int, float)) and not isinstance(node.value, bool)
+    if isinstance(node, ast.UnaryOp):
+        return isinstance(node.op, _NUM_OPS) and _const_arith(node.operand)
+    if isinstance(node, ast.BinOp):
+        if isinstance(node.op, ast.Pow) and not (isinstance(node.right, ast.Constant) and abs(node.right.value) <= 64):
+            return False
+        return isinstance(node.op, _NUM_OPS) and _const_arith(node.left) and _const_arith(node.right)
+    return False
+
+
 def _is_literal(node) -> bool:
+    if _const_arith(node):
+        return True
     try:
         v = ast.literal_eval(node)
     except Exception:  # noqa: BLE001
