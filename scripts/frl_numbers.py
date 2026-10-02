@@ -15,6 +15,7 @@ import sys, json, os, math
 sys.path.insert(0, ".")
 import numpy as np, pandas as pd, yaml
 import statsmodels.formula.api as smf
+from minteval.data import load_prices
 
 OUT = "paper_frl"; os.makedirs(OUT, exist_ok=True)
 # robustness mode: --vix uses VIX (mean over the reference's holding days) as sigma for the equity instruments;
@@ -140,7 +141,7 @@ for tk, lab in (("Tau", r"$\log_{10}\tau_{\max}$"), ("Sig", r"$\sigma$"), ("Int"
     L.append(" & " + " & ".join(f"(\\{PFX}RegNoR{c}{tk}T)" for c, _, _ in COLS[3:]) + r" \\")
 L += [r"\midrule", r"$N$ & " + " & ".join(f"\\{PFX}RegNoR{c}N" for c, _, _ in COLS[3:]) + r" \\",
       r"adj.\ $R^2$ & " + " & ".join(f"\\{PFX}RegNoR{c}AdjR" for c, _, _ in COLS[3:]) + r" \\", r"\bottomrule", r"\end{tabular}"]
-open(f"{OUT}/table_frl_reg_noR{SFX}.tex", "w").write("% Columns (4)-(8) without the reference-return control.\n" + "\n".join(L) + "\n")
+open(f"{OUT}/table_frl_reg_noR{SFX}.tex", "w").write("\n".join(L) + "\n")   # columns (4)-(8) without R_bench
 
 # ---------------------------------------------------------------- robustness: alternative outcomes (column-4 spec without
 # R_bench, all four assets, clustered by strategy)
@@ -169,6 +170,41 @@ if not VIX:
     Dm["ltrades"] = np.log(Dm.n_trades_bench)
     mac("FrlRobMaxLossNImputed", int((Dm.compile_fail == 1).sum()), "{}")
     rob("MaxLoss", "wmax", Dm)
+
+# ---------------------------------------------------------------- ActionMatch on tau (no block FE / low-cost with block FE),
+# exposure-controlled |ES| (column-4 spec w/o R_bench + share of bars in position + log mean holding duration)
+if not VIX:
+    CT = "K_bits + ltrades + mccabe"
+    FEB = "C(signal_id) + C(sizing_id) + C(filter_id) + C(direction) + " + " + ".join(f"has_{r}" for r in RISK)
+    Da = D.copy(); Da["am_pp"] = 100 * Da.action_match
+    cl = lambda data: {"groups": pd.factorize(data.strategy_id)[0]}
+    r = smf.ols(f"am_pp ~ ltau * sig + {CT} + C(model) + C(asset)", Da).fit(cov_type="cluster", cov_kwds=cl(Da))
+    mac("FrlAMNoFETau", r.params["ltau"], "{:.2f}"); mac("FrlAMNoFETauT", r.tvalues["ltau"], "{:.2f}")
+    Dl = Da[Da.model.isin(LOWCOST)]
+    r = smf.ols(f"am_pp ~ ltau * sig + {CT} + {FEB} + C(model) + C(asset)", Dl).fit(cov_type="cluster", cov_kwds=cl(Dl))
+    mac("FrlAMLowFETau", r.params["ltau"], "{:.2f}"); mac("FrlAMLowFETauT", r.tvalues["ltau"], "{:.2f}")
+    # exposure controls: bars in position = frac_in_pos x bars of the asset; mean holding duration = that / round trips
+    nbars = {a: len(load_prices(MA[a]["price_file"])["close"]) for a in AK}
+    De = D.copy()
+    De["log_hold"] = np.log(De.frac_in_pos * De.asset.map(nbars) / De.n_trades_bench)
+    r = smf.ols(FULL_NOR + " + frac_in_pos + log_hold", De).fit(cov_type="cluster", cov_kwds=cl(De))
+    mac("FrlExpoTau", r.params["ltau"], "{:.1f}"); mac("FrlExpoTauT", r.tvalues["ltau"], "{:.2f}")
+    mac("FrlExpoN", r.nobs, "{:.0f}")
+    print(f"Expo tau {r.params['ltau']:.1f} (t {r.tvalues['ltau']:.2f})  frac_in_pos {r.params['frac_in_pos']:.1f} (t {r.tvalues['frac_in_pos']:.2f})  log_hold {r.params['log_hold']:.1f} (t {r.tvalues['log_hold']:.2f})")
+    # diversification ranges from results/decay/decay.json (all assets x models)
+    DJ = json.load(open("results/decay/decay.json")) if os.path.exists("results/decay/decay.json") else None
+    if DJ:
+        rhos = [v["rho_mean"] for a in DJ.values() for v in a.values()]
+        r100 = [100 * v["curve"]["100"]["ratio"] for a in DJ.values() for v in a.values() if "100" in v["curve"]]
+        mac("FrlDivCorrMin", min(rhos), "{:.3f}"); mac("FrlDivCorrMax", max(rhos), "{:.3f}")
+        mac("FrlDivVarMin", min(r100), "{:.0f}"); mac("FrlDivVarMax", max(r100), "{:.0f}")
+    else:
+        for n in ("FrlDivCorrMin", "FrlDivCorrMax", "FrlDivVarMin", "FrlDivVarMax"): mac(n, None)
+else:
+    # column (7) aliases for the VIX run
+    r7 = REG.get("Seven")
+    mac("FrlEqSig", r7.params["sig"] if r7 is not None else None, "{:.1f}"); mac("FrlEqSigT", r7.tvalues["sig"] if r7 is not None else None, "{:.2f}")
+    mac("FrlEqInt", r7.params["ltau:sig"] if r7 is not None else None, "{:.1f}"); mac("FrlEqIntT", r7.tvalues["ltau:sig"] if r7 is not None else None, "{:.2f}")
 
 # ---------------------------------------------------------------- 2. interaction by model x asset
 rows = []
@@ -235,7 +271,7 @@ def t1_table(tags, fname, caption_note, drop_empty=False):
                 L.append(f"{MNAME[m]} & " + " & ".join(["--"] * 7) + r" \\"); continue
             L.append(f"{MNAME[m]} & \\{k}N & \\{k}Compile & \\{k}ESMed & \\{k}ESMean{{}} [\\{k}ESMeanT] & \\{k}AM & \\{k}Exact & \\{k}Silent \\\\")
     L += [r"\bottomrule", r"\end{tabular}"]
-    open(f"{OUT}/{fname}", "w").write("% " + caption_note + "\n" + "\n".join(L) + "\n")
+    open(f"{OUT}/{fname}", "w").write("\n".join(L) + "\n")      # tabular only (note: caption_note is for the author)
 B = d[(d.asset == "BTCUSDT_2022_2023") & d.pass_filter]
 t1(B[B.subset == "full800"], "BtcFull"); t1(B[B.strategy_id.isin(ids200)], "BtcSub")
 t1_table([("BtcFull", "BTC/USDT 2022--2023, all 800 tasks (frontier models were run on the 200-task subset only)"),
@@ -248,7 +284,6 @@ t1_table([("AllFull", "All four instruments pooled, surviving references, all ta
          "Table 1 pooled over BTC, ETH, SPY and Nasdaq-100 (surviving references only).", drop_empty=True)
 
 # ---------------------------------------------------------------- 4. multi-asset description
-from minteval.data import load_prices
 rep = json.load(open("results/multiasset/report.json"))
 L = [r"\begin{tabular}{lllrrrr}", r"\toprule",
      r"Instrument & Window (first--last bar, UTC) & Frictions (bp) & Bars & Surviving refs & Median ref.\ return & Profitable \\", r"\midrule"]

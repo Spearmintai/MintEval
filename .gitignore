@@ -15,3 +15,4 @@ data/prices/raw_eth/
 data/prices/raw_dukascopy/
 data/prices/*RTH*
 results/decay/*_daily.npz
+results/convergence/*_targets.npz
