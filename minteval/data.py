@@ -32,6 +32,9 @@ def build_price_file(raw_dir: str, out_path: str, start: str, end: str, freq_ms:
     t0 = pd.Timestamp(start, tz="UTC").value // 10**6
     t1 = pd.Timestamp(end, tz="UTC").value // 10**6
     df = df[(df.open_time >= t0) & (df.open_time < t1)].reset_index(drop=True)
+    off_grid = df.open_time % freq_ms != 0          # e.g. ETH 2018-02-09 09:58:14.8 after an outage
+    n_off_grid = int(off_grid.sum())
+    df = df[~off_grid].reset_index(drop=True)
     diffs = np.diff(df.open_time.values)
     gap_idx = np.where(diffs != freq_ms)[0]
     gaps = [{"after_bar": int(i),
@@ -40,7 +43,7 @@ def build_price_file(raw_dir: str, out_path: str, start: str, end: str, freq_ms:
              "missing_bars": int(diffs[i] // freq_ms - 1)} for i in gap_idx]
     expected = (t1 - t0) // freq_ms
     report = {"n_bars": len(df), "expected_bars": int(expected),
-              "missing_bars": int(expected - len(df)), "gaps": gaps,
+              "missing_bars": int(expected - len(df)), "gaps": gaps, "dropped_off_grid": n_off_grid,
               "bad_ohlc": int(((df.high < df[["open", "close"]].max(axis=1)) |
                                (df.low > df[["open", "close"]].min(axis=1))).sum())}
     df.to_parquet(out_path, index=False) if out_path.endswith(".parquet") else df.to_csv(out_path, index=False)

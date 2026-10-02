@@ -55,3 +55,12 @@ generation:
   max_tokens: 32768           # 8000 truncated reasoning models in the smoke test (PROGRESS step 4)
   settings: [open, closed]
   workers: {openrouter: 64, vllm: 64}       # 24 caused HTTP 402 (in-flight credit check) near the budget end
+multiasset:                   # re-run existing reference + generated programs on other instruments (no new generation)
+  assets:
+    BTCUSDT_2022_2023: {price_file: data/prices/BTCUSDT_15m_2022_2023.csv, fee_bp: 5.0, slippage_bp: 1.0, bars_per_year: 35040, kind: crypto}
+    ETHUSDT_2018_2023: {price_file: data/prices/ETHUSDT_15m_2018_2023.csv, fee_bp: 5.0, slippage_bp: 1.0, bars_per_year: 35040, kind: crypto}
+    SPY_CFD_2018_2023: {price_file: data/prices/SPYUSUSD_15m_RTH_2018_2023.csv, fee_bp: 0.1, slippage_bp: 0.5, bars_per_year: 6552, kind: equity}
+    NDX_CFD_2018_2023: {price_file: data/prices/USATECHIDXUSD_15m_RTH_2018_2023.csv, fee_bp: 0.1, slippage_bp: 0.5, bars_per_year: 6552, kind: equity}
+  timeout_s_per_70k_bars: 10.0
+  vix_file: data/macro/VIX_History.csv
+  high_vix: 25.0

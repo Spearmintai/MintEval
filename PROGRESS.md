@@ -214,3 +214,28 @@ Attempt log (all runs kept under `results/archive/`):
   silent failures; rejects much of Qwen2.5-Coder-7B (pass 0.47).
 - Paper: abstract/main line rewritten per the decision table; frontier table (3 families), Fig 4, judge,
   mutants, cost-of-errors and structure paragraphs; limitations updated. 7 pages.
+
+## Multi-asset re-run (no new generation; `scripts/multiasset.py`, `multiasset_collect.py`)
+- Output: separate CSV `results/multiasset/minteval_multiasset.csv` (+ `report.json`).
+- Data: ETHUSDT 15m 2018-2023 (Binance, 72 months, checksums OK; 611 missing bars in 30 gaps; **81 off-grid
+  bars dropped** — e.g. a bar opening 2018-02-09 09:58:14.8 after an outage would break HTF bucketing;
+  BTC unaffected). VIX daily (CBOE). Equities: FirstRate is paid; free 15m equity data back to 2018 found only
+  at Dukascopy (CFD on SPY `SPYUSUSD`; QQQ not offered -> Nasdaq-100 index CFD `USATECHIDXUSD` as proxy).
+  URL month is 0-based (caught by a price sanity check). Feed throttles (77 s requests, TLS failures at 4
+  workers) -> 2 workers, 1 s pause, backoff to 5 min (~6 s/file). HistData.com rejected: download token is
+  hidden/JS-generated; not circumvented. Raw and derived equity files are not committed (redistribution
+  terms unclear); `minteval/dukascopy.py` rebuilds them.
+- Engine choices (appendix): equities regular session only (09:30-16:00 ET, 26 bars/day), positions may be
+  held overnight, stops gapped through fill at the next open (native engine rule). Frictions: crypto 5+1 bp,
+  equity 0.1 bp commission + 0.5 bp half-spread; bars_per_year 35040 / 6552. Sandbox timeout scaled
+  10 s per 70k bars. tau and all reference stats re-measured per asset; filter re-applied per asset.
+- Bug caught before use: the reference-run cache key hashes only the engine cfg, not the price file (BTC and
+  ETH share frictions -> silent reuse). Per-asset cache dirs.
+- Control: BTC through the multi-asset path reproduces the main CSVs on all 3,800 rows (first check showed
+  0% equality on R_bench — only CSV print precision, %.10g; with tolerance 100% on every metric).
+- ETH: 752/800 survive; spearman(log tau, R_bench) = 0.161 (p=1e-5) — re-correlated, so R_bench is controlled:
+  low-cost tau -0.075/decade (p=6e-8), frontier flat (0.000, p=0.99). Model levels ~identical to BTC.
+- Inert-block check (ablate each risk block, bit-identical behaviour?): fixed_stop/breakeven/partial_take
+  inert sets identical on BTC and ETH -> structural dominance (e.g. fixed 2 ATR stop beside 1.5 ATR trail),
+  ~10% of those layers; v1 should filter dominated layers at generation. Data-dependent: daily_cap,
+  time_stop, cooldown differ by asset.

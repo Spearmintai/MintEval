@@ -11,3 +11,6 @@ paper/*.log
 paper/*.out
 paper/*.bbl
 paper/*.blg
+data/prices/raw_eth/
+data/prices/raw_dukascopy/
+data/prices/*RTH*

@@ -1,0 +1,10 @@
+ETHUSDT_2018_2023 refs: pass_filter 752 / 800
+ETHUSDT_2018_2023 scored claude-haiku__open.jsonl
+ETHUSDT_2018_2023 scored gpt-5.4-mini__open.jsonl
+ETHUSDT_2018_2023 scored qwen2.5-coder-32b__open.jsonl
+ETHUSDT_2018_2023 scored qwen2.5-coder-7b__open.jsonl
+ETHUSDT_2018_2023 scored claude-opus-5.5__open.jsonl
+ETHUSDT_2018_2023 scored deepseek-v4-pro__open.jsonl
+ETHUSDT_2018_2023 scored qwen3.8-max__open.jsonl
+ETHUSDT_2018_2023 inert check done 1439
+MA_CRYPTO_DONE

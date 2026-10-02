@@ -66,7 +66,10 @@ for m in LOW + [OPUS]:
                   am=c.action_match.mean(), exact=(c.action_match == 1).sum() / n,
                   silent=(c.action_match < 0.9).sum() / n, sd_es=es.std(),
                   rllm_med=c.R_llm.median(), rref_med=c.R_bench.median(),
-                  rllm_gt_ref=(c.R_llm > c.R_bench).mean())
+                  rllm_gt_ref=(c.R_llm > c.R_bench).mean(),
+                  # share of the intended outcome rewritten: |ES| / |R_ref|, per task (median is robust to small R_ref)
+                  ratio_med=(c.abs_es / (c.R_bench.abs() * 1e4)).median(),
+                  ratio_gt1=(c.abs_es > c.R_bench.abs() * 1e4).mean())
 res["table1"] = tab
 
 # ---------------------------------------------------------------- Table 2
