@@ -1,0 +1,66 @@
+[
+ {
+  "q_task": "S0001",
+  "code_task": "S0005",
+  "q_signal": "macd_cross",
+  "code_signal": "breakout_pullback",
+  "judge_pass": false,
+  "err": ""
+ },
+ {
+  "q_task": "S0002",
+  "code_task": "S0033",
+  "q_signal": "macd_cross",
+  "code_signal": "box_breakout",
+  "judge_pass": false,
+  "err": ""
+ },
+ {
+  "q_task": "S0005",
+  "code_task": "S0001",
+  "q_signal": "breakout_pullback",
+  "code_signal": "macd_cross",
+  "judge_pass": false,
+  "err": ""
+ },
+ {
+  "q_task": "S0008",
+  "code_task": "S0009",
+  "q_signal": "ma_cross",
+  "code_signal": "macd_cross",
+  "judge_pass": false,
+  "err": ""
+ },
+ {
+  "q_task": "S0009",
+  "code_task": "S0008",
+  "q_signal": "macd_cross",
+  "code_signal": "ma_cross",
+  "judge_pass": null,
+  "err": "HTTP 402: {\"error\":{\"message\":\"This request would exceed you"
+ },
+ {
+  "q_task": "S0011",
+  "code_task": "S0015",
+  "q_signal": "macd_cross",
+  "code_signal": "box_breakout",
+  "judge_pass": false,
+  "err": ""
+ },
+ {
+  "q_task": "S0013",
+  "code_task": "S0017",
+  "q_signal": "macd_cross",
+  "code_signal": "donchian_break",
+  "judge_pass": false,
+  "err": ""
+ },
+ {
+  "q_task": "S0015",
+  "code_task": "S0011",
+  "q_signal": "box_breakout",
+  "code_signal": "macd_cross",
+  "judge_pass": false,
+  "err": ""
+ }
+]

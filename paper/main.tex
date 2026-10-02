@@ -26,12 +26,13 @@ and re-implemented by the model under test. Generated and reference programs are
 bar on identical market data and frictions, and compared on their actions rather than on code
 similarity or profit: alpha is differenced away. MintEval v0 contains \NTasks{} tasks on BTCUSDT
 15-minute data, stratified by an execution-measured state-span complexity $\tau$ that is decoupled
-from description length. On four models the best mean ActionMatch is \BestAMOpen{} and at most
-\BestExactOpen{} of tasks are reproduced exactly; between \SilentMin{} and \SilentMax{} of all tasks
-are silent failures (code runs, behaviour diverges). Given a menu of building blocks, models
-identify the strategy almost perfectly, yet \SpecOneBehaviourWrong{} of the implementations whose
-specification was read correctly still diverge on more than 10\% of active bars; accuracy falls with
-$\tau$ after controlling for description length and block identity.
+from description length. Low-cost models reach a mean ActionMatch of at most \BestAMOpen{} and reproduce at most
+\BestExactOpen{} of tasks exactly; on a stratified subset of \NSub{} tasks a frontier model (Claude
+Opus 5.5) reaches \AMSubOpus{} and reproduces \ExactSubOpus{} exactly, yet still fails silently on
+\SilentSubOpus{} of tasks. Given a menu of building blocks, models identify the strategy almost
+perfectly, yet \SpecOneBehaviourWrong{} of the implementations whose specification was read correctly
+diverge on more than 10\% of active bars. The LLM judge of a recent strategy-generation benchmark,
+applied verbatim, accepts every one of these silent failures.
 \end{abstract}
 
 \begin{CCSXML}
@@ -108,7 +109,10 @@ error, and signed errors would cancel across tasks. We also report $\Delta$Sharp
 A run that raises, times out or looks ahead is \textbf{CompileOK}$=0$; its other metrics are left
 missing rather than imputed. In the closed setting, \textbf{SpecMatch} scores the model's
 structured reading of $q_s$ slot by slot. A \emph{silent failure} is a run with CompileOK$=1$
-and ActionMatch$<0.9$.
+and ActionMatch$<0.9$. The threshold is a convention, not a cliff: at 0.8 the silent share
+ranges from \SilentEightyMin{} to \SilentEightyMax{} across models and settings, and at 0.99 from
+\SilentNinetyNineMin{} to \SilentNinetyNineMax{} (GPT-5.4-mini open: \SilentGptOpenEighty{} at 0.8,
+\SilentGptOpen{} at 0.9, \SilentGptOpenNinetyNine{} at 0.99).
 
 \section{Benchmark Construction}
 \textbf{Building blocks.} The library has \NBlocksSignal{} signal, \NBlocksFilter{} filter,
@@ -133,6 +137,22 @@ short state spans trade more often and therefore pay more fees, $\tau$ and refer
 confounded in the raw pool. We therefore stratify jointly: within each $\tau_{\max}$ quintile we draw
 32 tasks from each of five equal-width bands of reference return, giving \NTasks{} tasks with median
 reference return \RMedBinA, \RMedBinB, \RMedBinC, \RMedBinD{} and \RMedBinE{} across the five quintiles.
+
+\textbf{Why losing references do not undermine the measurement.} The median reference program
+loses \RNetMed\% over the two years and only \ShareNetPos\% are profitable after costs. This is
+friction, not a negative edge: re-running the same programs with zero fees and slippage gives a
+median of \RGrossMed\% with \ShareGrossPos\% profitable, i.e.\ randomly assembled rules with no edge
+that trade frequently at 6\,bp per fill. The measurement does not depend on the sign of P\&L:
+ActionMatch and TradeF1 compare actions, and $|$ES$|$ compares two programs under identical
+frictions, so a faithful re-implementation of a losing strategy scores perfectly and an unfaithful
+one does not. Empirically, ActionMatch is only weakly related to reference return, and in the
+direction opposite to the concern: references that lose more are slightly \emph{easier} to match
+(\RegOpenRonly{} ActionMatch per 100\% of return, open setting, $p=\RegOpenRonlyP$), and the $\tau$
+coefficient is unchanged when $R_{\text{bench}}$ is added as a control (\RegOpenTauGivenR{} open,
+\RegClosedTauGivenR{} closed, vs.\ \RegOpenTauOnlyTau{} and \RegClosedTauOnlyTau{} without it). A
+benchmark whose references are realistic trading candidates is nevertheless more convincing for a
+finance audience; v1 lowers frictions to 2--3\,bp and adds 1-hour bars so that the reference return
+distribution straddles zero.
 
 \textbf{Back-translation.} An LLM translator (a third vendor, not among the models under test)
 rewrites each program, given its precise template description and source, as a 40--120 word desk
@@ -178,11 +198,27 @@ SpecMatch equal to one and ActionMatch below 0.9 are highlighted.}
 Claude Haiku) and two open-weight coders (Qwen2.5-Coder 32B and 7B, served locally with vLLM in
 batch-invariant mode); temperature 0, one sample per task and setting.
 
-\textbf{Nobody is close to saturation} (Table~\ref{tab:leader}). In the open setting the strongest
-model reaches ActionMatch \ActionMatchGptOpen{} on compiled runs and reproduces \ExactGptOpen{} of
+\textbf{Low-cost models are far from saturation} (Table~\ref{tab:leader}). In the open setting the
+strongest of them reaches ActionMatch \ActionMatchGptOpen{} on compiled runs and reproduces \ExactGptOpen{} of
 tasks exactly; the median $|$ES$|$ is \ESmedGptOpen{}\,bp of initial equity. Compilation is not the
 bottleneck for the closed models (CompileOK \CompileOKGptOpen{} and \CompileOKHaikuOpen{}): most of
 their failures are silent, \SilentGptOpen{} and \SilentHaikuOpen{} of all tasks.
+
+\textbf{A frontier model narrows the gap but does not close it} (Table~\ref{tab:frontier}). Budget
+allowed one frontier model on a subset of \NSub{} tasks (40 per $\tau$ quintile, open setting). Claude
+Opus 5.5 compiles every task, reaches ActionMatch \AMSubOpus{} and reproduces \ExactSubOpus{} of tasks
+exactly, against \AMSubGpt{} and \ExactSubGpt{} for GPT-5.4-mini on the same tasks; but
+\SilentSubOpus{} of its tasks are still silent failures, and unlike the weaker models it shows no
+$\tau$ gradient (\AMQoneSubOpus{} in the first quintile, \AMQfiveSubOpus{} in the last). At the
+frontier, the residual errors are not concentrated in long-state tasks; v1 needs harder tasks and
+frontier models from other families (see Limitations on authorship).
+
+\begin{table}[t]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Same \NSub{} tasks (40 per $\tau_{\max}$ quintile), open setting. ActionMatch and the
+quintile columns are over compiled runs; Exact and Silent are shares of all tasks.}
+\label{tab:frontier}
+\input{table2.tex}
+\end{table}
 
 \textbf{Understanding is not the bottleneck} (Fig.~\ref{fig:spec}). With the block menu, GPT-5.4-mini,
 Claude Haiku and Qwen-32B recover the specification with SpecMatch \SpecMatchGptClosed,
@@ -218,6 +254,36 @@ contains the current bar (so the breakout can never trigger), stops re-anchored 
 close on every bar instead of to the entry, and HTF filters evaluated on the wrong candle. A
 systematic taxonomy is left to v1.
 
+\subsection*{A code-reading judge does not see silent failures}\label{sec:judge}
+We apply the QuantCode-Bench judge \cite{khoroshilov2026quantcode} verbatim (prompt and rating parser
+from its public repository; temperature 0, thinking off; the judge model is Claude Sonnet 4, the
+default in that repository) to every compiled open-setting run of Opus 5.5 and GPT-5.4-mini on the
+\NSub{}-task subset, giving it our instruction $q_s$ and the generated code.
+
+\begin{table}[h]\centering\small
+\caption{QuantCode-Bench judge vs.\ behavioural equivalence (ActionMatch $\geq 0.9$).}
+\label{tab:judge}
+\begin{tabular}{llrr}
+\toprule
+Model & & Judge pass & Judge fail\\
+\midrule
+Opus 5.5 & ActionMatch $\geq 0.9$ & \JudgePassOkOpus & 0\\
+ & ActionMatch $< 0.9$ & \textbf{\JudgePassBadOpus} & 0\\
+GPT-5.4-mini & ActionMatch $\geq 0.9$ & \JudgePassOkGpt & 0\\
+ & ActionMatch $< 0.9$ & \textbf{\JudgePassBadGpt} & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The judge passes every judged run (Table~\ref{tab:judge}): all \JudgePassBadOpus{} silent failures
+of Opus 5.5 (\JudgeSilentShareOpus{} of its passes) and all \JudgePassBadGpt{} of GPT-5.4-mini
+(\JudgeSilentShareGpt{} of its passes; \JudgeMissing{} of its runs could not be judged because our
+API budget ran out). The judge is not simply permissive: in a negative control that pairs an
+instruction with code written for a different task using a different signal family, it rejected
+\NegCtlRejected{} of \NegCtlN. It detects the wrong strategy; it cannot detect the right strategy
+implemented wrongly. This is the gap behavioural equivalence closes, and it applies to any
+evaluation whose final check reads code rather than executing it against a reference.
+
 \textbf{Sensitivity to the state rule.} Re-running every program that failed only because it stored
 \texttt{None} or a string in the state dictionary under a lenient engine raises CompileOK for
 Qwen-32B from \CompileOKQwenLOpen{} to \CompileLenientQwenLOpen{} (open) and for Qwen-7B from
@@ -232,7 +298,17 @@ the silent column; it does not drive the conclusions.
 repository tests \cite{jimenez2024swebench}; LiveCodeBench addresses contamination by collecting
 problems after model cut-offs \cite{jain2024livecodebench}. MintEval instead generates tasks
 combinatorially and judges behaviour over thousands of stateful steps against a reference, which
-makes silent divergence measurable. \textbf{Code hallucination} studies catalogue incorrect but
+makes silent divergence measurable. \textbf{Closest to our work}, QuantCode-Bench \cite{khoroshilov2026quantcode} collects 400 real strategy
+descriptions (Reddit, TradingView, StackExchange, GitHub) and checks generated Backtrader code for
+compilation, backtest execution, the presence of trades, and semantic alignment judged by an LLM;
+the best models reach 70--76\% judge pass in a single turn and 95--98\% with iterative repair. Its
+tasks are real and its model coverage broad, both stronger than ours. The two benchmarks answer
+complementary questions: QuantCode-Bench asks whether a model can produce an executable strategy
+that plausibly matches a real description; MintEval asks whether the produced strategy
+\emph{behaves} as described, which requires a reference program and lets us vary the mechanism.
+In their pooled single-turn breakdown only 2.7\% of attempts are rejected by the judge; a
+code-reading judge cannot observe a trailing stop that is re-anchored every bar. We measure this
+gap directly in Section~\ref{sec:judge}. \textbf{Code hallucination} studies catalogue incorrect but
 plausible code \cite{tian2024codehalu,zhang2024hallucode}; we quantify one consequential form of it.
 \textbf{LLMs in finance} have been studied mainly as forecasters and domain language models
 \cite{lopezlira2023chatgpt,wu2023bloomberggpt,yang2023fingpt}. Our metric borrows the logic of
@@ -253,7 +329,9 @@ then, instructions are LLM-written and may be friendlier to LLMs than real trade
 the slang dictionary is still under human review. Latency is deliberately excluded: fidelity and
 latency are orthogonal goals. The unit of observation is the bar-level action and the complete
 round trip; we do not model intra-position dynamics such as fills inside a bar beyond stop/take
-priority. Finally, a mismatch can stem from an ambiguous instruction rather than from the model;
+priority. The reference library, interface document and desk conventions were written with the help of
+Claude Opus 5.5, the same family as our frontier model; shared conventions may favour it, and
+replicating the frontier result with models from other families is a priority for v1. Finally, a mismatch can stem from an ambiguous instruction rather than from the model;
 the round-trip reader bounds but does not eliminate this.
 
 \section*{Ethics Statement}

@@ -1,0 +1,28 @@
+{
+ "judge_model": "anthropic/claude-sonnet-4",
+ "parse_failures": 26,
+ "api_errors": 26,
+ "cost": 3.4647179999999995,
+ "by_model": {
+  "claude-opus-5.5": {
+   "n": 200,
+   "judge_pass": 1.0,
+   "pass_and_ok": 145,
+   "pass_and_bad": 55,
+   "fail_and_ok": 0,
+   "fail_and_bad": 0,
+   "share_silent_among_pass": 0.275,
+   "AM_mean_among_pass": 0.889042949802
+  },
+  "gpt-5.4-mini": {
+   "n": 163,
+   "judge_pass": 1.0,
+   "pass_and_ok": 43,
+   "pass_and_bad": 120,
+   "fail_and_ok": 0,
+   "fail_and_bad": 0,
+   "share_silent_among_pass": 0.7361963190184049,
+   "AM_mean_among_pass": 0.5881590866662859
+  }
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "strategy_id": "task id",
+ "model": "model under test",
+ "setting": "open (instruction+interface) / closed (with block menu)",
+ "subset": "full800 = all tasks; frontier200 = 40/tau-bin stratified subset run for the frontier model",
+ "realized_vol": "annualised realised vol of BTC over bars the reference holds a position",
+ "R_bench / R_llm": "total return over 2022-2023, net of 5bp fee + 1bp slippage per fill",
+ "R_bench_gross": "reference total return with zero fees/slippage",
+ "abs_es": "|R_bench - R_llm| in bp of initial equity",
+ "compile_fail": "1 -> other metrics NaN (not imputed)",
+ "tau_max, tau_p90, n_registers": "execution-measured state complexity",
+ "K_bits": "description length (bits)",
+ "strict_violation": "1 if code used nested helper functions (allowed, flagged)",
+ "prompt_valid / roundtrip": "instruction passed all gates / round-trip recovery (NaN = reader failed)"
+}

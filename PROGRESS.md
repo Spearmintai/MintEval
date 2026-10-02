@@ -163,3 +163,24 @@ Attempt log (all runs kept under `results/archive/`):
   TradingView not scraped — ToS).
 - Pilot: 10 permissive-licence ports in `data/real/tasks/R001..R010`, all PENDING_HUMAN_VERIFICATION;
   intents are placeholders pending human rewrite. Pipeline demo only (`results/real_scores.csv`).
+
+## Post-v0 additions (2026-10-02)
+- §4 paragraph on negative reference returns (`scripts/returns_check.py`, `results/returns_check.json`):
+  net median -35.1% (8.9% profitable) vs. frictionless median -0.6% (47.8% profitable) -> friction, not
+  negative edge. ActionMatch weakly *negatively* related to R_bench (open -0.11 per 100% return, p=3e-5);
+  tau coefficient unchanged with R_bench control (-0.063 open, -0.086 closed). v1: 2-3 bp / 1h bars.
+  (The user's "-37%" is the per-bin medians; the paper uses the CSV value via macro.)
+- Silent-failure threshold sensitivity (0.8 / 0.9 / 0.95 / 0.99) in analyze.py, one sentence in §3.
+- Frontier model: claude-opus-5.5, open setting, 200 tasks (40 per tau bin, seed 20261002;
+  `results/tasks/frontier200.jsonl`). Cost $0.056/task. 31 first-pass HTTP 402 (in-flight credit check)
+  -> re-run at 4 workers -> 0 errors. Result: CompileOK 1.000, AM 0.889, exact 0.575, silent 0.275,
+  no tau gradient. Leak check: no reference helper names in its code. Disclosed threat: reference
+  library / interface doc written with Claude Opus 5.5 assistance (same family).
+- QuantCode-Bench (arXiv:2604.15151, MIT repo) judge replicated verbatim (`minteval/qcb_judge.py`),
+  judge model claude-sonnet-4 (repo default), on compiled open runs of Opus (200) and GPT-5.4-mini
+  (163 of 189; 26 lost to HTTP 402 when the budget ran out). Judge pass = 100% for both; all 55 Opus and
+  120 GPT-mini silent failures are passed. Negative control (instruction + code of a different task,
+  different signal family): 7/7 rejected (8th hit 402). `results/judge_vs_behaviour*.{json,csv}`.
+- FRL export: `results/frl/minteval_v0_frl.csv` (+ DATA_DICTIONARY.json) with realized_vol (annualised,
+  over the reference's in-position bars) and R_bench_gross; includes the frontier200 rows.
+- Budget: OpenRouter key exhausted ($0.11 left).

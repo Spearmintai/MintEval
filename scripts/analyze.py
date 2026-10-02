@@ -176,6 +176,59 @@ if os.path.exists("results/sensitivity_state_summary.csv"):
         k = key(r.model) + r.setting.title()
         L += [mac(f"CompileLenient{k}", r.CompileOK_lenient), mac(f"AMLenient{k}", r.AM_lenient),
               mac(f"NStateFail{k}", r.n_state_type_fail, "{}")]
+# silent-failure threshold sensitivity (share of all tasks: compiled and ActionMatch < thr)
+SIL = {}
+for thr in (0.8, 0.9, 0.95, 0.99):
+    for (m, s_), g in df[df.model.isin(models)].groupby(["model", "setting"]):
+        SIL[(thr, m, s_)] = float(((g.compile_fail == 0) & (g.action_match < thr)).mean())
+A["silent_thresholds"] = {f"{t}|{m}|{s_}": v for (t, m, s_), v in SIL.items()}
+for thr, nm in ((0.8, "Eighty"), (0.95, "NinetyFive"), (0.99, "NinetyNine")):
+    vals = [v for (t, m, s_), v in SIL.items() if t == thr]
+    L += [mac(f"Silent{nm}Min", min(vals)), mac(f"Silent{nm}Max", max(vals))]
+L += [mac("SilentGptOpenEighty", SIL[(0.8, "gpt-5.4-mini", "open")]),
+      mac("SilentGptOpenNinetyNine", SIL[(0.99, "gpt-5.4-mini", "open")])]
+if os.path.exists("results/returns_check.json"):
+    RC = json.load(open("results/returns_check.json"))
+    L += [mac("RNetMed", 100 * RC["R_net_median"], "{:.1f}"), mac("RGrossMed", 100 * RC["R_gross_median"], "{:.1f}"),
+          mac("ShareNetPos", 100 * RC["share_net_pos"], "{:.1f}"), mac("ShareGrossPos", 100 * RC["share_gross_pos"], "{:.1f}"),
+          mac("RegOpenTauGivenR", RC["reg_open"]["log_tau"]["coef"]), mac("RegClosedTauGivenR", RC["reg_closed"]["log_tau"]["coef"]),
+          mac("RegOpenRonly", RC["reg_open_R_only"]["coef"], "{:.2f}"), mac("RegOpenRonlyP", RC["reg_open_R_only"]["p"], "{:.1g}")]
+# frontier subset (200 tasks, 40 per tau bin, open setting) incl. Opus
+if os.path.exists("results/minteval_v0_frontier.csv"):
+    FR = pd.read_csv("results/minteval_v0_frontier.csv"); ids = set(FR.strategy_id)
+    SUB = pd.concat([FR, df[(df.setting == "open") & df.strategy_id.isin(ids)]])
+    KEYS["claude-opus-5.5"] = "Opus"
+    for m_, g in SUB.groupby("model"):
+        ok = g[g.compile_fail == 0]; k = "Sub" + key(m_)
+        L += [mac(f"CompileOK{k}", 1 - g.compile_fail.mean()), mac(f"AM{k}", ok.action_match.mean()),
+              mac(f"Exact{k}", (ok.action_match == 1).sum() / len(g)),
+              mac(f"Silent{k}", ((g.compile_fail == 0) & (g.action_match < 0.9)).mean())]
+        bt = ok.groupby("tau_bin").action_match.mean()
+        L += [mac(f"AMQone{k}", bt.get(0, float("nan"))), mac(f"AMQfive{k}", bt.get(4, float("nan")))]
+    L.append(mac("NSub", len(ids), "{}"))
+    rows = []
+    for m_ in ["claude-opus-5.5"] + models:
+        g = SUB[SUB.model == m_]
+        if g.empty: continue
+        ok = g[g.compile_fail == 0]
+        rows.append(f"{m_} & {1-g.compile_fail.mean():.3f} & {ok.action_match.mean():.3f} & {(ok.action_match==1).sum()/len(g):.3f} & "
+                    f"{((g.compile_fail==0)&(g.action_match<0.9)).mean():.3f} & "
+                    + " & ".join(f"{v:.2f}" for v in ok.groupby('tau_bin').action_match.mean().reindex(range(5)).values) + r" \\")
+    (out / "table2.tex").write_text("\n".join([r"\begin{tabular}{lrrrrrrrrr}", r"\toprule",
+        r"Model & CompileOK & ActionMatch & Exact & Silent & $\tau$1 & $\tau$2 & $\tau$3 & $\tau$4 & $\tau$5 \\", r"\midrule"]
+        + rows + [r"\bottomrule", r"\end{tabular}"]) + "\n")
+if os.path.exists("results/judge_vs_behaviour.json"):
+    JV = json.load(open("results/judge_vs_behaviour.json"))
+    for m_, v in JV["by_model"].items():
+        k = KEYS.get(m_, m_)
+        L += [mac(f"JudgeN{k}", v["n"], "{}"), mac(f"JudgePass{k}", v["judge_pass"]),
+              mac(f"JudgePassBad{k}", v["pass_and_bad"], "{}"), mac(f"JudgePassOk{k}", v["pass_and_ok"], "{}"),
+              mac(f"JudgeFailAll{k}", v["fail_and_ok"] + v["fail_and_bad"], "{}"),
+              mac(f"JudgeSilentShare{k}", v["share_silent_among_pass"]), mac(f"JudgeAMPass{k}", v["AM_mean_among_pass"])]
+    L.append(mac("JudgeMissing", JV["api_errors"], "{}"))
+    NC = json.load(open("results/judge_negative_control.json"))
+    nc = [r for r in NC if r["judge_pass"] is not None]
+    L += [mac("NegCtlN", len(nc), "{}"), mac("NegCtlRejected", sum(not r["judge_pass"] for r in nc), "{}")]
 for k, v in reg.items():
     if "log_tau" in v:
         n = "Reg" + "".join(ch for ch in k.title() if ch.isalpha())
