@@ -142,6 +142,34 @@ L += [r"\midrule", r"$N$ & " + " & ".join(f"\\{PFX}RegNoR{c}N" for c, _, _ in CO
       r"adj.\ $R^2$ & " + " & ".join(f"\\{PFX}RegNoR{c}AdjR" for c, _, _ in COLS[3:]) + r" \\", r"\bottomrule", r"\end{tabular}"]
 open(f"{OUT}/table_frl_reg_noR{SFX}.tex", "w").write("% Columns (4)-(8) without the reference-return control.\n" + "\n".join(L) + "\n")
 
+# ---------------------------------------------------------------- robustness: alternative outcomes (column-4 spec without
+# R_bench, all four assets, clustered by strategy)
+if not VIX:
+    RHS = FULL_NOR.split("~", 1)[1]
+    def rob(name, dep, data):
+        r = smf.ols(f"{dep} ~{RHS}", data).fit(cov_type="cluster", cov_kwds={"groups": pd.factorize(data.strategy_id)[0]})
+        mac(f"FrlRob{name}Tau", r.params["ltau"], "{:.2f}"); mac(f"FrlRob{name}TauT", r.tvalues["ltau"], "{:.2f}")
+        mac(f"FrlRob{name}N", r.nobs, "{:.0f}")
+        print(f"Rob {name:8s} tau {r.params['ltau']:9.3f} (t {r.tvalues['ltau']:5.2f}) N={int(r.nobs)}")
+    # (a) |ES| / realised vol of the reference's holding bars, winsorized 1/99 within asset
+    Ds = D.copy(); Ds["sc"] = Ds.abs_es / Ds.realized_vol
+    Ds["wsc"] = Ds.groupby("asset").sc.transform(lambda x: x.clip(x.quantile(0.01), x.quantile(0.99)))
+    rob("Scaled", "wsc", Ds)
+    # (b) ActionMatch in percentage points
+    Da = D.copy(); Da["am_pp"] = 100 * Da.action_match
+    rob("AM", "am_pp", Da)
+    # (c) compile failures kept, |ES| := p99 of compiled |ES| of the same model on the same asset (raw, before winsorizing)
+    Dm = d[d.pass_filter].copy()
+    p99 = Dm[Dm.compile_fail == 0].groupby(["model", "asset"]).abs_es.quantile(0.99)
+    fill = Dm.set_index(["model", "asset"]).index.map(p99.to_dict().get)
+    Dm["es_imp"] = np.where(Dm.compile_fail == 1, np.asarray(fill, dtype=float), Dm.abs_es)
+    Dm["wmax"] = Dm.groupby("asset").es_imp.transform(lambda x: x.clip(x.quantile(0.01), x.quantile(0.99)))
+    Dm["ltau"] = np.log10(Dm.tau_max) - tau_mean
+    Dm["sig"] = (Dm.realized_vol - Dm.asset.map(vs["mean"])) / Dm.asset.map(vs["std"])
+    Dm["ltrades"] = np.log(Dm.n_trades_bench)
+    mac("FrlRobMaxLossNImputed", int((Dm.compile_fail == 1).sum()), "{}")
+    rob("MaxLoss", "wmax", Dm)
+
 # ---------------------------------------------------------------- 2. interaction by model x asset
 rows = []
 for (m, a), g in D.groupby(["model", "asset"]):
@@ -194,13 +222,15 @@ def t1(sample, tag):
         mac(f"{k}ESMed", okk.abs_es.median(), "{:.0f}"); mac(f"{k}ESMean", es.mean(), "{:.0f}"); mac(f"{k}ESMeanT", tval, "{:.2f}")
         mac(f"{k}AM", okk.action_match.mean()); mac(f"{k}Exact", (okk.action_match == 1).sum() / len(g))
         mac(f"{k}Silent", ((g.compile_fail == 0) & (g.action_match < 0.9)).mean())
-def t1_table(tags, fname, caption_note):
+def t1_table(tags, fname, caption_note, drop_empty=False):
     L = [r"\begin{tabular}{lrrrrrrr}", r"\toprule",
          r"Model & $N$ & Compile & med.\ $|$ES$|$ (bp) & mean ES (bp) [$t$] & ActionMatch & Exact & Silent \\"]
     for tag, title in tags:
         L += [r"\midrule", f"\\multicolumn{{8}}{{l}}{{\\emph{{{title}}}}} \\\\"]
         for m in FRONTIER + LOWCOST:
             k = f"Tone{tag}{MK[m]}"
+            if k in EMPTY and drop_empty:
+                continue
             if k in EMPTY:
                 L.append(f"{MNAME[m]} & " + " & ".join(["--"] * 7) + r" \\"); continue
             L.append(f"{MNAME[m]} & \\{k}N & \\{k}Compile & \\{k}ESMed & \\{k}ESMean{{}} [\\{k}ESMeanT] & \\{k}AM & \\{k}Exact & \\{k}Silent \\\\")
@@ -215,7 +245,7 @@ P = d[d.pass_filter]
 t1(P[P.subset == "full800"], "AllFull"); t1(P[P.strategy_id.isin(ids200)], "AllSub")
 t1_table([("AllFull", "All four instruments pooled, surviving references, all tasks"),
           ("AllSub", "All four instruments pooled, 200-task subset")], "table_frl_table1_pooled.tex",
-         "Table 1 pooled over BTC, ETH, SPY and Nasdaq-100 (surviving references only).")
+         "Table 1 pooled over BTC, ETH, SPY and Nasdaq-100 (surviving references only).", drop_empty=True)
 
 # ---------------------------------------------------------------- 4. multi-asset description
 from minteval.data import load_prices
