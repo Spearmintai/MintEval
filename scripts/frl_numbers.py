@@ -17,6 +17,11 @@ import numpy as np, pandas as pd, yaml
 import statsmodels.formula.api as smf
 
 OUT = "paper_frl"; os.makedirs(OUT, exist_ok=True)
+# robustness mode: --vix uses VIX (mean over the reference's holding days) as sigma for the equity instruments;
+# crypto keeps realised vol. Only the regression/cell outputs are produced, under prefix FrlVix / suffix _vix.
+VIX = "--vix" in sys.argv
+PFX = "FrlVix" if VIX else "Frl"
+SFX = "_vix" if VIX else ""
 cfg = yaml.safe_load(open("configs/base.yaml")); MA = cfg["multiasset"]["assets"]
 d = pd.read_csv("results/multiasset/minteval_multiasset.csv")
 spec = {json.loads(l)["strategy_id"]: json.loads(l)["spec"] for l in open("results/tasks/tasks.jsonl")}
@@ -41,6 +46,8 @@ ids200 = {json.loads(l)["strategy_id"] for l in open("results/tasks/frontier200.
 
 M = []           # macro lines
 def mac(name, val, fmt="{:.3f}"):
+    if VIX and name.startswith("Frl") and not name.startswith("FrlVix"):
+        name = "FrlVix" + name[3:]
     assert not any(c.isdigit() for c in name), name
     if val is None or (isinstance(val, float) and not math.isfinite(val)):
         M.append(f"\\newcommand{{\\{name}}}{{\\todo{{{name}}}}}"); return
@@ -53,8 +60,11 @@ D["wes"] = D.groupby("asset").abs_es.transform(lambda x: x.clip(x.quantile(0.01)
 u = D.drop_duplicates(["asset", "strategy_id"])
 tau_mean = float(np.log10(u.tau_max).mean())
 D["ltau"] = np.log10(D.tau_max) - tau_mean
-vs = u.groupby("asset").realized_vol.agg(["mean", "std"])
-D["sig"] = (D.realized_vol - D.asset.map(vs["mean"])) / D.asset.map(vs["std"])
+EQUITY = {"SPY_CFD_2018_2023", "NDX_CFD_2018_2023"}
+D["sig_raw"] = np.where(VIX & D.asset.isin(EQUITY), D.vix_mean_held, D.realized_vol)
+u = D.drop_duplicates(["asset", "strategy_id"])
+vs = u.groupby("asset").sig_raw.agg(["mean", "std"])
+D["sig"] = (D.sig_raw - D.asset.map(vs["mean"])) / D.asset.map(vs["std"])
 D["ltrades"] = np.log(D.n_trades_bench)
 mac("FrlTauMean", tau_mean, "{:.3f}")
 mac("FrlNAnalysis", len(D), "{:,}".replace(",", "{,}") if False else "{}")
@@ -103,17 +113,17 @@ has = lambda c, tk: c in REG and TERM[tk] in REG[c].params
 for tk, lab in (("Tau", r"$\log_{10}\tau_{\max}$ (centred)"), ("Sig", r"$\sigma$ (std.\ within asset)"),
                 ("Int", r"$\tau\times\sigma$"), ("Rbench", "reference return"), ("K", "$K$ (bits)"),
                 ("Ltr", "log trades"), ("Mcc", "McCabe")):
-    L.append(lab + " & " + " & ".join(f"\\FrlReg{c}{tk}" if has(c, tk) else "" for c in cols) + r" \\")
-    L.append(" & " + " & ".join(f"(\\FrlReg{c}{tk}T)" if has(c, tk) else "" for c in cols) + r" \\")
+    L.append(lab + " & " + " & ".join(f"\\{PFX}Reg{c}{tk}" if has(c, tk) else "" for c in cols) + r" \\")
+    L.append(" & " + " & ".join(f"(\\{PFX}Reg{c}{tk}T)" if has(c, tk) else "" for c in cols) + r" \\")
 L += [r"\midrule",
       "block FE & -- & -- & -- & yes & yes & yes & yes & yes \\\\",
       "model FE & -- & -- & -- & yes & yes & yes & yes & yes \\\\",
       "asset FE & -- & -- & -- & yes & yes & yes & yes & yes \\\\",
-      "$N$ & " + " & ".join(f"\\FrlReg{c}N" for c in cols) + r" \\",
-      "strategies & " + " & ".join(f"\\FrlReg{c}Clust" for c in cols) + r" \\",
-      r"adj.\ $R^2$ & " + " & ".join(f"\\FrlReg{c}AdjR" for c in cols) + r" \\",
+      "$N$ & " + " & ".join(f"\\{PFX}Reg{c}N" for c in cols) + r" \\",
+      "strategies & " + " & ".join(f"\\{PFX}Reg{c}Clust" for c in cols) + r" \\",
+      r"adj.\ $R^2$ & " + " & ".join(f"\\{PFX}Reg{c}AdjR" for c in cols) + r" \\",
       r"\bottomrule", r"\end{tabular}"]
-open(f"{OUT}/table_frl_reg.tex", "w").write("\n".join(L) + "\n")
+open(f"{OUT}/table_frl_reg{SFX}.tex", "w").write("\n".join(L) + "\n")
 
 # sensitivity: |ES| contains R_bench mechanically (|R_llm - R_bench|), so conditioning on it may be a bad
 # control. Report the full specification without R_bench (all samples of columns 4-8).
@@ -126,11 +136,11 @@ for col, f, data in COLS[3:]:
     mac(f"FrlRegNoR{col}N", r.nobs, "{:.0f}"); mac(f"FrlRegNoR{col}AdjR", r.rsquared_adj, "{:.3f}")
 L = [r"\begin{tabular}{lrrrrr}", r"\toprule", r" & (4) full & (5) low-cost & (6) frontier & (7) equity & (8) crypto \\", r"\midrule"]
 for tk, lab in (("Tau", r"$\log_{10}\tau_{\max}$"), ("Sig", r"$\sigma$"), ("Int", r"$\tau\times\sigma$")):
-    L.append(lab + " & " + " & ".join(f"\\FrlRegNoR{c}{tk}" for c, _, _ in COLS[3:]) + r" \\")
-    L.append(" & " + " & ".join(f"(\\FrlRegNoR{c}{tk}T)" for c, _, _ in COLS[3:]) + r" \\")
-L += [r"\midrule", r"$N$ & " + " & ".join(f"\\FrlRegNoR{c}N" for c, _, _ in COLS[3:]) + r" \\",
-      r"adj.\ $R^2$ & " + " & ".join(f"\\FrlRegNoR{c}AdjR" for c, _, _ in COLS[3:]) + r" \\", r"\bottomrule", r"\end{tabular}"]
-open(f"{OUT}/table_frl_reg_noR.tex", "w").write("% Columns (4)-(8) without the reference-return control.\n" + "\n".join(L) + "\n")
+    L.append(lab + " & " + " & ".join(f"\\{PFX}RegNoR{c}{tk}" for c, _, _ in COLS[3:]) + r" \\")
+    L.append(" & " + " & ".join(f"(\\{PFX}RegNoR{c}{tk}T)" for c, _, _ in COLS[3:]) + r" \\")
+L += [r"\midrule", r"$N$ & " + " & ".join(f"\\{PFX}RegNoR{c}N" for c, _, _ in COLS[3:]) + r" \\",
+      r"adj.\ $R^2$ & " + " & ".join(f"\\{PFX}RegNoR{c}AdjR" for c, _, _ in COLS[3:]) + r" \\", r"\bottomrule", r"\end{tabular}"]
+open(f"{OUT}/table_frl_reg_noR{SFX}.tex", "w").write("% Columns (4)-(8) without the reference-return control.\n" + "\n".join(L) + "\n")
 
 # ---------------------------------------------------------------- 2. interaction by model x asset
 rows = []
@@ -142,7 +152,7 @@ for (m, a), g in D.groupby(["model", "asset"]):
                      "t": float(r.tvalues["ltau:sig"]), "p": float(r.pvalues["ltau:sig"])})
     except Exception as e:  # noqa: BLE001
         rows.append({"model": m, "asset": a, "n": len(g), "b": np.nan, "t": np.nan, "p": np.nan})
-C = pd.DataFrame(rows); C.to_csv("results/multiasset/frl_interaction_cells.csv", index=False)
+C = pd.DataFrame(rows); C.to_csv(f"results/multiasset/frl_interaction_cells{SFX}.csv", index=False)
 ok = C.dropna(subset=["p"])
 mac("FrlCellsN", len(C), "{}"); mac("FrlCellsEst", len(ok), "{}")
 mac("FrlCellsSig", int((ok.p < 0.05).sum()), "{}")
@@ -154,11 +164,21 @@ for r in C.itertuples():
     mac(f"FrlCell{k}B", r.b, "{:.1f}"); mac(f"FrlCell{k}T", r.t, "{:.2f}"); mac(f"FrlCell{k}N", r.n, "{}")
 L = [r"\begin{tabular}{l" + "r" * len(AK) + "}", r"\toprule", "Model & " + " & ".join(ANAME[a] for a in AK) + r" \\", r"\midrule"]
 for m in FRONTIER + LOWCOST:
-    L.append(MNAME[m] + " & " + " & ".join(f"\\FrlCell{MK[m]}{AK[a]}B" for a in AK) + r" \\")
-    L.append(" & " + " & ".join(f"(\\FrlCell{MK[m]}{AK[a]}T)" for a in AK) + r" \\")
+    L.append(MNAME[m] + " & " + " & ".join(f"\\{PFX}Cell{MK[m]}{AK[a]}B" for a in AK) + r" \\")
+    L.append(" & " + " & ".join(f"(\\{PFX}Cell{MK[m]}{AK[a]}T)" for a in AK) + r" \\")
 L += [r"\bottomrule", r"\end{tabular}"]
-open(f"{OUT}/table_frl_cells.tex", "w").write("\n".join(L) + "\n")
+open(f"{OUT}/table_frl_cells{SFX}.tex", "w").write("\n".join(L) + "\n")
 
+if VIX:
+    hdr = ["% AUTO-GENERATED by scripts/frl_numbers.py --vix: robustness with VIX as sigma for SPY/NDX (crypto: realised vol)."]
+    open(f"{OUT}/numbers_frl_vix.tex", "w").write("\n".join(hdr + M) + "\n")
+    for c in [c for c, _, _ in COLS]:
+        r = REG.get(c)
+        if r is not None:
+            g = lambda t: f"{r.params[t]:8.1f} ({r.tvalues[t]:5.2f})" if t in r.params else " " * 16
+            print(f"({c:5s}) tau {g('ltau')} sig {g('sig')} int {g('ltau:sig')}  N={int(r.nobs)} adjR2={r.rsquared_adj:.3f}")
+    print("cells", C.assign(sig=C.p < 0.05).groupby("asset").sig.sum().to_dict(), int((ok.p < 0.05).sum()), "/", len(ok))
+    sys.exit(0)
 # ---------------------------------------------------------------- 3. Table 1 (per asset sample definitions)
 EMPTY = set()
 def t1(sample, tag):

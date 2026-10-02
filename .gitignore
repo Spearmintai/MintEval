@@ -14,3 +14,4 @@ paper/*.blg
 data/prices/raw_eth/
 data/prices/raw_dukascopy/
 data/prices/*RTH*
+results/decay/*_daily.npz
