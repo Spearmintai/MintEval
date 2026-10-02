@@ -1,0 +1,24 @@
+% Table 1 pooled over BTC, ETH, SPY and Nasdaq-100 (surviving references only).
+\begin{tabular}{lrrrrrrr}
+\toprule
+Model & $N$ & Compile & med.\ $|$ES$|$ (bp) & mean ES (bp) [$t$] & ActionMatch & Exact & Silent \\
+\midrule
+\multicolumn{8}{l}{\emph{All four instruments pooled, surviving references, all tasks}} \\
+Claude Opus 5.5 & -- & -- & -- & -- & -- & -- & -- \\
+Qwen3.8-Max & -- & -- & -- & -- & -- & -- & -- \\
+DeepSeek-V4-Pro & -- & -- & -- & -- & -- & -- & -- \\
+GPT-5.4-mini & \ToneAllFullGptN & \ToneAllFullGptCompile & \ToneAllFullGptESMed & \ToneAllFullGptESMean{} [\ToneAllFullGptESMeanT] & \ToneAllFullGptAM & \ToneAllFullGptExact & \ToneAllFullGptSilent \\
+Claude Haiku & \ToneAllFullHaikuN & \ToneAllFullHaikuCompile & \ToneAllFullHaikuESMed & \ToneAllFullHaikuESMean{} [\ToneAllFullHaikuESMeanT] & \ToneAllFullHaikuAM & \ToneAllFullHaikuExact & \ToneAllFullHaikuSilent \\
+Qwen2.5-Coder-32B & \ToneAllFullQwenLN & \ToneAllFullQwenLCompile & \ToneAllFullQwenLESMed & \ToneAllFullQwenLESMean{} [\ToneAllFullQwenLESMeanT] & \ToneAllFullQwenLAM & \ToneAllFullQwenLExact & \ToneAllFullQwenLSilent \\
+Qwen2.5-Coder-7B & \ToneAllFullQwenSN & \ToneAllFullQwenSCompile & \ToneAllFullQwenSESMed & \ToneAllFullQwenSESMean{} [\ToneAllFullQwenSESMeanT] & \ToneAllFullQwenSAM & \ToneAllFullQwenSExact & \ToneAllFullQwenSSilent \\
+\midrule
+\multicolumn{8}{l}{\emph{All four instruments pooled, 200-task subset}} \\
+Claude Opus 5.5 & \ToneAllSubOpusN & \ToneAllSubOpusCompile & \ToneAllSubOpusESMed & \ToneAllSubOpusESMean{} [\ToneAllSubOpusESMeanT] & \ToneAllSubOpusAM & \ToneAllSubOpusExact & \ToneAllSubOpusSilent \\
+Qwen3.8-Max & \ToneAllSubQMaxN & \ToneAllSubQMaxCompile & \ToneAllSubQMaxESMed & \ToneAllSubQMaxESMean{} [\ToneAllSubQMaxESMeanT] & \ToneAllSubQMaxAM & \ToneAllSubQMaxExact & \ToneAllSubQMaxSilent \\
+DeepSeek-V4-Pro & \ToneAllSubDSProN & \ToneAllSubDSProCompile & \ToneAllSubDSProESMed & \ToneAllSubDSProESMean{} [\ToneAllSubDSProESMeanT] & \ToneAllSubDSProAM & \ToneAllSubDSProExact & \ToneAllSubDSProSilent \\
+GPT-5.4-mini & \ToneAllSubGptN & \ToneAllSubGptCompile & \ToneAllSubGptESMed & \ToneAllSubGptESMean{} [\ToneAllSubGptESMeanT] & \ToneAllSubGptAM & \ToneAllSubGptExact & \ToneAllSubGptSilent \\
+Claude Haiku & \ToneAllSubHaikuN & \ToneAllSubHaikuCompile & \ToneAllSubHaikuESMed & \ToneAllSubHaikuESMean{} [\ToneAllSubHaikuESMeanT] & \ToneAllSubHaikuAM & \ToneAllSubHaikuExact & \ToneAllSubHaikuSilent \\
+Qwen2.5-Coder-32B & \ToneAllSubQwenLN & \ToneAllSubQwenLCompile & \ToneAllSubQwenLESMed & \ToneAllSubQwenLESMean{} [\ToneAllSubQwenLESMeanT] & \ToneAllSubQwenLAM & \ToneAllSubQwenLExact & \ToneAllSubQwenLSilent \\
+Qwen2.5-Coder-7B & \ToneAllSubQwenSN & \ToneAllSubQwenSCompile & \ToneAllSubQwenSESMed & \ToneAllSubQwenSESMean{} [\ToneAllSubQwenSESMeanT] & \ToneAllSubQwenSAM & \ToneAllSubQwenSExact & \ToneAllSubQwenSSilent \\
+\bottomrule
+\end{tabular}

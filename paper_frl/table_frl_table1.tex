@@ -1,0 +1,24 @@
+% Table 1 on the benchmark instrument (BTC), open setting.
+\begin{tabular}{lrrrrrrr}
+\toprule
+Model & $N$ & Compile & med.\ $|$ES$|$ (bp) & mean ES (bp) [$t$] & ActionMatch & Exact & Silent \\
+\midrule
+\multicolumn{8}{l}{\emph{BTC/USDT 2022--2023, all 800 tasks (frontier models were run on the 200-task subset only)}} \\
+Claude Opus 5.5 & -- & -- & -- & -- & -- & -- & -- \\
+Qwen3.8-Max & -- & -- & -- & -- & -- & -- & -- \\
+DeepSeek-V4-Pro & -- & -- & -- & -- & -- & -- & -- \\
+GPT-5.4-mini & \ToneBtcFullGptN & \ToneBtcFullGptCompile & \ToneBtcFullGptESMed & \ToneBtcFullGptESMean{} [\ToneBtcFullGptESMeanT] & \ToneBtcFullGptAM & \ToneBtcFullGptExact & \ToneBtcFullGptSilent \\
+Claude Haiku & \ToneBtcFullHaikuN & \ToneBtcFullHaikuCompile & \ToneBtcFullHaikuESMed & \ToneBtcFullHaikuESMean{} [\ToneBtcFullHaikuESMeanT] & \ToneBtcFullHaikuAM & \ToneBtcFullHaikuExact & \ToneBtcFullHaikuSilent \\
+Qwen2.5-Coder-32B & \ToneBtcFullQwenLN & \ToneBtcFullQwenLCompile & \ToneBtcFullQwenLESMed & \ToneBtcFullQwenLESMean{} [\ToneBtcFullQwenLESMeanT] & \ToneBtcFullQwenLAM & \ToneBtcFullQwenLExact & \ToneBtcFullQwenLSilent \\
+Qwen2.5-Coder-7B & \ToneBtcFullQwenSN & \ToneBtcFullQwenSCompile & \ToneBtcFullQwenSESMed & \ToneBtcFullQwenSESMean{} [\ToneBtcFullQwenSESMeanT] & \ToneBtcFullQwenSAM & \ToneBtcFullQwenSExact & \ToneBtcFullQwenSSilent \\
+\midrule
+\multicolumn{8}{l}{\emph{BTC/USDT 2022--2023, 200-task subset (40 per $\tau$ quintile)}} \\
+Claude Opus 5.5 & \ToneBtcSubOpusN & \ToneBtcSubOpusCompile & \ToneBtcSubOpusESMed & \ToneBtcSubOpusESMean{} [\ToneBtcSubOpusESMeanT] & \ToneBtcSubOpusAM & \ToneBtcSubOpusExact & \ToneBtcSubOpusSilent \\
+Qwen3.8-Max & \ToneBtcSubQMaxN & \ToneBtcSubQMaxCompile & \ToneBtcSubQMaxESMed & \ToneBtcSubQMaxESMean{} [\ToneBtcSubQMaxESMeanT] & \ToneBtcSubQMaxAM & \ToneBtcSubQMaxExact & \ToneBtcSubQMaxSilent \\
+DeepSeek-V4-Pro & \ToneBtcSubDSProN & \ToneBtcSubDSProCompile & \ToneBtcSubDSProESMed & \ToneBtcSubDSProESMean{} [\ToneBtcSubDSProESMeanT] & \ToneBtcSubDSProAM & \ToneBtcSubDSProExact & \ToneBtcSubDSProSilent \\
+GPT-5.4-mini & \ToneBtcSubGptN & \ToneBtcSubGptCompile & \ToneBtcSubGptESMed & \ToneBtcSubGptESMean{} [\ToneBtcSubGptESMeanT] & \ToneBtcSubGptAM & \ToneBtcSubGptExact & \ToneBtcSubGptSilent \\
+Claude Haiku & \ToneBtcSubHaikuN & \ToneBtcSubHaikuCompile & \ToneBtcSubHaikuESMed & \ToneBtcSubHaikuESMean{} [\ToneBtcSubHaikuESMeanT] & \ToneBtcSubHaikuAM & \ToneBtcSubHaikuExact & \ToneBtcSubHaikuSilent \\
+Qwen2.5-Coder-32B & \ToneBtcSubQwenLN & \ToneBtcSubQwenLCompile & \ToneBtcSubQwenLESMed & \ToneBtcSubQwenLESMean{} [\ToneBtcSubQwenLESMeanT] & \ToneBtcSubQwenLAM & \ToneBtcSubQwenLExact & \ToneBtcSubQwenLSilent \\
+Qwen2.5-Coder-7B & \ToneBtcSubQwenSN & \ToneBtcSubQwenSCompile & \ToneBtcSubQwenSESMed & \ToneBtcSubQwenSESMean{} [\ToneBtcSubQwenSESMeanT] & \ToneBtcSubQwenSAM & \ToneBtcSubQwenSExact & \ToneBtcSubQwenSSilent \\
+\bottomrule
+\end{tabular}
