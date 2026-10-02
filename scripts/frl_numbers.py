@@ -198,6 +198,20 @@ if not VIX:
         r100 = [100 * v["curve"]["100"]["ratio"] for a in DJ.values() for v in a.values() if "100" in v["curve"]]
         mac("FrlDivCorrMin", min(rhos), "{:.3f}"); mac("FrlDivCorrMax", max(rhos), "{:.3f}")
         mac("FrlDivVarMin", min(r100), "{:.0f}"); mac("FrlDivVarMax", max(r100), "{:.0f}")
+        # tiny portfolio-diversification table: per model, averaged over the four assets
+        TL = [r"\begin{tabular}{lrrr}", r"\toprule", r"Model & $\bar\rho$ & Var$_{10}$ (\%) & Var$_{50}$ (\%) \\", r"\midrule"]
+        for m in FRONTIER + LOWCOST:
+            vals = [a[m] for a in DJ.values() if m in a]
+            if not vals: continue
+            k = MK[m]
+            mac(f"FrlDivRho{k}", float(np.mean([v["rho_mean"] for v in vals])), "{:.3f}")
+            for kk, nm in (("10", "Ten"), ("50", "Fifty")):
+                xs = [100 * v["curve"][kk]["ratio"] for v in vals if kk in v["curve"]]
+                mac(f"FrlDivVar{nm}{k}", float(np.mean(xs)) if len(xs) == len(vals) else None, "{:.1f}")
+            TL.append(f"{MNAME[m]} & \\FrlDivRho{k} & \\FrlDivVarTen{k} & \\FrlDivVarFifty{k} \\\\")
+        mac("FrlDivIndepTen", 100 / 10, "{:.1f}"); mac("FrlDivIndepFifty", 100 / 50, "{:.1f}"); mac("FrlDivIndepRho", 0.0, "{:.0f}")
+        TL += [r"\midrule", r"Independent errors & 0 & \FrlDivIndepTen & \FrlDivIndepFifty \\", r"\bottomrule", r"\end{tabular}"]
+        open(f"{OUT}/table_frl_div.tex", "w").write("\n".join(TL) + "\n")
     else:
         for n in ("FrlDivCorrMin", "FrlDivCorrMax", "FrlDivVarMin", "FrlDivVarMax"): mac(n, None)
 else:
