@@ -281,6 +281,20 @@ if os.path.exists("results/judges/kimi_k2.5.csv"):
               mac(f"Kimi{k}Bad", int(g.bad.sum()), "{}"), mac(f"Kimi{k}N", len(g), "{}")]
     mu = KJ[KJ.kind == "mutant"]
     L += [mac("KimiMutPassBad", int((mu.jp & mu.bad).sum()), "{}"), mac("KimiMutBad", int(mu.bad.sum()), "{}")]
+MAR = J("results/multiasset/report.json")
+if MAR:
+    AK = {"BTCUSDT_2022_2023": "Btc", "ETHUSDT_2018_2023": "Eth", "SPY_CFD_2018_2023": "Spy", "NDX_CFD_2018_2023": "Ndx"}
+    for a_, r_ in MAR.items():
+        k = AK[a_]
+        L += [mac(f"MA{k}Survive", r_["survive_filter"], "{}"), mac(f"MA{k}Rho", r_["spearman_logtau_R"], "{:.2f}"),
+              mac(f"MA{k}RhoP", r_["spearman_p"], "{:.1g}"), mac(f"MA{k}RMed", 100 * r_["R_bench_median_survivors"], "{:.1f}"),
+              mac(f"MA{k}Profitable", r_["share_profitable"], "{:.2f}")]
+        for grp, gk in (("low_cost", "Low"), ("frontier", "Front")):
+            rr = r_["regressions"].get(f"{grp}|tau_R")
+            if rr:
+                L += [mac(f"MA{k}{gk}Tau", rr["ltau"]["b"], "{:+.3f}"), mac(f"MA{k}{gk}TauP", rr["ltau"]["p"], "{:.1g}")]
+        for m_, v_ in r_["by_model"].items():
+            L += [mac(f"MA{k}AM{key(m_)}", v_["AM"]), mac(f"MA{k}Silent{key(m_)}", v_["silent"])]
 for k, v in reg.items():
     if "log_tau" in v:
         n = "Reg" + "".join(ch for ch in k.title() if ch.isalpha())

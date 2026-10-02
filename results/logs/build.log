@@ -200,55 +200,56 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (1.70105pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (2.49452pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (2.39629pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (2.04pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:418: Overfull \vbox (1.3594pt too high) has occurred while \output is active
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (1.70105pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (2.49452pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (2.39629pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (2.04pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 10.95pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 note: Running BibTeX on main.aux ...
 note: warnings were issued by BibTeX; use --print and/or --keep-logs for details.
 note: Rerunning TeX because bibtex was run ...
@@ -452,59 +453,60 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (1.70105pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (2.49452pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (2.39629pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (2.04pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (1.70105pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (2.49452pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (2.39629pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (2.04pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
 warning: main.bbl:46: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main.bbl:49: Underfull \vbox (badness 10000) has occurred while \output is active
 warning: main.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main.tex:412: 
+warning: main.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 note: Rerunning TeX because "main.aux" changed ...
 warning: libertine.sty:308: 
 Requested font "[LinLibertine_R.otf]/OT" at 8.99997pt
@@ -707,58 +709,59 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
+warning: main.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
 warning: main.bbl:46: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main.bbl:49: Underfull \vbox (badness 10000) has occurred while \output is active
 warning: main.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main.tex:412: 
+warning: main.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main.bbl changed
 note: Rerunning TeX because "main.bbl" changed ...
 warning: libertine.sty:308: 
@@ -962,58 +965,59 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
+warning: main.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
 warning: main.bbl:46: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main.bbl:49: Underfull \vbox (badness 10000) has occurred while \output is active
 warning: main.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main.tex:412: 
+warning: main.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main.bbl changed
 note: Rerunning TeX because "main.bbl" changed ...
 warning: libertine.sty:308: 
@@ -1217,58 +1221,59 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
+warning: main.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
 warning: main.bbl:46: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main.bbl:49: Underfull \vbox (badness 10000) has occurred while \output is active
 warning: main.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main.tex:412: 
+warning: main.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main.bbl changed
 note: Rerunning TeX because "main.bbl" changed ...
 warning: libertine.sty:308: 
@@ -1472,58 +1477,59 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
+warning: main.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
 warning: main.bbl:46: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main.bbl:49: Underfull \vbox (badness 10000) has occurred while \output is active
 warning: main.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main.tex:412: 
+warning: main.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main.bbl changed
 note: Rerunning TeX because "main.bbl" changed ...
 warning: libertine.sty:308: 
@@ -1727,63 +1733,64 @@ warning: main.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines
 warning: main.tex:295: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
 warning: main.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
+warning: main.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main.tex:390: Underfull \vbox (badness 5787) has occurred while \output is active
+warning: main.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main.tex:411: Underfull \vbox (badness 3049) has occurred while \output is active
 warning: main.bbl:46: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main.bbl:49: Underfull \vbox (badness 10000) has occurred while \output is active
 warning: main.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main.tex:412: 
+warning: main.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main.tex:412:  -> MinLibReg-ot1
-warning: main.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main.tex:412:  -> nxlmi
-warning: main.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main.tex:412:  -> nxlmi5
-warning: main.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main.tex:412:  -> ntxsy
-warning: main.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main.tex:412:  -> ntxsy5
-warning: main.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main.tex:412:  -> ntxexx
-warning: main.tex:412: Requested font "msam10" at 10.95pt
-warning: main.tex:412:  -> msam10
-warning: main.tex:412: Requested font "msam7" at 6.1pt
-warning: main.tex:412:  -> msam7
-warning: main.tex:412: Requested font "msbm10" at 10.95pt
-warning: main.tex:412:  -> msbm10
-warning: main.tex:412: Requested font "msbm7" at 6.1pt
-warning: main.tex:412:  -> msbm7
-warning: main.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main.tex:412:  -> nxlmia
-warning: main.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main.tex:412:  -> ntxsym
-warning: main.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main.tex:412:  -> ntxsyc
-warning: main.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main.tex:412:  -> ntxexa
-warning: main.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main.tex:412:  -> ntxexa
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main.tex:422:  -> MinLibReg-ot1
+warning: main.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main.tex:422:  -> nxlmi
+warning: main.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main.tex:422:  -> nxlmi5
+warning: main.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main.tex:422:  -> ntxsy
+warning: main.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main.tex:422:  -> ntxsy5
+warning: main.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main.tex:422:  -> ntxexx
+warning: main.tex:422: Requested font "msam10" at 10.95pt
+warning: main.tex:422:  -> msam10
+warning: main.tex:422: Requested font "msam7" at 6.1pt
+warning: main.tex:422:  -> msam7
+warning: main.tex:422: Requested font "msbm10" at 10.95pt
+warning: main.tex:422:  -> msbm10
+warning: main.tex:422: Requested font "msbm7" at 6.1pt
+warning: main.tex:422:  -> msbm7
+warning: main.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main.tex:422:  -> nxlmia
+warning: main.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main.tex:422:  -> ntxsym
+warning: main.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main.tex:422:  -> ntxsyc
+warning: main.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main.tex:422:  -> ntxexa
+warning: main.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main.bbl changed
 warning: TeX rerun seems needed, but stopping at 6 passes
 warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
 note: Running xdvipdfmx ...
-note: Writing `main.pdf` (174.57 KiB)
+note: Writing `main.pdf` (175.28 KiB)
 note: Skipped writing 4 intermediate files (use --keep-intermediates to keep them)
 note: "version 2" Tectonic command-line interface activated
 note: Running TeX ...
@@ -1987,55 +1994,54 @@ warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragrap
 warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
 warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (1.70105pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (2.49452pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (2.39629pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (2.04pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (1.70105pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (2.49452pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (2.39629pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (2.04pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 10.95pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
 note: Running BibTeX on main_submission.aux ...
 note: warnings were issued by BibTeX; use --print and/or --keep-logs for details.
 note: Rerunning TeX because bibtex was run ...
@@ -2239,311 +2245,57 @@ warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragrap
 warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
 warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (1.70105pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (2.49452pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (2.39629pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (2.04pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (1.70105pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (2.49452pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (2.39629pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (2.04pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
 warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main_submission.tex:412: 
+warning: main_submission.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
-note: Rerunning TeX because "main_submission.out" changed ...
-warning: libertine.sty:308: 
-Requested font "[LinLibertine_R.otf]/OT" at 8.99997pt
-warning: libertine.sty:308: Requested font "[LinLibertine_R.otf]/OT" at 9.00003pt
-warning: libertine.sty:308: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:308: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:308: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:308: Requested font "[LinLibertine_RBI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:308: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
-warning: libertine.sty:319: Requested font "[LinBiolinum_R.otf]/OT" at 8.99997pt
-warning: libertine.sty:319: Requested font "[LinBiolinum_R.otf]/OT" at 9.00003pt
-warning: libertine.sty:319: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:319: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:319: Requested font "[LinBiolinum_RI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:319: Requested font "[LinBiolinum_RBO.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:338: Requested font "[LinLibertine_RZ.otf]/OT" at 8.99997pt
-warning: libertine.sty:338: Requested font "[LinLibertine_RZ.otf]/OT" at 9.00003pt
-warning: libertine.sty:338: Requested font "[LinLibertine_RZ.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:338: Requested font "[LinLibertine_RZI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:361: Requested font "[LinLibertine_DR.otf]/OT" at 8.99997pt
-warning: libertine.sty:361: Requested font "[LinLibertine_DR.otf]/OT" at 9.00003pt
-warning: libertine.sty:361: Requested font "[LinLibertine_DR.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:435: Requested font "[LinLibertine_M.otf]/OT" at 8.99997pt
-warning: libertine.sty:435: Requested font "[LinLibertine_M.otf]/OT" at 9.00003pt
-warning: libertine.sty:435: Requested font "[LinLibertine_M.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:435: Requested font "[LinLibertine_MB.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:435: Requested font "[LinLibertine_MO.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:435: Requested font "[LinLibertine_MBO.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:436: Requested font "[LinBiolinum_K.otf]/OT" at 8.99997pt
-warning: libertine.sty:436: Requested font "[LinBiolinum_K.otf]/OT" at 9.00003pt
-warning: libertine.sty:436: Requested font "[LinBiolinum_K.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: libertine.sty:437: Requested font "[LinLibertine_I.otf]/OT" at 8.99997pt
-warning: libertine.sty:437: Requested font "[LinLibertine_I.otf]/OT" at 9.00003pt
-warning: libertine.sty:437: Requested font "[LinLibertine_I.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: acmart.cls:815: 
-Requested font "[Inconsolatazi4-Regular.otf]/OT" at 8.99997pt
-warning: acmart.cls:815: Requested font "[Inconsolatazi4-Regular.otf]/OT" at 9.00003pt
-warning: acmart.cls:815: Requested font "[Inconsolatazi4-Regular.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: acmart.cls:815: Requested font "[Inconsolatazi4-Bold.otf]/OT:script=latn;language=dflt;" at 9.00003pt
-warning: main_submission.tex:10: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main_submission.tex:10: 
-Requested font "MinLibReg-ot1" at 7.3pt
-warning: main_submission.tex:10:  -> MinLibReg-ot1
-warning: main_submission.tex:10: Requested font "MinLibReg-ot1" at 5.5pt
-warning: main_submission.tex:10:  -> MinLibReg-ot1
-warning: main_submission.tex:10: Requested font "nxlmi7" at 7.3pt
-warning: main_submission.tex:10:  -> nxlmi7
-warning: main_submission.tex:10: Requested font "nxlmi5" at 5.5pt
-warning: main_submission.tex:10:  -> nxlmi5
-warning: main_submission.tex:10: Requested font "ntxsy7" at 7.3pt
-warning: main_submission.tex:10:  -> ntxsy7
-warning: main_submission.tex:10: Requested font "ntxsy5" at 5.5pt
-warning: main_submission.tex:10:  -> ntxsy5
-warning: main_submission.tex:10: Requested font "ntxexx" at 7.3pt
-warning: main_submission.tex:10:  -> ntxexx
-warning: main_submission.tex:10: Requested font "ntxexx" at 5.5pt
-warning: main_submission.tex:10:  -> ntxexx
-warning: main_submission.tex:10: 
-Requested font "msam7" at 7.3pt
-warning: main_submission.tex:10:  -> msam7
-warning: main_submission.tex:10: Requested font "msam5" at 5.5pt
-warning: main_submission.tex:10:  -> msam5
-warning: main_submission.tex:10: 
-Requested font "msbm7" at 7.3pt
-warning: main_submission.tex:10:  -> msbm7
-warning: main_submission.tex:10: Requested font "msbm5" at 5.5pt
-warning: main_submission.tex:10:  -> msbm5
-warning: main_submission.tex:10: 
-Requested font "nxlmia" at 7.3pt
-warning: main_submission.tex:10:  -> nxlmia
-warning: main_submission.tex:10: Requested font "nxlmia" at 5.5pt
-warning: main_submission.tex:10:  -> nxlmia
-warning: main_submission.tex:10: 
-Requested font "ntxsym" at 7.3pt
-warning: main_submission.tex:10:  -> ntxsym
-warning: main_submission.tex:10: Requested font "ntxsym" at 5.5pt
-warning: main_submission.tex:10:  -> ntxsym
-warning: main_submission.tex:10: 
-Requested font "ntxsyc" at 7.3pt
-warning: main_submission.tex:10:  -> ntxsyc
-warning: main_submission.tex:10: Requested font "ntxsyc" at 5.5pt
-warning: main_submission.tex:10:  -> ntxsyc
-warning: main_submission.tex:10: Requested font "ntxexa" at 7.3pt
-warning: main_submission.tex:10:  -> ntxexa
-warning: main_submission.tex:10: Requested font "ntxexa" at 5.5pt
-warning: main_submission.tex:10:  -> ntxexa
-warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 17.28pt
-warning: main_submission.tex:57: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 17.28pt
-warning: main_submission.tex:57: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 17.28pt
-warning: main_submission.tex:57: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
-warning: main_submission.tex:57: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 12.0pt
-warning: main_submission.tex:57: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 12.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 12.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 10.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 10.95pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
-warning: main_submission.tex:57: Requested font "MinLibReg-ot1" at 9.0pt
-warning: main_submission.tex:57:  -> MinLibReg-ot1
-warning: main_submission.tex:57: Requested font "nxlmi" at 9.0pt
-warning: main_submission.tex:57:  -> nxlmi
-warning: main_submission.tex:57: Requested font "ntxsy" at 9.0pt
-warning: main_submission.tex:57:  -> ntxsy
-warning: main_submission.tex:57: Requested font "ntxexx" at 9.0pt
-warning: main_submission.tex:57:  -> ntxexx
-warning: main_submission.tex:57: Requested font "msam10" at 9.0pt
-warning: main_submission.tex:57:  -> msam10
-warning: main_submission.tex:57: 
-Requested font "msbm10" at 9.0pt
-warning: main_submission.tex:57:  -> msbm10
-warning: main_submission.tex:57: 
-Requested font "nxlmia" at 9.0pt
-warning: main_submission.tex:57:  -> nxlmia
-warning: main_submission.tex:57: Requested font "ntxsym" at 9.0pt
-warning: main_submission.tex:57:  -> ntxsym
-warning: main_submission.tex:57: Requested font "ntxsyc" at 9.0pt
-warning: main_submission.tex:57:  -> ntxsyc
-warning: main_submission.tex:57: Requested font "ntxexa" at 9.0pt
-warning: main_submission.tex:57:  -> ntxexa
-warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
-warning: main_submission.tex:57: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
-warning: main_submission.tex:57: Requested font "MinLibReg-ot1" at 8.0pt
-warning: main_submission.tex:57:  -> MinLibReg-ot1
-warning: main_submission.tex:57: Requested font "MinLibReg-ot1" at 6.2pt
-warning: main_submission.tex:57:  -> MinLibReg-ot1
-warning: main_submission.tex:57: Requested font "nxlmi7" at 8.0pt
-warning: main_submission.tex:57:  -> nxlmi7
-warning: main_submission.tex:57: Requested font "nxlmi5" at 6.2pt
-warning: main_submission.tex:57:  -> nxlmi5
-warning: main_submission.tex:57: Requested font "ntxsy7" at 8.0pt
-warning: main_submission.tex:57:  -> ntxsy7
-warning: main_submission.tex:57: Requested font "ntxsy5" at 6.2pt
-warning: main_submission.tex:57:  -> ntxsy5
-warning: main_submission.tex:57: Requested font "ntxexx" at 8.0pt
-warning: main_submission.tex:57:  -> ntxexx
-warning: main_submission.tex:57: Requested font "ntxexx" at 6.2pt
-warning: main_submission.tex:57:  -> ntxexx
-warning: main_submission.tex:57: Requested font "msam10" at 8.0pt
-warning: main_submission.tex:57:  -> msam10
-warning: main_submission.tex:57: Requested font "msam7" at 6.2pt
-warning: main_submission.tex:57:  -> msam7
-warning: main_submission.tex:57: Requested font "msbm10" at 8.0pt
-warning: main_submission.tex:57:  -> msbm10
-warning: main_submission.tex:57: Requested font "msbm7" at 6.2pt
-warning: main_submission.tex:57:  -> msbm7
-warning: main_submission.tex:57: Requested font "nxlmia" at 8.0pt
-warning: main_submission.tex:57:  -> nxlmia
-warning: main_submission.tex:57: Requested font "nxlmia" at 6.2pt
-warning: main_submission.tex:57:  -> nxlmia
-warning: main_submission.tex:57: Requested font "ntxsym" at 8.0pt
-warning: main_submission.tex:57:  -> ntxsym
-warning: main_submission.tex:57: Requested font "ntxsym" at 6.2pt
-warning: main_submission.tex:57:  -> ntxsym
-warning: main_submission.tex:57: Requested font "ntxsyc" at 8.0pt
-warning: main_submission.tex:57:  -> ntxsyc
-warning: main_submission.tex:57: Requested font "ntxsyc" at 6.2pt
-warning: main_submission.tex:57:  -> ntxsyc
-warning: main_submission.tex:57: Requested font "ntxexa" at 8.0pt
-warning: main_submission.tex:57:  -> ntxexa
-warning: main_submission.tex:57: Requested font "ntxexa" at 6.2pt
-warning: main_submission.tex:57:  -> ntxexa
-warning: main_submission.tex:57: Overfull \hbox (5.9366pt too wide) in paragraph at lines 57--57
-warning: main_submission.tex:57: Overfull \hbox (8.14925pt too wide) in paragraph at lines 57--57
-warning: main_submission.tex:57: Overfull \hbox (9.50253pt too wide) in paragraph at lines 57--57
-warning: main_submission.tex:76: Overfull \hbox (1.098pt too wide) in paragraph at lines 68--76
-warning: main_submission.tex:89: Requested font "[Inconsolatazi4-Regular.otf]/OT:script=latn;language=dflt;+ss03;" at 9.0pt
-warning: main_submission.tex:96: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 6.0pt
-warning: main_submission.tex:152: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.3pt
-warning: main_submission.tex:152: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 5.5pt
-warning: main_submission.tex:157: Overfull \hbox (4.84752pt too wide) in paragraph at lines 142--157
-warning: main_submission.tex:157: Underfull \vbox (badness 10000) has occurred while \output is active
-warning: main_submission.tex:169: Overfull \hbox (4.77701pt too wide) in paragraph at lines 158--169
-warning: main_submission.tex:207: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
-warning: main_submission.tex:207: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
-warning: table2.tex:1: 
-Requested font "MinLibReg-ot1" at 6.5pt
-warning: table2.tex:1:  -> MinLibReg-ot1
-warning: table2.tex:1: Requested font "nxlmi7" at 6.5pt
-warning: table2.tex:1:  -> nxlmi7
-warning: table2.tex:1: Requested font "ntxsy7" at 6.5pt
-warning: table2.tex:1:  -> ntxsy7
-warning: table2.tex:1: Requested font "ntxexx" at 6.5pt
-warning: table2.tex:1:  -> ntxexx
-warning: table2.tex:1: Requested font "msam7" at 6.5pt
-warning: table2.tex:1:  -> msam7
-warning: table2.tex:1: Requested font "msbm7" at 6.5pt
-warning: table2.tex:1:  -> msbm7
-warning: table2.tex:1: Requested font "nxlmia" at 6.5pt
-warning: table2.tex:1:  -> nxlmia
-warning: table2.tex:1: Requested font "ntxsym" at 6.5pt
-warning: table2.tex:1:  -> ntxsym
-warning: table2.tex:1: Requested font "ntxsyc" at 6.5pt
-warning: table2.tex:1:  -> ntxsyc
-warning: table2.tex:1: Requested font "ntxexa" at 6.5pt
-warning: table2.tex:1:  -> ntxexa
-warning: main_submission.tex:245: Overfull \hbox (1.8167pt too wide) in paragraph at lines 1--245
-warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragraph at lines 247--255
-warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
-warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
-warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
-warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main_submission.tex:412: 
-Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main_submission.bbl changed
 note: Rerunning TeX because "main_submission.bbl" changed ...
 warning: libertine.sty:308: 
@@ -2747,57 +2499,56 @@ warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragrap
 warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
 warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: main_submission.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
 warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main_submission.tex:412: 
+warning: main_submission.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main_submission.bbl changed
 note: Rerunning TeX because "main_submission.bbl" changed ...
 warning: libertine.sty:308: 
@@ -3001,57 +2752,56 @@ warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragrap
 warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
 warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: main_submission.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
 warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main_submission.tex:412: 
+warning: main_submission.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main_submission.bbl changed
 note: Rerunning TeX because "main_submission.bbl" changed ...
 warning: libertine.sty:308: 
@@ -3255,57 +3005,56 @@ warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragrap
 warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
 warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: main_submission.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
 warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main_submission.tex:412: 
+warning: main_submission.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main_submission.bbl changed
 note: Rerunning TeX because "main_submission.bbl" changed ...
 warning: libertine.sty:308: 
@@ -3509,60 +3258,312 @@ warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragrap
 warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
 warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
 warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
-warning: main_submission.tex:380: Overfull \hbox (6.0pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (5.6693pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (16.80977pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (9.20926pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:380: Overfull \hbox (24.76128pt too wide) in paragraph at lines 357--380
-warning: main_submission.tex:401: Overfull \hbox (9.90529pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:401: Overfull \hbox (4.19852pt too wide) in paragraph at lines 382--401
-warning: main_submission.tex:407: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: main_submission.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
 warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
 warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
-warning: main_submission.tex:412: 
+warning: main_submission.tex:422: 
 Requested font "MinLibReg-ot1" at 10.95pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "MinLibReg-ot1" at 6.1pt
-warning: main_submission.tex:412:  -> MinLibReg-ot1
-warning: main_submission.tex:412: Requested font "nxlmi" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmi
-warning: main_submission.tex:412: Requested font "nxlmi5" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmi5
-warning: main_submission.tex:412: Requested font "ntxsy" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsy
-warning: main_submission.tex:412: Requested font "ntxsy5" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsy5
-warning: main_submission.tex:412: Requested font "ntxexx" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "ntxexx" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexx
-warning: main_submission.tex:412: Requested font "msam10" at 10.95pt
-warning: main_submission.tex:412:  -> msam10
-warning: main_submission.tex:412: Requested font "msam7" at 6.1pt
-warning: main_submission.tex:412:  -> msam7
-warning: main_submission.tex:412: Requested font "msbm10" at 10.95pt
-warning: main_submission.tex:412:  -> msbm10
-warning: main_submission.tex:412: Requested font "msbm7" at 6.1pt
-warning: main_submission.tex:412:  -> msbm7
-warning: main_submission.tex:412: Requested font "nxlmia" at 10.95pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "nxlmia" at 6.1pt
-warning: main_submission.tex:412:  -> nxlmia
-warning: main_submission.tex:412: Requested font "ntxsym" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsym" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsym
-warning: main_submission.tex:412: Requested font "ntxsyc" at 10.95pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxsyc" at 6.1pt
-warning: main_submission.tex:412:  -> ntxsyc
-warning: main_submission.tex:412: Requested font "ntxexa" at 10.95pt
-warning: main_submission.tex:412:  -> ntxexa
-warning: main_submission.tex:412: Requested font "ntxexa" at 6.1pt
-warning: main_submission.tex:412:  -> ntxexa
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: internal consistency problem when checking if main_submission.bbl changed
+note: Rerunning TeX because "main_submission.bbl" changed ...
+warning: libertine.sty:308: 
+Requested font "[LinLibertine_R.otf]/OT" at 8.99997pt
+warning: libertine.sty:308: Requested font "[LinLibertine_R.otf]/OT" at 9.00003pt
+warning: libertine.sty:308: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:308: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:308: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:308: Requested font "[LinLibertine_RBI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:308: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
+warning: libertine.sty:319: Requested font "[LinBiolinum_R.otf]/OT" at 8.99997pt
+warning: libertine.sty:319: Requested font "[LinBiolinum_R.otf]/OT" at 9.00003pt
+warning: libertine.sty:319: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:319: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:319: Requested font "[LinBiolinum_RI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:319: Requested font "[LinBiolinum_RBO.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:338: Requested font "[LinLibertine_RZ.otf]/OT" at 8.99997pt
+warning: libertine.sty:338: Requested font "[LinLibertine_RZ.otf]/OT" at 9.00003pt
+warning: libertine.sty:338: Requested font "[LinLibertine_RZ.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:338: Requested font "[LinLibertine_RZI.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:361: Requested font "[LinLibertine_DR.otf]/OT" at 8.99997pt
+warning: libertine.sty:361: Requested font "[LinLibertine_DR.otf]/OT" at 9.00003pt
+warning: libertine.sty:361: Requested font "[LinLibertine_DR.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:435: Requested font "[LinLibertine_M.otf]/OT" at 8.99997pt
+warning: libertine.sty:435: Requested font "[LinLibertine_M.otf]/OT" at 9.00003pt
+warning: libertine.sty:435: Requested font "[LinLibertine_M.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:435: Requested font "[LinLibertine_MB.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:435: Requested font "[LinLibertine_MO.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:435: Requested font "[LinLibertine_MBO.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:436: Requested font "[LinBiolinum_K.otf]/OT" at 8.99997pt
+warning: libertine.sty:436: Requested font "[LinBiolinum_K.otf]/OT" at 9.00003pt
+warning: libertine.sty:436: Requested font "[LinBiolinum_K.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: libertine.sty:437: Requested font "[LinLibertine_I.otf]/OT" at 8.99997pt
+warning: libertine.sty:437: Requested font "[LinLibertine_I.otf]/OT" at 9.00003pt
+warning: libertine.sty:437: Requested font "[LinLibertine_I.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: acmart.cls:815: 
+Requested font "[Inconsolatazi4-Regular.otf]/OT" at 8.99997pt
+warning: acmart.cls:815: Requested font "[Inconsolatazi4-Regular.otf]/OT" at 9.00003pt
+warning: acmart.cls:815: Requested font "[Inconsolatazi4-Regular.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: acmart.cls:815: Requested font "[Inconsolatazi4-Bold.otf]/OT:script=latn;language=dflt;" at 9.00003pt
+warning: main_submission.tex:10: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
+warning: main_submission.tex:10: 
+Requested font "MinLibReg-ot1" at 7.3pt
+warning: main_submission.tex:10:  -> MinLibReg-ot1
+warning: main_submission.tex:10: Requested font "MinLibReg-ot1" at 5.5pt
+warning: main_submission.tex:10:  -> MinLibReg-ot1
+warning: main_submission.tex:10: Requested font "nxlmi7" at 7.3pt
+warning: main_submission.tex:10:  -> nxlmi7
+warning: main_submission.tex:10: Requested font "nxlmi5" at 5.5pt
+warning: main_submission.tex:10:  -> nxlmi5
+warning: main_submission.tex:10: Requested font "ntxsy7" at 7.3pt
+warning: main_submission.tex:10:  -> ntxsy7
+warning: main_submission.tex:10: Requested font "ntxsy5" at 5.5pt
+warning: main_submission.tex:10:  -> ntxsy5
+warning: main_submission.tex:10: Requested font "ntxexx" at 7.3pt
+warning: main_submission.tex:10:  -> ntxexx
+warning: main_submission.tex:10: Requested font "ntxexx" at 5.5pt
+warning: main_submission.tex:10:  -> ntxexx
+warning: main_submission.tex:10: 
+Requested font "msam7" at 7.3pt
+warning: main_submission.tex:10:  -> msam7
+warning: main_submission.tex:10: Requested font "msam5" at 5.5pt
+warning: main_submission.tex:10:  -> msam5
+warning: main_submission.tex:10: 
+Requested font "msbm7" at 7.3pt
+warning: main_submission.tex:10:  -> msbm7
+warning: main_submission.tex:10: Requested font "msbm5" at 5.5pt
+warning: main_submission.tex:10:  -> msbm5
+warning: main_submission.tex:10: 
+Requested font "nxlmia" at 7.3pt
+warning: main_submission.tex:10:  -> nxlmia
+warning: main_submission.tex:10: Requested font "nxlmia" at 5.5pt
+warning: main_submission.tex:10:  -> nxlmia
+warning: main_submission.tex:10: 
+Requested font "ntxsym" at 7.3pt
+warning: main_submission.tex:10:  -> ntxsym
+warning: main_submission.tex:10: Requested font "ntxsym" at 5.5pt
+warning: main_submission.tex:10:  -> ntxsym
+warning: main_submission.tex:10: 
+Requested font "ntxsyc" at 7.3pt
+warning: main_submission.tex:10:  -> ntxsyc
+warning: main_submission.tex:10: Requested font "ntxsyc" at 5.5pt
+warning: main_submission.tex:10:  -> ntxsyc
+warning: main_submission.tex:10: Requested font "ntxexa" at 7.3pt
+warning: main_submission.tex:10:  -> ntxexa
+warning: main_submission.tex:10: Requested font "ntxexa" at 5.5pt
+warning: main_submission.tex:10:  -> ntxexa
+warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 17.28pt
+warning: main_submission.tex:57: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 17.28pt
+warning: main_submission.tex:57: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 17.28pt
+warning: main_submission.tex:57: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
+warning: main_submission.tex:57: Requested font "[LinBiolinum_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 12.0pt
+warning: main_submission.tex:57: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 12.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 12.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 10.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 10.95pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
+warning: main_submission.tex:57: Requested font "MinLibReg-ot1" at 9.0pt
+warning: main_submission.tex:57:  -> MinLibReg-ot1
+warning: main_submission.tex:57: Requested font "nxlmi" at 9.0pt
+warning: main_submission.tex:57:  -> nxlmi
+warning: main_submission.tex:57: Requested font "ntxsy" at 9.0pt
+warning: main_submission.tex:57:  -> ntxsy
+warning: main_submission.tex:57: Requested font "ntxexx" at 9.0pt
+warning: main_submission.tex:57:  -> ntxexx
+warning: main_submission.tex:57: Requested font "msam10" at 9.0pt
+warning: main_submission.tex:57:  -> msam10
+warning: main_submission.tex:57: 
+Requested font "msbm10" at 9.0pt
+warning: main_submission.tex:57:  -> msbm10
+warning: main_submission.tex:57: 
+Requested font "nxlmia" at 9.0pt
+warning: main_submission.tex:57:  -> nxlmia
+warning: main_submission.tex:57: Requested font "ntxsym" at 9.0pt
+warning: main_submission.tex:57:  -> ntxsym
+warning: main_submission.tex:57: Requested font "ntxsyc" at 9.0pt
+warning: main_submission.tex:57:  -> ntxsyc
+warning: main_submission.tex:57: Requested font "ntxexa" at 9.0pt
+warning: main_submission.tex:57:  -> ntxexa
+warning: main_submission.tex:57: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_RB.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
+warning: main_submission.tex:57: Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 8.0pt
+warning: main_submission.tex:57: Requested font "MinLibReg-ot1" at 8.0pt
+warning: main_submission.tex:57:  -> MinLibReg-ot1
+warning: main_submission.tex:57: Requested font "MinLibReg-ot1" at 6.2pt
+warning: main_submission.tex:57:  -> MinLibReg-ot1
+warning: main_submission.tex:57: Requested font "nxlmi7" at 8.0pt
+warning: main_submission.tex:57:  -> nxlmi7
+warning: main_submission.tex:57: Requested font "nxlmi5" at 6.2pt
+warning: main_submission.tex:57:  -> nxlmi5
+warning: main_submission.tex:57: Requested font "ntxsy7" at 8.0pt
+warning: main_submission.tex:57:  -> ntxsy7
+warning: main_submission.tex:57: Requested font "ntxsy5" at 6.2pt
+warning: main_submission.tex:57:  -> ntxsy5
+warning: main_submission.tex:57: Requested font "ntxexx" at 8.0pt
+warning: main_submission.tex:57:  -> ntxexx
+warning: main_submission.tex:57: Requested font "ntxexx" at 6.2pt
+warning: main_submission.tex:57:  -> ntxexx
+warning: main_submission.tex:57: Requested font "msam10" at 8.0pt
+warning: main_submission.tex:57:  -> msam10
+warning: main_submission.tex:57: Requested font "msam7" at 6.2pt
+warning: main_submission.tex:57:  -> msam7
+warning: main_submission.tex:57: Requested font "msbm10" at 8.0pt
+warning: main_submission.tex:57:  -> msbm10
+warning: main_submission.tex:57: Requested font "msbm7" at 6.2pt
+warning: main_submission.tex:57:  -> msbm7
+warning: main_submission.tex:57: Requested font "nxlmia" at 8.0pt
+warning: main_submission.tex:57:  -> nxlmia
+warning: main_submission.tex:57: Requested font "nxlmia" at 6.2pt
+warning: main_submission.tex:57:  -> nxlmia
+warning: main_submission.tex:57: Requested font "ntxsym" at 8.0pt
+warning: main_submission.tex:57:  -> ntxsym
+warning: main_submission.tex:57: Requested font "ntxsym" at 6.2pt
+warning: main_submission.tex:57:  -> ntxsym
+warning: main_submission.tex:57: Requested font "ntxsyc" at 8.0pt
+warning: main_submission.tex:57:  -> ntxsyc
+warning: main_submission.tex:57: Requested font "ntxsyc" at 6.2pt
+warning: main_submission.tex:57:  -> ntxsyc
+warning: main_submission.tex:57: Requested font "ntxexa" at 8.0pt
+warning: main_submission.tex:57:  -> ntxexa
+warning: main_submission.tex:57: Requested font "ntxexa" at 6.2pt
+warning: main_submission.tex:57:  -> ntxexa
+warning: main_submission.tex:57: Overfull \hbox (5.9366pt too wide) in paragraph at lines 57--57
+warning: main_submission.tex:57: Overfull \hbox (8.14925pt too wide) in paragraph at lines 57--57
+warning: main_submission.tex:57: Overfull \hbox (9.50253pt too wide) in paragraph at lines 57--57
+warning: main_submission.tex:76: Overfull \hbox (1.098pt too wide) in paragraph at lines 68--76
+warning: main_submission.tex:89: Requested font "[Inconsolatazi4-Regular.otf]/OT:script=latn;language=dflt;+ss03;" at 9.0pt
+warning: main_submission.tex:96: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 6.0pt
+warning: main_submission.tex:152: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.3pt
+warning: main_submission.tex:152: Requested font "[LinLibertine_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 5.5pt
+warning: main_submission.tex:157: Overfull \hbox (4.84752pt too wide) in paragraph at lines 142--157
+warning: main_submission.tex:157: Underfull \vbox (badness 10000) has occurred while \output is active
+warning: main_submission.tex:169: Overfull \hbox (4.77701pt too wide) in paragraph at lines 158--169
+warning: main_submission.tex:207: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 9.0pt
+warning: main_submission.tex:207: Requested font "[LinBiolinum_R.otf]/OT:script=latn;language=dflt;+tnum;+lnum;mapping=tex-text;" at 7.0pt
+warning: table2.tex:1: 
+Requested font "MinLibReg-ot1" at 6.5pt
+warning: table2.tex:1:  -> MinLibReg-ot1
+warning: table2.tex:1: Requested font "nxlmi7" at 6.5pt
+warning: table2.tex:1:  -> nxlmi7
+warning: table2.tex:1: Requested font "ntxsy7" at 6.5pt
+warning: table2.tex:1:  -> ntxsy7
+warning: table2.tex:1: Requested font "ntxexx" at 6.5pt
+warning: table2.tex:1:  -> ntxexx
+warning: table2.tex:1: Requested font "msam7" at 6.5pt
+warning: table2.tex:1:  -> msam7
+warning: table2.tex:1: Requested font "msbm7" at 6.5pt
+warning: table2.tex:1:  -> msbm7
+warning: table2.tex:1: Requested font "nxlmia" at 6.5pt
+warning: table2.tex:1:  -> nxlmia
+warning: table2.tex:1: Requested font "ntxsym" at 6.5pt
+warning: table2.tex:1:  -> ntxsym
+warning: table2.tex:1: Requested font "ntxsyc" at 6.5pt
+warning: table2.tex:1:  -> ntxsyc
+warning: table2.tex:1: Requested font "ntxexa" at 6.5pt
+warning: table2.tex:1:  -> ntxexa
+warning: main_submission.tex:245: Overfull \hbox (1.8167pt too wide) in paragraph at lines 1--245
+warning: main_submission.tex:255: Overfull \hbox (2.0273pt too wide) in paragraph at lines 247--255
+warning: main_submission.tex:280: Overfull \hbox (1.13628pt too wide) in paragraph at lines 271--280
+warning: main_submission.tex:320: Overfull \hbox (8.61624pt too wide) in paragraph at lines 311--320
+warning: main_submission.tex:320: Overfull \hbox (3.82805pt too wide) in paragraph at lines 311--320
+warning: main_submission.tex:390: Overfull \hbox (6.0pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (5.6693pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (16.80977pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (9.20926pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:390: Overfull \hbox (24.76128pt too wide) in paragraph at lines 367--390
+warning: main_submission.tex:411: Overfull \hbox (9.90529pt too wide) in paragraph at lines 392--411
+warning: main_submission.tex:411: Overfull \hbox (4.19852pt too wide) in paragraph at lines 392--411
+warning: main_submission.bbl:220: Underfull \hbox (badness 10000) in paragraph at lines 214--220
+warning: main_submission.bbl:220: Underfull \hbox (badness 2600) in paragraph at lines 214--220
+warning: main_submission.tex:422: 
+Requested font "MinLibReg-ot1" at 10.95pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "MinLibReg-ot1" at 6.1pt
+warning: main_submission.tex:422:  -> MinLibReg-ot1
+warning: main_submission.tex:422: Requested font "nxlmi" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmi
+warning: main_submission.tex:422: Requested font "nxlmi5" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmi5
+warning: main_submission.tex:422: Requested font "ntxsy" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsy
+warning: main_submission.tex:422: Requested font "ntxsy5" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsy5
+warning: main_submission.tex:422: Requested font "ntxexx" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "ntxexx" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexx
+warning: main_submission.tex:422: Requested font "msam10" at 10.95pt
+warning: main_submission.tex:422:  -> msam10
+warning: main_submission.tex:422: Requested font "msam7" at 6.1pt
+warning: main_submission.tex:422:  -> msam7
+warning: main_submission.tex:422: Requested font "msbm10" at 10.95pt
+warning: main_submission.tex:422:  -> msbm10
+warning: main_submission.tex:422: Requested font "msbm7" at 6.1pt
+warning: main_submission.tex:422:  -> msbm7
+warning: main_submission.tex:422: Requested font "nxlmia" at 10.95pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "nxlmia" at 6.1pt
+warning: main_submission.tex:422:  -> nxlmia
+warning: main_submission.tex:422: Requested font "ntxsym" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsym" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsym
+warning: main_submission.tex:422: Requested font "ntxsyc" at 10.95pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxsyc" at 6.1pt
+warning: main_submission.tex:422:  -> ntxsyc
+warning: main_submission.tex:422: Requested font "ntxexa" at 10.95pt
+warning: main_submission.tex:422:  -> ntxexa
+warning: main_submission.tex:422: Requested font "ntxexa" at 6.1pt
+warning: main_submission.tex:422:  -> ntxexa
 warning: internal consistency problem when checking if main_submission.bbl changed
 warning: TeX rerun seems needed, but stopping at 6 passes
 warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
 note: Running xdvipdfmx ...
-note: Writing `main_submission.pdf` (184.24 KiB)
+note: Writing `main_submission.pdf` (198.97 KiB)
 note: Skipped writing 4 intermediate files (use --keep-intermediates to keep them)

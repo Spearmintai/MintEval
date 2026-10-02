@@ -345,6 +345,16 @@ $p=\ESvolPGptOpen$; Haiku: \ESvolHaikuOpen{}\,bp, $p=\ESvolPHaikuOpen$) and in l
 v0; realised volatility varies little within a single two-year window, and the multi-window data of v1
 are needed to test it. For Opus 5.5 neither term is distinguishable from zero.
 
+\textbf{Other instruments, same programs.} Because every reference and generated program is
+instrument-agnostic, we re-ran all of them, without any new generation, on ETH/USDT 15-minute data
+for 2018--2023, a longer window that includes March 2020 and the 2021 boom. Filters were re-applied and
+$\tau$ re-measured on the new series; \MAEthSurvive{} of \NTasks{} references survive. On ETH, $\tau$
+and reference return become correlated (Spearman \MAEthRho, $p=\MAEthRhoP$), so we control for
+reference return: the low-cost models still lose \MAEthLowTau{} ActionMatch per decade of $\tau$
+($p=\MAEthLowTauP$) and the frontier models remain flat (\MAEthFrontTau, $p=\MAEthFrontTauP$); Opus
+5.5 reaches \MAEthAMOpus{} with \MAEthSilentOpus{} silent failures, as on BTC. The findings are
+properties of the programs, not of one price path.
+
 \textbf{Sensitivity to the state rule.} Re-running every program that failed only because it stored
 \texttt{None} or a string in the state dictionary under a lenient engine raises CompileOK for
 Qwen-32B from \CompileOKQwenLOpen{} to \CompileLenientQwenLOpen{} (open) and for Qwen-7B from
