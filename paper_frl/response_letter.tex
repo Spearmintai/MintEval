@@ -1,0 +1,191 @@
+% Response to Reviewer 1, FRL-D-26-05997. Build: tectonic -X compile response_letter.tex (from paper_frl/).
+% Every number comes from numbers_frl.tex (submitted version) and numbers_frl_rev.tex (scripts/frl_revision.py).
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{amsmath,booktabs,xcolor,graphicx,pdflscape}
+\usepackage[labelformat=empty]{caption}
+\usepackage[authoryear,round]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\newcommand{\todo}[1]{{\color{red}\textbf{[TODO: #1]}}}
+\input{numbers_frl.tex}
+\input{numbers_frl_rev.tex}
+
+\newenvironment{reviewer}{\par\medskip\noindent\begin{quote}\itshape}{\end{quote}\par}
+\newcommand{\response}{\par\noindent\textbf{Response.}\ }
+\newcommand{\changes}{\par\medskip\noindent\textbf{Changes to the manuscript.}\ }
+\newenvironment{newtext}{\par\medskip\noindent\begin{quote}\small\color{blue!60!black}}{\end{quote}\par}
+\setlength{\parskip}{4pt}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries Response to the Reviewer}\\[4pt]
+Manuscript FRL-D-26-05997, \emph{Silent implementation shortfall in LLM-written trading code}\\
+Finance Research Letters --- minor revision
+\end{center}
+
+\noindent Dear Editor, dear Reviewer,
+
+\noindent We thank the Reviewer for a careful and constructive reading of the manuscript, and for the accurate summary of its argument. The six comments led us to (i) quantify the share of tasks with ambiguous instructions and re-estimate every main result on the unambiguous subset, (ii) add annualised, risk-adjusted and turnover-adjusted versions of the shortfall and tighten the vocabulary that distinguishes \emph{deviation} from \emph{loss}, (iii) report the correlations and variance inflation factors between state span and exposure, the complete exposure-controlled regression and a duration-matched test of state-management complexity, (iv) document every setting of the pipeline, (v) extend the literature discussion, including the two papers the Reviewer kindly pointed us to, and (vi) correct the typo. All new numbers are produced by one script (\texttt{scripts/frl\_revision.py}) from the data already used in the submitted version; no model was re-run and no backtest was re-executed. Below we reproduce each comment in italics, followed by our response and the corresponding changes. Tables R1--R6 of this letter are added to the manuscript as indicated.
+
+%% =====================================================================================================
+\section*{Comment 1 --- Ambiguous specifications and expert validation}
+\begin{reviewer}
+Can you quantify the fraction of errors attributable to ambiguous specifications, introduce independent expert validation for at least a representative subset, and examine whether the conclusions persist when restricting the evaluation to unambiguous instructions?
+\end{reviewer}
+
+\response We agree that this was the main open question in the submitted version (Appendix D stated that ``this share is not quantified''). We have done three things.
+
+\paragraph{(a) Quantifying ambiguous instructions.} We flag a task as potentially ambiguous if at least one of three conditions holds: (1)~the independent round-trip reader failed to recover the building blocks or could not be run (\RevAmbRtCount{} tasks, the complement of the ``780 of 800'' reported in Section~2.1); (2)~the strategy uses the breakout-then-retest entry and the instruction does not state that the breakout is evaluated on the \emph{close} rather than on an intrabar high or low (\RevAmbBpCount{} of \RevAmbBpTotal{} retest tasks); (3)~the strategy uses the higher-timeframe trend filter and the instruction does not state that the filter reads the last \emph{completed} higher-timeframe candle (\RevAmbHtfCount{} of \RevAmbHtfTotal{} filter tasks). Conditions (2) and (3) are exactly the two conventions that our inspection of frontier failures had identified (Appendix~B.3). The three flags mark \RevAmbSumFlags{} task-conditions on \RevAmbCount{} distinct tasks, i.e.\ \RevAmbShare\% of the 800 tasks; the remaining \RevUnambCount{} tasks (\RevUnambShare\%) form the \emph{unambiguous} subset. As a stricter alternative we also drop \emph{every} retest and higher-timeframe task regardless of wording, leaving a \emph{strict} subset of \RevStrictCount{} tasks (\RevStrictShare\%).
+
+\paragraph{(b) Fraction of errors attributable to ambiguity.} Table~R1 compares, model by model, the silent-failure share and the median $|IS|$ on ambiguous and unambiguous tasks, and reports the share of each model's silent failures that is attributable to ambiguity in the population-attributable-fraction sense (excess silent rate on ambiguous tasks $\times$ number of ambiguous tasks $\div$ all silent failures). The answer differs sharply between model tiers. For the three frontier models, ambiguous tasks fail silently in \RevAttrFrontSilentAm{} of cases against \RevAttrFrontSilentUn{} for unambiguous tasks, so \RevAttrFrontShare{} of frontier silent failures are attributable to instruction ambiguity; for Claude Opus~5.5 alone the share is \RevAttrOpusShare. For the four low-cost models the silent-failure share is \emph{not} higher on ambiguous tasks (\RevAttrLowSilentAm{} vs \RevAttrLowSilentUn), so the attributable fraction is \RevAttrLowShare; pooled over all seven models it is \RevAttrAllShare. Ambiguity therefore accounts for roughly a quarter of the residual frontier failures, which is consistent with Section~3.4, and for essentially none of the low-cost shortfall that drives the magnitude results.
+
+\begin{table}[h]\centering\footnotesize
+\caption*{\textbf{Table R1.} Silent-failure share and median $|IS|$ on unambiguous vs ambiguous tasks, and share of each model's silent failures attributable to ambiguity (four instruments pooled; low-cost models on all tasks, frontier models on the 200-task subset).}
+\input{table_frl_amb_silent.tex}
+\end{table}
+
+\paragraph{(c) Independent expert validation.} We drew a stratified random sample of \RevAuditN{} tasks from the 200-task core set (20 per state-span quintile; \RevAuditAutoFlagged{} of them carry an automatic flag). For each task, two raters with trading-desk experience who were not involved in building the benchmark independently receive the instruction and the full plain-English specification of the reference program, and judge whether the instruction pins down the reference behaviour on every bar (unambiguous) or admits a second defensible reading (ambiguous), recording the reason. The file with the sample, the automatic flags and empty rater columns is \texttt{results/frl/expert\_audit\_100.csv} in the repository. \todo{Fill in after the two ratings are complete: share judged unambiguous by both raters (x/100), Cohen's $\kappa$ between raters, and agreement between the raters' majority judgement and the automatic flag. The revised Appendix~E text below has the same placeholders.}
+
+\paragraph{(d) Do the conclusions persist on unambiguous instructions?} Yes. Table~R2 repeats Table~2 on the \RevUnambCount{} unambiguous tasks. Median absolute shortfalls of the low-cost models are \RevUnambGptISMed--\RevUnambQwenSISMed~bp (\RevAllGptISMed--\RevAllQwenSISMed~bp in the full set), silent-failure shares \RevUnambQwenSSilent--\RevUnambHaikuSilent{} (\RevAllQwenSSilent--\RevAllHaikuSilent), and the sign of the mean shortfall still varies across models. Frontier models fail silently on \RevUnambOpusSilent--\RevUnambDSProSilent{} of unambiguous tasks (\RevAllOpusSilent--\RevAllDSProSilent{} in the full set), and on \RevStrictOpusSilent--\RevStrictDSProSilent{} of the strict subset, so even after removing every retest and higher-timeframe task the best frontier model still diverges silently on about one task in nine. Table~R3 re-estimates the column~(4) specification of Table~3 with and without exposure controls on the full, unambiguous and strict samples. The state-span coefficient is \RevUnambTau~bp per decade ($t=\RevUnambTauT$) on the unambiguous subset and \RevStrictTau~bp ($t=\RevStrictTauT$) on the strict subset, against \RevFullTau~bp ($t=\RevFullTauT$) in the paper; with the exposure controls it falls to \RevUnambExpoTau~bp ($t=\RevUnambExpoTauT$) and \RevStrictExpoTau~bp ($t=\RevStrictExpoTauT$), while log holding duration enters at \RevUnambExpoDur~bp ($t=\RevUnambExpoDurT$) and \RevStrictExpoDur~bp ($t=\RevStrictExpoDurT$). Restricted to low-cost models the unambiguous-subset coefficient is \RevUnambLowTau~bp ($t=\RevUnambLowTauT$); for frontier models it is \RevUnambFrontTau~bp ($t=\RevUnambFrontTauT$). Every qualitative statement of the paper---the magnitude, the unstable sign, the state-span gradient and its disappearance under exposure controls, and the absence of a frontier gradient---holds on unambiguous instructions.
+
+\begin{table}[h]\centering\footnotesize
+\caption*{\textbf{Table R2.} Table~2 of the manuscript restricted to the \RevUnambCount{} unambiguous tasks. Columns as in Table~2; mean $IS=R^{\mathrm{ref}}-R^{\mathrm{llm}}$ with unclustered $t$-statistic in brackets.}
+\input{table_frl_unamb_table2.tex}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption*{\textbf{Table R3.} Table~3, column (4) specification (dependent variable $|IS|$ in bp, winsorised 1/99 within instrument; model, instrument and building-block fixed effects; controls $K$, log trade count, McCabe), estimated on all tasks, on the unambiguous subset and on the strict subset, without and with the two exposure controls. Strategy-clustered $t$-statistics in parentheses.}
+\resizebox{\textwidth}{!}{\input{table_frl_unamb.tex}}
+\end{table}
+
+\changes (1)~Section~2.1 now defines the three ambiguity flags and reports \RevAmbCount{} flagged tasks (\RevAmbShare\%). (2)~A new Appendix~E, ``Ambiguous instructions'', contains Tables~R1--R3 and the expert-validation protocol and results. (3)~Section~4 replaces ``this share is not quantified'' with a summary of Appendix~E. (4)~Appendix~D is shortened accordingly. The new Section~4 paragraph reads:
+\begin{newtext}
+Some deviations could reflect ambiguous instructions rather than model error. We flag a task as potentially ambiguous if the round-trip reader could not recover its building blocks, or if a breakout-then-retest or higher-timeframe rule is described without stating the bar-close or completed-candle convention; \RevAmbCount{} tasks (\RevAmbShare\%) are flagged. Ambiguity explains part of the residual frontier failures (\RevAttrFrontShare{} of frontier silent failures occur in excess on flagged tasks) but none of the low-cost shortfall, whose silent-failure share is no higher on flagged tasks. On the \RevUnambCount{} unflagged tasks the median absolute shortfall of low-cost models is \RevUnambGptISMed--\RevUnambQwenSISMed~bp, the state-span coefficient is \RevUnambTau~bp per decade ($t=\RevUnambTauT$) and falls to \RevUnambExpoTau~bp ($t=\RevUnambExpoTauT$) once holding duration is controlled, and frontier models still fail silently on \RevUnambOpusSilent--\RevUnambDSProSilent{} of tasks. Two independent raters judged a stratified sample of 100 instructions against the full reference specification; \todo{x} were judged unambiguous by both (Cohen's $\kappa=\todo{k}$). Appendix~E reports the details.
+\end{newtext}
+
+%% =====================================================================================================
+\section*{Comment 2 --- Annualised, risk-adjusted and turnover-adjusted measures; deviation versus loss}
+\begin{reviewer}
+Can you supplement the existing results with annualized return discrepancies, differences in risk-adjusted returns, maximum drawdown, and turnover-adjusted performance? The authors should also distinguish implementation deviation from implementation loss more consistently.
+\end{reviewer}
+
+\response Table~R4 adds, for every model and pooled over the four instruments, (i)~the annualised shortfall, $IS/T_i$ with $T_i$ the window length in years (\RevYearsBtc{} years for BTC/USDT, \RevYearsEth{} for ETH/USDT and \RevYearsSpy{} for the two equity proxies); (ii)~the Sharpe-ratio difference $\Delta\mathrm{SR}=\mathrm{SR}^{\mathrm{ref}}-\mathrm{SR}^{\mathrm{llm}}$; (iii)~the maximum-drawdown difference $\Delta\mathrm{MDD}=|\mathrm{MDD}^{\mathrm{llm}}|-|\mathrm{MDD}^{\mathrm{ref}}|$ in bp, so that, as for $IS$, a positive value means the generated program is worse for the trader; and (iv)~the turnover-adjusted deviation $|IS|/n^{\mathrm{ref}}$, i.e.\ bp of shortfall per intended round trip. Medians of absolute differences measure deviation, means of signed differences measure loss. Because \RevBustRuns{} compiled programs lose their entire equity and their Sharpe ratio is then a numerical artefact (\RevSharpeBelowFifty{} runs have $\mathrm{SR}^{\mathrm{llm}}<-50$), the means of $\Delta\mathrm{SR}$ and $\Delta\mathrm{MDD}$ are winsorised at 1/99 within model, as mean $IS$ already is; medians are unaffected.
+
+\begin{table}[h]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption*{\textbf{Table R4.} Annualised, risk-adjusted and turnover-adjusted shortfall, four instruments pooled, compiled runs. $IS$/yr is $IS$ divided by the window length in years; $\Delta\mathrm{SR}=\mathrm{SR}^{\mathrm{ref}}-\mathrm{SR}^{\mathrm{llm}}$; $\Delta\mathrm{MDD}=|\mathrm{MDD}^{\mathrm{llm}}|-|\mathrm{MDD}^{\mathrm{ref}}|$ in bp (positive: the generated program has the deeper drawdown); $|IS|$/trade is $|IS|$ per round trip of the reference. Means of $\Delta\mathrm{SR}$ and $\Delta\mathrm{MDD}$ winsorised 1/99 within model; unclustered $t$-statistics in brackets.}
+\resizebox{\textwidth}{!}{\input{table_frl_riskadj.tex}}
+\end{table}
+
+Four points emerge. First, on an annual basis the median absolute deviation of low-cost models is \RevRiskGptAnnMed--\RevRiskQwenSAnnMed~bp per year and that of frontier models \RevRiskOpusAnnMed--\RevRiskDSProAnnMed~bp per year, while the mean annual loss is small and of unstable sign (\RevRiskGptAnnMean~bp for GPT-5.4-mini, $t=\RevRiskGptAnnMeanT$; \RevRiskHaikuAnnMean~bp for Claude Haiku, $t=\RevRiskHaikuAnnMeanT$); this is the deviation-not-haircut result of Section~3.1 in annual units. Second, the deviation is visible in risk-adjusted terms: the median $|\Delta\mathrm{SR}|$ is \RevRiskGptDSMed--\RevRiskQwenSDSMed{} for low-cost models against \RevRiskOpusDSMed--\RevRiskDSProDSMed{} for frontier models, and the mean $\Delta\mathrm{SR}$ of low-cost models is positive (generated programs have the lower Sharpe ratio: \RevRiskGptDSMean{} to \RevRiskQwenSDSMean), whereas it is indistinguishable from zero for the frontier models. Third, maximum drawdown shows the mechanism behind the unstable sign: the median $|\Delta\mathrm{MDD}|$ of low-cost models is \RevRiskGptDDMed--\RevRiskQwenSDDMed~bp, yet the mean $\Delta\mathrm{MDD}$ is \emph{negative} (\RevRiskGptDDMean{} to \RevRiskQwenSDDMean~bp), because mis-implemented programs often trade less than intended and therefore draw down less; a shallower drawdown is not fidelity. Fourth, per intended round trip the median deviation is \RevRiskGptTurnMed--\RevRiskQwenSTurnMed~bp for low-cost models and \RevRiskOpusTurnMed--\RevRiskDSProTurnMed~bp for frontier models, i.e.\ of the same order as the per-fill frictions on the cryptocurrency venues (6~bp) and above those on the equity proxies (0.6~bp).
+
+\paragraph{Deviation versus loss.} We now use two terms consistently. \emph{Implementation deviation} is the absolute gap $|IS|$ (and its behavioural counterpart, $1-\mathrm{ActionMatch}$): how far the executed strategy is from the authorised one. \emph{Implementation loss} is the signed gap $IS=R^{\mathrm{ref}}-R^{\mathrm{llm}}$: how much the trader forgoes, which is negative when the error happens to help. The revised text uses ``deviation'' whenever an absolute or behavioural quantity is meant and ``loss'' only for signed quantities; we have corrected the abstract, the introduction, Section~2.4, the headings of Tables~2 and~R4 and the conclusion accordingly. For example, the abstract sentence now reads:
+\begin{newtext}
+The sign of the average loss varies across models and samples, so the shortfall is better described as an unpredictable deviation from the authorised strategy than as a haircut on its return.
+\end{newtext}
+and Section~2.4 now states, after equation~(1):
+\begin{newtext}
+We call $|IS|$ the implementation \emph{deviation} and the signed $IS$ the implementation \emph{loss}; a positive loss means the generated program earns less than the reference. Our dependent variable is the deviation, winsorised at 1\% and 99\% within each instrument: an implementation error that happens to make money is still an error, and signed errors cancel across tasks.
+\end{newtext}
+
+\changes Table~R4 and the four observations above are added as Section~3.1.1, ``Annualised, risk-adjusted and turnover-adjusted shortfall''; the definitions of $\Delta\mathrm{SR}$, $\Delta\mathrm{MDD}$ and the turnover adjustment are added to Section~2.4; the deviation/loss vocabulary is applied throughout.
+
+%% =====================================================================================================
+\section*{Comment 3 --- Collinearity, the complete exposure-controlled regression, and a duration-matched test}
+\begin{reviewer}
+Can you report correlations and variance inflation factors for state span and holding duration, provide the complete exposure-controlled regression, and conduct an experiment comparing strategies with similar holding durations but different state-management complexity?
+\end{reviewer}
+
+\response We address the three requests in turn.
+
+\paragraph{(a) Correlations and variance inflation factors.} Table~R5 reports, at the level of the \RevVifUnitsN{} reference$\times$instrument units, Pearson and Spearman correlations between $\log_{10}\tau_{\max}$, log mean holding duration and the share of bars in position, together with the variance inflation factors. State span and holding duration are correlated at $r=\RevCorrTauDur$ ($\rho=\RevSpearmanTauDur$), and the two exposure variables together explain \RevTauOnExpoR{} of the variance of $\log_{10}\tau_{\max}$. The VIFs are \RevVifTau{} for state span, \RevVifDur{} for log holding duration and \RevVifPos{} for the share in position (\RevVifTwoTau{} when only state span and duration are included; \RevVifPooledTau{} for state span in the pooled estimation sample), all far below the conventional thresholds of 5 or 10. Collinearity is therefore moderate, and the drop of the state-span coefficient from \RevRegBaseTau{} to \RevRegExpoTau~bp is not a variance-inflation artefact: its clustered standard error rises only from about 183 to 191~bp while the point estimate falls by more than 90\%. The two variables are correlated because they measure related things---entry price and entry volatility are written when a position opens and read until it closes---but they are separately identified.
+
+\begin{table}[h]\centering\small
+\caption*{\textbf{Table R5.} Correlations and variance inflation factors between state span and the two exposure variables, one observation per reference strategy and instrument ($N=\RevVifUnitsN$). Pearson $r$ with Spearman $\rho$ in parentheses; VIF from the regression of each variable on the other two (3 vars) or on state span and duration only.}
+\input{table_frl_vif.tex}
+\end{table}
+
+\paragraph{(b) The complete exposure-controlled regression.} Table~R6 reports the full sequence. Column~(1) is state span alone (\RevRegTauOnlyTau~bp per decade, $t=\RevRegTauOnlyTauT$); column~(2) is column~(4) of Table~3 (\RevRegBaseTau~bp, $t=\RevRegBaseTauT$); column~(3) adds log mean holding duration (state span \RevRegDurOnlyTau~bp, $t=\RevRegDurOnlyTauT$; duration \RevRegDurOnlyDur~bp per log unit, $t=\RevRegDurOnlyDurT$); column~(4) adds the share of bars in position as well (state span \RevRegExpoTau~bp, $t=\RevRegExpoTauT$; duration \RevRegExpoDur~bp, $t=\RevRegExpoDurT$; share in position \RevRegExpoPos~bp, $t=\RevRegExpoPosT$), and columns~(5)--(6) estimate column~(4) on low-cost and frontier models separately (state span \RevRegExpoLowTau~bp, $t=\RevRegExpoLowTauT$, and \RevRegExpoFrontTau~bp, $t=\RevRegExpoFrontTauT$). All coefficients, including the controls, are shown with strategy-clustered $t$-statistics. Holding duration alone absorbs the state-span gradient; the share of bars in position adds nothing once duration is included. The same holds in the Appendix~C variant that controls for the reference return: the state-span coefficient goes from \RevRegWithRBaseTau~bp ($t=\RevRegWithRBaseTauT$) to \RevRegWithRExpoTau~bp ($t=\RevRegWithRExpoTauT$) with duration at \RevRegWithRExpoDur~bp ($t=\RevRegWithRExpoDurT$).
+
+\begin{table}[h]\centering\small
+\caption*{\textbf{Table R6.} Complete exposure-controlled regression. Dependent variable $|IS|$ in bp, winsorised 1/99 within instrument; $\log_{10}\tau$ centred, $\sigma$ standardised within instrument; building-block fixed effects are signal, sizing, filter and direction effects and one indicator per risk block; strategy-clustered $t$-statistics in parentheses. Columns (5) and (6) estimate column (4) on the low-cost and frontier models.}
+\resizebox{\textwidth}{!}{\input{table_frl_reg_rev.tex}}
+\end{table}
+
+\paragraph{(c) Similar holding duration, different state-management complexity.} We sort the reference$\times$instrument units into quintiles of mean holding duration (median \RevDurQOneMedBars, \RevDurQTwoMedBars, \RevDurQThreeMedBars, \RevDurQFourMedBars{} and \RevDurQFiveMedBars{} bars) and, within each quintile, split strategies by their state-management complexity, measured by the register count $R$: the number of state variables of the reference program with at least one cross-bar read, recorded by the same execution instrumentation that measures $\tau$ (Section~2.4; $R$ ranges from \RevRegMin{} to \RevRegMax{} with median \RevRegMedian). Strategies at or below the quintile median of $R$ are ``low complexity'', the rest ``high complexity''; the two groups have the same median holding duration within one bar in every quintile. $R$ is almost uncorrelated with state span ($r=\RevRegCorrTau$) and with holding duration ($r=\RevRegCorrDur$), so the split varies the number of things the program must remember while holding fixed how long it must remember them. Table~R7 reports mean ActionMatch and median $|IS|$ for the two groups.
+
+\begin{landscape}
+\begin{table}[p]\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\caption*{\textbf{Table R7.} Duration-matched comparison of low and high state-management complexity. Reference$\times$instrument units are sorted into quintiles of mean holding duration; within each quintile, strategies with register count $R$ at or below the quintile median (last column) are low complexity (L), the rest high (H). $n$ is the number of compiled runs; AM is mean ActionMatch; $\Delta$AM $=$ AM$_{\mathrm{L}}-$ AM$_{\mathrm{H}}$ with Welch $t$-statistic; med.\ $|IS|$ in bp. Low-cost models on all tasks ($N=\RevDurNLow$), frontier models on the 200-task subset ($N=\RevDurNFront$), four instruments pooled.}
+\resizebox{\linewidth}{!}{\input{table_frl_matched_dur.tex}}
+\end{table}
+\end{landscape}
+
+At every holding duration, strategies with more state variables are implemented less faithfully and cost more. For the low-cost models ActionMatch is higher in the low-complexity group by \RevDurMedQTwoLowAMDiff{} to \RevDurMedQFourLowAMDiff{} ($t$ between \RevDurMedQTwoLowAMT{} and \RevDurMedQFourLowAMT), and the median deviation is larger in the high-complexity group in all five quintiles (\RevDurMedQOneLowISLo{} vs \RevDurMedQOneLowISHi~bp in the shortest quintile, \RevDurMedQFiveLowISLo{} vs \RevDurMedQFiveLowISHi~bp in the longest). For the frontier models the ActionMatch gap is \RevDurMedQTwoFrontAMDiff{} to \RevDurMedQFourFrontAMDiff{} ($t$ between \RevDurMedQTwoFrontAMT{} and \RevDurMedQFourFrontAMT), and the median deviation of the low-complexity group is zero in every quintile against \RevDurMedQOneFrontISHi--\RevDurMedQFourFrontISHi~bp for the high-complexity group in the first four quintiles (both are zero in the fifth, where the frontier subset is thin). Pooling the quintiles with duration-quintile, model and instrument fixed effects and strategy clusters, each additional register changes ActionMatch by \RevDurPoolLowAMReg{} percentage points ($t=\RevDurPoolLowAMRegT$) for low-cost models and by \RevDurPoolFrontAMReg{} points ($t=\RevDurPoolFrontAMRegT$) for frontier models, and changes the winsorised deviation by $+\RevDurPoolLowISReg$~bp ($t=\RevDurPoolLowISRegT$) for low-cost models ($+\RevDurPoolFrontISReg$~bp, $t=\RevDurPoolFrontISRegT$, for frontier models). The contrast with state span is instructive: within the same duration quintiles, $\log_{10}\tau_{\max}$ has no effect on ActionMatch for low-cost models (\RevDurPoolLowAMTau{} points per decade, $t=\RevDurPoolLowAMTauT$), and when register count and state span are entered together the register count keeps its coefficient (\RevDurPoolLowAMBothReg, $t=\RevDurPoolLowAMBothRegT$) while state span is \RevDurPoolLowAMBothTau{} ($t=\RevDurPoolLowAMBothTauT$). Two alternative definitions of low complexity---a single risk layer with at most five registers (\RevAltTasks{} strategies), and the literal ``at most two registers and a single risk layer'' (\RevLitTasks{} strategies, too few for the frontier subset in the longest quintile)---give the same signs in every estimable cell (Appendix~F, Tables~F.2--F.3).
+
+The experiment therefore sharpens, rather than overturns, the paper's conclusion. The \emph{span} of state, $\tau$, has no effect once exposure is held fixed: it is a proxy for how long a position stays open. The \emph{amount} of state the program must manage does matter at any holding duration, in behaviour for all models and in money for the low-cost models. We have revised the abstract, the introduction and Section~3.2 to say both things.
+
+\changes (1)~Tables~R5 and~R6 replace Table~4 of the submitted version; Section~3.2 reports the correlations and VIFs and walks through columns (1)--(6). (2)~A new Section~3.2.1, ``Similar duration, different state complexity'', presents Table~R7 and the pooled estimates; the alternative definitions are in a new Appendix~F. (3)~The abstract sentence ``within a given type of risk control, models do not diverge more often on longer-state logic, and each divergence costs more the longer the strategy stays in position'' now continues: ``At a given holding duration, however, strategies with more state variables are implemented less faithfully and deviate more, so the risk sits in the amount of state a program must manage, not in how long it must keep it.'' The new Section~3.2 paragraph reads:
+\begin{newtext}
+State span and holding duration are correlated ($r=\RevCorrTauDur$) but not collinear: the variance inflation factors are \RevVifTau{} and \RevVifDur{} (Table~R5), and the clustered standard error of the state-span coefficient is almost unchanged when duration is added. The coefficient itself falls from \RevRegBaseTau~bp to \RevRegDurOnlyTau~bp ($t=\RevRegDurOnlyTauT$) when log holding duration enters (\RevRegDurOnlyDur~bp per log unit, $t=\RevRegDurOnlyDurT$), and to \RevRegExpoTau~bp ($t=\RevRegExpoTauT$) when the share of bars in position is added as well; the latter has no effect of its own (Table~R6). Holding duration, not state span, carries the gradient.
+\end{newtext}
+
+%% =====================================================================================================
+\section*{Comment 4 --- Hyperparameter selection}
+\begin{reviewer}
+Can you give more details on hyperparameter selection?
+\end{reviewer}
+
+\response The submitted version only said that ``decoding is deterministic, with one sample per task''. We have added a subsection to Appendix~A that lists every setting of the pipeline and how it was chosen. There are no fitted hyperparameters in the sense of values tuned on the outcome; every setting below was fixed before any model under test was run, and the two analysis choices that could move the results (the silent-failure threshold and the winsorisation) are reported with sensitivity checks. The new text reads:
+\begin{newtext}
+\textbf{Decoding.} Every model under test is queried at temperature 0 with a fixed seed, one sample per task, as a single user message containing the instruction and the interface document (no system prompt), with a 32{,}768-token output budget (8{,}192 for the two locally served Qwen2.5-Coder models, which have shorter context); Qwen3.8-Max is run at low and DeepSeek-V4-Pro at high reasoning effort, because the default effort of Qwen3.8-Max exhausted the token budget in a pilot. Requests are retried up to six times on transport errors; a response with no code block counts as a compile failure. \textbf{Execution.} Generated programs run in a subprocess sandbox limited to \texttt{math} and \texttt{numpy}, 2~GB of memory and a wall-clock budget of 10~s per 70{,}000 bars; a time-out counts as a compile failure. The engine uses a 960-bar warm-up; a target position decided at the close of bar $t$ is filled at the open of bar $t+1$, stop and take-profit levels are filled at the level when the next bar's range reaches them (stop first) and at the open when gapped through, and target positions are quantised to a grid of 0.05 of equity before the two programs are compared. Frictions are listed in Table~1. \textbf{Task construction} (fixed in \citealp{wang2026minteval}). 15{,}000 candidate programs were generated from the block library; those with fewer than 20 round trips, never trading, or losing half their equity in the first 5\% of bars were removed; 800 were drawn by stratifying jointly on five $\tau_{\max}$ quintiles and five reference-return bands (32 per cell), which makes state span orthogonal to profitability. Instructions were produced by a translator model (Gemini~3.5 Flash Lite, temperature 0.7, 40--120 words, up to six attempts against deterministic gates) and verified by a round-trip reader (DeepSeek-V4-Pro, temperature 0). The 200-task frontier subset takes 40 tasks per $\tau_{\max}$ quintile. \textbf{Analysis.} A run is a silent failure if it compiles and ActionMatch $<0.9$; the shares at 0.8 and 0.99 are reported in Appendix~C. $|IS|$ is winsorised at the 1st and 99th percentile within instrument; reference strategies must have at least 20 round trips on each instrument. Standard errors are clustered by strategy. The high-VIX indicator in Appendix~B uses a threshold of 25.
+\end{newtext}
+
+\changes New Appendix~A.1, ``Settings'', with the text above; Section~2.2 points to it.
+
+%% =====================================================================================================
+\section*{Comment 5 --- References}
+\begin{reviewer}
+The number of references can still be increased. The following papers \url{https://doi.org/10.1016/j.jfds.2026.100177} and \url{https://doi.org/10.1145/3805712.3809852} on distinction between intended trading strategies, their realized performance, and backtesting evaluation can also be related to this manuscript. Can you discuss them as well?
+\end{reviewer}
+
+\response We are grateful to the Reviewer for pointing us to these two papers, which we had missed and which relate to our argument from two different directions. \citet{yilmaz2026} study pairs trading with time-series deep-learning models and evaluate the resulting strategies by backtesting their realised performance. This is exactly the setting in which our question arises: once a strategy is produced by a model and judged by its backtest, the backtest presumes that the executed rule is the intended one, and our shortfall is the wedge between the two that sits upstream of any performance evaluation. \citet{arat2026} diagnose the behaviour of LLM rerankers while holding the pool of evidence fixed, so that differences in output are attributable to the model rather than to what it was shown; our design has the same logic---holding strategy, prices and frictions fixed so that the return gap is attributable to the implementation alone---and we now say so. We have added both papers to the Introduction and to the related-work paragraph of Section~4, and we have also broadened the reference list on the two literatures the paper draws on: execution cost and backtest reliability in finance \citep{almgren2001,harvey2016,gatev2006,bailey2014pseudo}, LLMs as financial language models and forecasters \citep{wu2023bloomberggpt,yang2023fingpt}, and functional-correctness and hallucination benchmarks for code generation \citep{chen2021humaneval,liu2023evalplus,jain2024livecodebench,tian2024codehalu,zhang2024hallucode}, against which behavioural equivalence is the distinguishing feature of our measurement. The new Introduction paragraph reads:
+\begin{newtext}
+The distinction between an intended strategy, the strategy actually executed and the performance a backtest reports runs through recent work on model-based trading. \citet{yilmaz2026} build pairs-trading strategies from time-series deep-learning models and evaluate them by their realised backtested performance; such an evaluation presumes that the rule being backtested is the rule that was intended, which is what LLM-written code can silently violate. Conversely, \citet{arat2026} diagnose LLM behaviour by holding the evidence pool fixed so that output differences are attributable to the model; we adopt the same identification logic by holding the strategy, the prices and the frictions fixed. Backtests are fragile even when the code is right \citep{bailey2014pseudo,bailey2016pbo,harvey2016}, execution adds its own costs \citep{perold1988implementation,almgren2001}, and code benchmarks score functional correctness on unit tests rather than behaviour over thousands of stateful steps \citep{chen2021humaneval,liu2023evalplus,jain2024livecodebench}; the gap we measure sits before all three.
+\end{newtext}
+
+\changes Introduction, second paragraph (text above); Section~4, related-work sentences on code review and code hallucination \citep{tian2024codehalu,zhang2024hallucode}; the pairs-trading literature \citep{gatev2006,yilmaz2026} is cited in Section~3.5 where portfolio-level diversification is discussed. Thirteen references are added in total (the list at the end of this letter also repeats the three already-cited works that the new text refers to).
+
+%% =====================================================================================================
+\section*{Comment 6 --- Typo}
+\begin{reviewer}
+Typos: As a behavioural companion $\to$ As a complementary behavioral measure
+\end{reviewer}
+
+\response Corrected. Section~2.4 now reads ``As a complementary behavioural measure we report ActionMatch, \ldots'' (we keep the British spelling used throughout the manuscript). We have also re-read the manuscript for similar phrasing and corrected ``fiercely changing market'' to ``volatile markets'' and ``we want to figure out if there exists some systematical bias'' to ``we ask whether the shortfall has a systematic sign that could be hedged in advance'' in the Introduction.
+
+%% =====================================================================================================
+\section*{Summary of changes}
+\begin{itemize}[nosep,leftmargin=1.2em]
+\item Abstract, Introduction, Sections~2.4 and~3.1, Conclusion: consistent use of \emph{deviation} ($|IS|$) and \emph{loss} ($IS$); state-complexity sentence added.
+\item Section~2.1: definition of the three ambiguity flags; \RevAmbCount{} flagged tasks.
+\item Section~2.2 and new Appendix~A.1: complete list of decoding, execution, construction and analysis settings.
+\item Section~2.4: definitions of annualised shortfall, $\Delta\mathrm{SR}$, $\Delta\mathrm{MDD}$ and turnover-adjusted deviation; typo corrected.
+\item New Section~3.1.1 with Table~R4 (annualised, risk-adjusted, turnover-adjusted).
+\item Section~3.2: correlations and VIFs (Table~R5) and the complete exposure-controlled regression (Table~R6), replacing Table~4; new Section~3.2.1 with the duration-matched test (Table~R7).
+\item Section~4 and new Appendix~E: ambiguity quantification, expert validation, unambiguous-subset results (Tables~R1--R3); Appendix~D shortened.
+\item New Appendix~F: alternative complexity definitions for the duration-matched test.
+\item References: the two papers suggested by the Reviewer and eleven further references; Introduction and Section~4 revised accordingly.
+\end{itemize}
+
+\noindent We hope that the revised manuscript addresses the Reviewer's comments and thank the Reviewer and the Editor again for their time.
+
+\medskip\noindent Sincerely,\\
+Siyu Wang, Yuecheng He and Varstern Yifan Wang
+
+\section*{References cited in this letter}
+\bibliographystyle{plainnat}
+\bibliography{refs_response}
+
+\end{document}
