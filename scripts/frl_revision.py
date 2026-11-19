@@ -104,20 +104,70 @@ mac("RevUnambCount", len(unamb_ids), "{}"); mac("RevUnambShare", 100 * len(unamb
 mac("RevStrictCount", len(strict_unamb_ids), "{}"); mac("RevStrictShare", 100 * len(strict_unamb_ids) / len(tasks), "{:.1f}")
 mac("RevStrictDropped", len(strict_amb_ids), "{}")
 
-# audit sample: 20 tasks per tau quintile from the 200-task core set; rater columns are left EMPTY on purpose
+# audit sample: 20 tasks per tau quintile from the 200-task core set; preserve existing rater annotations if present
+audit_path = "results/frl/expert_audit_100.csv"
+existing_ratings = {}
+if os.path.exists(audit_path):
+    ex_df = pd.read_csv(audit_path, dtype=str).fillna("")
+    for _, r in ex_df.iterrows():
+        existing_ratings[r["strategy_id"]] = {
+            "rater1_unambiguous": r.get("rater1_unambiguous", ""),
+            "rater1_notes": r.get("rater1_notes", ""),
+            "rater2_unambiguous": r.get("rater2_unambiguous", ""),
+            "rater2_notes": r.get("rater2_notes", ""),
+        }
 rows = []
 for x in f200:
     s = x["strategy_id"]; t = tasks[s]
+    er = existing_ratings.get(s, {})
     rows.append({"strategy_id": s, "tau_bin": t["tau_bin"], "tau_max": t["tau_max"], "n_registers": t["n_registers"],
                  "signal_id": spec[s]["signal"]["id"], "filter_id": spec[s]["filter"]["id"], "sizing_id": spec[s]["sizing"]["id"],
                  "risk_ids": "+".join(r["id"] for r in spec[s]["risk"]), "roundtrip_ok": int(s not in rt_fail),
                  "auto_flag_retest_no_close": int(s in bp_amb), "auto_flag_htf_no_completed": int(s in htf_amb),
                  "auto_flag_ambiguous": int(s in amb_ids), "prompt": x["q"], "spec_desc": x["spec_desc"],
-                 "rater1_unambiguous": "", "rater1_notes": "", "rater2_unambiguous": "", "rater2_notes": ""})
+                 "rater1_unambiguous": er.get("rater1_unambiguous", ""), "rater1_notes": er.get("rater1_notes", ""),
+                 "rater2_unambiguous": er.get("rater2_unambiguous", ""), "rater2_notes": er.get("rater2_notes", "")})
 F = pd.DataFrame(rows)
 sub100 = F.groupby("tau_bin", group_keys=False).apply(lambda g: g.sample(20, random_state=20261002)).sort_values("strategy_id")
-sub100.to_csv("results/frl/expert_audit_100.csv", index=False)
+sub100.to_csv(audit_path, index=False)
 mac("RevAuditN", len(sub100), "{}"); mac("RevAuditAutoFlagged", int(sub100.auto_flag_ambiguous.sum()), "{}")
+mac("RevAuditAutoUnamb", int((1 - sub100.auto_flag_ambiguous).sum()), "{}")
+
+def cohen_kappa(x, y):
+    po = float((x == y).mean())
+    px1, py1 = float(x.mean()), float(y.mean())
+    pe = px1 * py1 + (1.0 - px1) * (1.0 - py1)
+    return po, (po - pe) / (1.0 - pe) if pe < 1.0 else 1.0
+
+if (sub100["rater1_unambiguous"] != "").all() and (sub100["rater2_unambiguous"] != "").all():
+    r1 = sub100["rater1_unambiguous"].astype(int).to_numpy()
+    r2 = sub100["rater2_unambiguous"].astype(int).to_numpy()
+    both_un = ((r1 == 1) & (r2 == 1)).astype(int)
+    either_un = ((r1 == 1) | (r2 == 1)).astype(int)
+    both_am = ((r1 == 0) & (r2 == 0)).astype(int)
+    auto_un = (1 - sub100["auto_flag_ambiguous"].astype(int)).to_numpy()
+    po_12, kap_12 = cohen_kappa(r1, r2)
+    po_ba, kap_ba = cohen_kappa(both_un, auto_un)
+    po_1a, kap_1a = cohen_kappa(r1, auto_un)
+    po_2a, kap_2a = cohen_kappa(r2, auto_un)
+    # Auto flag specificity/recall relative to human consensus
+    auto_flagged_also_human = int(((auto_un == 0) & (both_un == 0)).sum())
+    human_extra_amb = int(((auto_un == 1) & (both_un == 0)).sum())
+    mac("RevAuditRaterOneUnamb", int(r1.sum()), "{}")
+    mac("RevAuditRaterTwoUnamb", int(r2.sum()), "{}")
+    mac("RevAuditBothUnamb", int(both_un.sum()), "{}")
+    mac("RevAuditEitherUnamb", int(either_un.sum()), "{}")
+    mac("RevAuditBothAmb", int(both_am.sum()), "{}")
+    mac("RevAuditDisagree", int((r1 != r2).sum()), "{}")
+    mac("RevAuditAgreePct", 100.0 * po_12, "{:.1f}")
+    mac("RevAuditAgreeCount", int((r1 == r2).sum()), "{}")
+    mac("RevAuditKappa", kap_12, "{:.2f}")
+    mac("RevAuditKappaThree", kap_12, "{:.3f}")
+    mac("RevAuditAutoAgreePct", 100.0 * po_ba, "{:.1f}")
+    mac("RevAuditAutoAgreeCount", int((both_un == auto_un).sum()), "{}")
+    mac("RevAuditAutoKappa", kap_ba, "{:.2f}")
+    mac("RevAuditAutoFlaggedConfirmed", auto_flagged_also_human, "{}")
+    mac("RevAuditHumanExtraAmb", human_extra_amb, "{}")
 
 d["ambiguous"] = d.strategy_id.isin(amb_ids); d["strict_ambiguous"] = d.strategy_id.isin(strict_amb_ids)
 
